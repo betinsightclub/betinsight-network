@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="description" content="BetInsight Network – Premium, Network, Provisionen und interne Kommunikation.">
   <title>BetInsight Network</title>
+  <!-- Startseite v2.2 · Premium-&-Network-Login verbunden -->
 
   <!-- Aktueller Dateiname im GitHub-Repository -->
   <link rel="icon" type="image/x-icon" href="favicon(1).ico">
@@ -108,17 +109,6 @@
       align-items:center;
       gap:11px;
       min-width:0;
-    }
-
-    .mini-network-logo{
-      display:block;
-      width:118px;
-      max-width:28vw;
-      height:42px;
-      object-fit:contain;
-      object-position:left center;
-      flex:0 0 auto;
-      filter:drop-shadow(0 5px 12px rgba(0,0,0,.22));
     }
 
     .mini-copy strong{
@@ -664,7 +654,6 @@
         padding:9px 10px;
         border-radius:15px;
       }
-      .mini-network-logo{width:96px;height:38px}
       .mini-copy small{display:none}
       .club-link{
         font-size:10px;
@@ -763,12 +752,7 @@
   <main class="page">
     <header class="topbar">
       <div class="mini-brand">
-        <img
-          class="mini-network-logo"
-          src="betinsight.network.png"
-          alt="BetInsight Network"
-        >
-        <div class="mini-copy">
+<div class="mini-copy">
           <strong>BetInsight Network</strong>
           <small>Premium · Network · Provisionen</small>
         </div>
@@ -792,9 +776,9 @@
           </p>
 
           <div class="main-actions">
-            <button class="btn btn-primary" type="button" onclick="planned('Premium & Network Login')">
+            <a class="btn btn-primary" href="premium/">
               🔐 Premium & Network Login
-            </button>
+            </a>
 
             <button class="btn btn-blue" type="button" onclick="openPlans()">
               ⭐ Premium entdecken
@@ -802,7 +786,7 @@
           </div>
 
           <div class="under-note">
-            Der Login wird als nächster geschützter Bereich eingerichtet.
+            Geschützter Zugang über deinen persönlichen BetInsight Network Zugang.
           </div>
         </div>
 
@@ -907,7 +891,7 @@
 
       <div class="footer-right">
         <a href="https://betinsight.club/">BetInsight Club</a>
-        <a href="#" onclick="planned('Premium & Network Login');return false;">Mitglieder</a>
+        <a href="premium/">Mitglieder</a>
 
         <!-- bewusst klein und unauffällig -->
         <a class="admin-link" href="#" onclick="planned('Administration');return false;">
