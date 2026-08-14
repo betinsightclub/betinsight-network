@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#03131d">
+  <meta name="description" content="BetInsight Network – Premium, Network, Provisionen und interne Kommunikation an einem Ort.">
+  <title>BetInsight Network</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    :root{
+      --bg1:#03131d;
+      --bg2:#062434;
+      --bg3:#020c13;
+      --panel:#07202e;
+      --panel2:#0a2a3a;
+      --border:rgba(104,191,230,.18);
+      --green:#0edca6;
+      --blue:#169cff;
+      --cyan:#18c9f3;
+      --orange:#ffab2e;
+      --soft:#d7edf7;
+      --muted:#83abc0;
+      --shadow:0 22px 70px rgba(0,0,0,.34);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:#fff;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(22,156,255,.15),transparent 32%),
+        radial-gradient(circle at 95% 15%,rgba(14,220,166,.10),transparent 30%),
+        linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 48%,var(--bg3) 100%);
+    }
+
+    a{color:inherit}
+    button{font:inherit}
+
+    .page{
+      width:min(1180px,calc(100% - 32px));
+      margin:0 auto;
+      padding:26px 0 38px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:11px 14px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(5,28,41,.68);
+      box-shadow:0 12px 34px rgba(0,0,0,.22);
+      backdrop-filter:blur(12px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+      font-size:20px;
+      letter-spacing:-1px;
+      color:#fff;
+      background:linear-gradient(145deg,#0a3150,#061d31);
+      border:1px solid rgba(83,186,231,.28);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 10px 26px rgba(0,0,0,.28);
+    }
+    .brand-logo span{color:var(--green)}
+
+    .brand-copy strong{
+      display:block;
+      font-size:16px;
+      line-height:1.1;
+      letter-spacing:.1px;
+    }
+    .brand-copy small{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.75px;
+      text-transform:uppercase;
+    }
+
+    .back-link{
+      text-decoration:none;
+      color:var(--soft);
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.045);
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+      transition:.2s ease;
+    }
+    .back-link:hover{transform:translateY(-1px);background:rgba(255,255,255,.075)}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      margin-top:20px;
+      padding:58px 48px 48px;
+      border:1px solid rgba(104,191,230,.20);
+      border-radius:28px;
+      background:
+        radial-gradient(circle at 88% 7%,rgba(22,156,255,.20),transparent 34%),
+        radial-gradient(circle at 12% 100%,rgba(14,220,166,.09),transparent 28%),
+        linear-gradient(155deg,rgba(12,48,64,.97),rgba(5,29,43,.97));
+      box-shadow:var(--shadow);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:270px;
+      height:270px;
+      right:-110px;
+      bottom:-150px;
+      border:48px solid rgba(14,220,166,.075);
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      color:#a7dff1;
+      background:rgba(22,156,255,.10);
+      border:1px solid rgba(22,156,255,.18);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    .eyebrow::before{
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 16px rgba(14,220,166,.8);
+    }
+
+    h1{
+      max-width:780px;
+      margin:18px 0 13px;
+      font-size:clamp(38px,6vw,72px);
+      line-height:.98;
+      letter-spacing:-2.8px;
+    }
+    h1 span{
+      background:linear-gradient(90deg,var(--green),var(--cyan));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      max-width:760px;
+      margin:0;
+      color:#b8d5e3;
+      font-size:clamp(15px,2vw,18px);
+      line-height:1.65;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:29px;
+    }
+
+    .action{
+      min-height:52px;
+      padding:0 20px;
+      border:0;
+      border-radius:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      color:#fff;
+      font-weight:900;
+      font-size:14px;
+      text-decoration:none;
+      cursor:pointer;
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      transition:.2s ease;
+    }
+    .action:hover{transform:translateY(-2px)}
+    .action-primary{background:linear-gradient(105deg,#079e79,#0ed5a0)}
+    .action-secondary{background:linear-gradient(105deg,#168dff,#08bdec)}
+    .action-muted{
+      background:linear-gradient(105deg,#5b7385,#728da0);
+      opacity:.72;
+      cursor:default;
+    }
+    .action-muted:hover{transform:none}
+
+    .status-note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .section-title{
+      margin:34px 0 15px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .section-title h2{margin:0;font-size:24px;letter-spacing:-.6px}
+    .section-title p{margin:0;color:var(--muted);font-size:12px;text-align:right}
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      min-height:205px;
+      padding:22px;
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:linear-gradient(145deg,rgba(3,27,39,.84),rgba(13,54,68,.62));
+      box-shadow:0 14px 36px rgba(0,0,0,.19);
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      width:88px;
+      height:88px;
+      top:-46px;
+      right:-42px;
+      border:15px solid rgba(22,156,255,.10);
+      border-radius:50%;
+    }
+
+    .card.green::after{border-color:rgba(14,220,166,.11)}
+    .card.orange::after{border-color:rgba(255,171,46,.11)}
+
+    .icon{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:rgba(22,156,255,.11);
+      border:1px solid rgba(22,156,255,.15);
+      font-size:19px;
+    }
+    .card.green .icon{background:rgba(14,220,166,.10);border-color:rgba(14,220,166,.14)}
+    .card.orange .icon{background:rgba(255,171,46,.10);border-color:rgba(255,171,46,.14)}
+
+    .card h3{margin:16px 0 8px;font-size:17px}
+    .card p{margin:0;color:#9fc0d0;font-size:13px;line-height:1.6}
+
+    .access-panel{
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .access-card{
+      padding:24px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background:linear-gradient(145deg,rgba(2,21,31,.82),rgba(13,55,69,.56));
+    }
+
+    .access-card h3{margin:0 0 8px;font-size:18px}
+    .access-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+
+    .access-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:17px;
+    }
+
+    .privacy{
+      border-color:rgba(14,220,166,.18);
+      background:
+        linear-gradient(145deg,rgba(14,220,166,.055),rgba(22,156,255,.035)),
+        rgba(2,21,31,.78);
+    }
+    .privacy strong{color:var(--green)}
+
+    footer{
+      margin-top:30px;
+      padding:18px 4px 0;
+      border-top:1px solid rgba(255,255,255,.07);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:rgba(215,237,247,.47);
+      font-size:11px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:24px;
+      transform:translate(-50%,18px);
+      z-index:9999;
+      max-width:min(520px,calc(100% - 30px));
+      padding:13px 16px;
+      border:1px solid rgba(104,191,230,.22);
+      border-radius:13px;
+      background:rgba(3,22,32,.96);
+      box-shadow:0 18px 50px rgba(0,0,0,.38);
+      color:var(--soft);
+      font-size:13px;
+      font-weight:800;
+      text-align:center;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+
+    @media (max-width:900px){
+      .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .access-panel{grid-template-columns:1fr}
+    }
+
+    @media (max-width:620px){
+      .page{width:min(100% - 20px,1180px);padding-top:10px}
+      .topbar{border-radius:15px;padding:9px 10px}
+      .brand-logo{width:41px;height:41px;border-radius:12px}
+      .brand-copy strong{font-size:14px}
+      .brand-copy small{font-size:9px}
+      .back-link{padding:9px 10px;font-size:11px}
+      .hero{padding:35px 21px 29px;border-radius:22px}
+      h1{letter-spacing:-1.8px}
+      .hero-actions{display:grid;grid-template-columns:1fr;width:100%}
+      .action{width:100%}
+      .feature-grid{grid-template-columns:1fr}
+      .card{min-height:0}
+      .section-title{display:block}
+      .section-title p{text-align:left;margin-top:5px}
+      footer{display:block;line-height:1.7;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">bi<span>n</span></div>
+        <div class="brand-copy">
+          <strong>BetInsight Network</strong>
+          <small>Premium · Network · Provisionen</small>
+        </div>
+      </div>
+      <a class="back-link" href="https://betinsight.club/">↗ BetInsight Club</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">BetInsight Network</div>
+      <h1>Dein <span>Network.</span><br>Ein System.</h1>
+      <p>
+        Premium-Mitgliedschaft, Network-Status, Provisionen und sichere interne Kommunikation
+        werden hier in einem eigenen Bereich gebündelt. Persönliche Kontaktdaten anderer Mitglieder
+        bleiben geschützt.
+      </p>
+
+      <div class="hero-actions">
+        <button class="action action-primary" type="button" onclick="planned('Mitglieder-Login')">🔐 Mitglieder-Login</button>
+        <button class="action action-secondary" type="button" onclick="planned('Admin-Login')">🛡️ Admin-Login</button>
+      </div>
+      <div class="status-note">Die Login-Bereiche werden im nächsten Schritt eingerichtet.</div>
+    </section>
+
+    <div class="section-title">
+      <h2>Alles Wichtige an einem Ort</h2>
+      <p>Klare Trennung zwischen Mitgliedern, Networkern und Administration</p>
+    </div>
+
+    <section class="feature-grid" aria-label="Network Funktionen">
+      <article class="card green">
+        <div class="icon">⭐</div>
+        <h3>Premium & Premium Plus</h3>
+        <p>Mitgliedschaft, Laufzeit, Status und Network-Berechtigung übersichtlich und nachvollziehbar.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🌐</div>
+        <h3>Network-Struktur</h3>
+        <p>Basis, Premium und Premium Plus bleiben sichtbar – ohne fremde E-Mail-Adressen offenzulegen.</p>
+      </article>
+
+      <article class="card orange">
+        <div class="icon">€</div>
+        <h3>Provisionen</h3>
+        <p>Premium-Provisionen, Status und spätere Auszahlungen erhalten einen eigenen, transparenten Bereich.</p>
+      </article>
+
+      <article class="card green">
+        <div class="icon">✉</div>
+        <h3>Interne Nachrichten</h3>
+        <p>Premium-Mitglieder können später innerhalb des Networks kommunizieren, ohne private E-Mail-Adressen auszutauschen.</p>
+      </article>
+    </section>
+
+    <div class="section-title">
+      <h2>Zugänge</h2>
+      <p>Die Rollen werden serverseitig geprüft – nicht nur im HTML verborgen.</p>
+    </div>
+
+    <section class="access-panel">
+      <article class="access-card">
+        <h3>Mitglieder & Networker</h3>
+        <p>
+          Persönlicher Bereich für Mitgliedschaft, Network, Provisionen und Nachrichten.
+          Andere Mitglieder werden nur mit den für das Network notwendigen Informationen angezeigt.
+        </p>
+        <div class="access-row">
+          <button class="action action-primary" type="button" onclick="planned('Mitglieder-Login')">Mitgliederbereich öffnen</button>
+        </div>
+      </article>
+
+      <article class="access-card privacy">
+        <h3>Datenschutz</h3>
+        <p><strong>Private Daten bleiben privat.</strong> Networker sehen keine fremden E-Mail-Adressen. Administrative Detaildaten bleiben dem berechtigten Backoffice vorbehalten.</p>
+      </article>
+    </section>
+
+    <footer>
+      <span>© 2026 BetInsight Network</span>
+      <span>betinsight.network · eigenständiger Network-Bereich</span>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    let toastTimer;
+    function planned(area){
+      const toast = document.getElementById('toast');
+      toast.textContent = area + ' wird im nächsten Schritt eingerichtet.';
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+  </script>
+</body>
+</html>
