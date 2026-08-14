@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#03131d">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Premium & Network Login | BetInsight Network</title>
+  <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
+
+  <style>
+    :root{
+      --bg:#020b12;
+      --panel:#052331;
+      --panel2:#082d3d;
+      --line:rgba(104,203,235,.17);
+      --line2:rgba(104,203,235,.30);
+      --text:#f2fbff;
+      --soft:#bad8e4;
+      --muted:#789eae;
+      --blue:#189df7;
+      --cyan:#18c9e8;
+      --green:#18d294;
+      --green2:#0ea978;
+      --gold:#ffc15b;
+      --danger:#ff7079;
+      --warning:#ffbf54;
+      --shadow:0 28px 90px rgba(0,0,0,.42);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(24,157,247,.15),transparent 30%),
+        radial-gradient(circle at 90% 12%,rgba(24,210,148,.10),transparent 29%),
+        linear-gradient(180deg,#03131d 0%,#041b27 50%,#020b12 100%);
+    }
+
+    a{color:inherit}
+    button,input{font:inherit}
+
+    .mesh{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.35;
+      background-image:
+        linear-gradient(rgba(64,177,207,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(64,177,207,.045) 1px,transparent 1px);
+      background-size:46px 46px;
+      mask-image:linear-gradient(to bottom,black,transparent 88%);
+    }
+
+    .wrap{
+      width:min(1080px,calc(100% - 28px));
+      margin:0 auto;
+      padding:22px 0 34px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 15px;
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:rgba(3,24,35,.76);
+      backdrop-filter:blur(12px);
+    }
+
+    .brand strong{
+      display:block;
+      font-size:15px;
+    }
+    .brand span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      font-weight:850;
+    }
+
+    .back{
+      min-height:38px;
+      padding:0 13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:11px;
+      text-decoration:none;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);
+      color:#d8eff7;
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .shell{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      background:linear-gradient(145deg,rgba(4,31,44,.94),rgba(4,22,32,.96));
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(240px,.65fr);
+      align-items:center;
+      gap:28px;
+      padding:34px 38px 30px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      color:#aef1d8;
+      background:rgba(24,210,148,.07);
+      border:1px solid rgba(24,210,148,.16);
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      font-size:10px;
+      font-weight:900;
+    }
+    .eyebrow::before{
+      content:"";
+      width:7px;height:7px;border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 13px rgba(24,210,148,.8);
+    }
+
+    h1{
+      margin:13px 0 10px;
+      font-size:clamp(32px,5vw,54px);
+      letter-spacing:-2px;
+      line-height:1.02;
+    }
+    h1 span{
+      background:linear-gradient(90deg,var(--green),var(--cyan));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      max-width:650px;
+      margin:0;
+      color:#a8c8d5;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .logo{
+      width:min(310px,100%);
+      max-height:155px;
+      object-fit:contain;
+      justify-self:center;
+      filter:drop-shadow(0 16px 30px rgba(0,0,0,.34));
+    }
+
+    .content{padding:26px 38px 34px}
+
+    .login-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(250px,.7fr);
+      gap:16px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(145deg,rgba(6,38,52,.78),rgba(7,46,60,.58));
+      padding:22px;
+    }
+
+    .card h2,.card h3{margin:0 0 8px}
+    .card h2{font-size:21px}
+    .card h3{font-size:16px}
+    .card p{
+      margin:0;
+      color:#93b7c5;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .field{
+      margin-top:17px;
+    }
+    .field label{
+      display:block;
+      margin-bottom:7px;
+      color:#c9e6ef;
+      font-size:11px;
+      font-weight:850;
+    }
+    input{
+      width:100%;
+      height:49px;
+      padding:0 14px;
+      border-radius:12px;
+      outline:none;
+      border:1px solid rgba(103,204,237,.24);
+      background:#f7fbfd;
+      color:#10222b;
+      font-size:14px;
+    }
+    input:focus{
+      border-color:#24a9ef;
+      box-shadow:0 0 0 3px rgba(36,169,239,.12);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:13px;
+    }
+
+    .btn{
+      min-height:47px;
+      padding:0 17px;
+      border:0;
+      border-radius:12px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      transition:.18s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(110deg,#0ca978,#19d397)}
+    .btn-blue{background:linear-gradient(110deg,#168df2,#16bddd)}
+    .btn-soft{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .status{
+      display:none;
+      margin-top:13px;
+      padding:11px 12px;
+      border-radius:11px;
+      font-size:12px;
+      line-height:1.5;
+      font-weight:750;
+    }
+    .status.show{display:block}
+    .status.loading{
+      color:#cceef8;
+      background:rgba(24,157,247,.08);
+      border:1px solid rgba(24,157,247,.15);
+    }
+    .status.error{
+      color:#ffd7da;
+      background:rgba(255,112,121,.08);
+      border:1px solid rgba(255,112,121,.18);
+    }
+    .status.ok{
+      color:#c9fae7;
+      background:rgba(24,210,148,.08);
+      border:1px solid rgba(24,210,148,.18);
+    }
+
+    .privacy{
+      margin-top:14px;
+      display:grid;
+      gap:8px;
+    }
+    .privacy div{
+      display:flex;
+      gap:9px;
+      align-items:flex-start;
+      color:#86aab9;
+      font-size:11px;
+      line-height:1.48;
+    }
+    .privacy b{color:#d9f1f8}
+
+    /* eingeloggter Bereich */
+    #memberArea{display:none}
+    #memberArea.show{display:block}
+    #loginArea.hidden{display:none}
+
+    .member-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+      padding:20px 22px;
+      border-radius:19px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(24,210,148,.09),transparent 33%),
+        rgba(255,255,255,.025);
+      border:1px solid var(--line);
+    }
+
+    .member-head small{
+      display:block;
+      color:var(--muted);
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      font-weight:850;
+    }
+    .member-head h2{
+      margin:5px 0 4px;
+      font-size:25px;
+    }
+    .member-head p{
+      margin:0;
+      color:#91b4c1;
+      font-size:12px;
+    }
+
+    .membership-badge{
+      flex:0 0 auto;
+      padding:9px 13px;
+      border-radius:999px;
+      color:#cefae9;
+      background:rgba(24,210,148,.09);
+      border:1px solid rgba(24,210,148,.18);
+      font-size:11px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+    .membership-badge.basis{
+      color:#d4e8ef;
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.08);
+    }
+    .membership-badge.plus{
+      color:#fff0c9;
+      background:rgba(255,193,91,.08);
+      border-color:rgba(255,193,91,.18);
+    }
+
+    .tiles{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:13px;
+      margin-top:14px;
+    }
+
+    .tile{
+      position:relative;
+      overflow:hidden;
+      min-height:177px;
+      padding:19px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(5,35,48,.86),rgba(7,47,61,.60));
+    }
+    .tile::after{
+      content:"";
+      position:absolute;
+      width:78px;height:78px;
+      right:-39px;top:-39px;
+      border:13px solid rgba(24,157,247,.075);
+      border-radius:50%;
+    }
+    .tile:nth-child(2)::after,
+    .tile:nth-child(4)::after{border-color:rgba(24,210,148,.08)}
+    .tile:nth-child(3)::after{border-color:rgba(255,193,91,.08)}
+
+    .tile .ico{
+      width:39px;height:39px;
+      display:grid;place-items:center;
+      border-radius:12px;
+      background:rgba(24,157,247,.08);
+      border:1px solid rgba(24,157,247,.13);
+      font-size:18px;
+    }
+    .tile h3{
+      margin:12px 0 6px;
+      font-size:15px;
+    }
+    .tile p{
+      margin:0 0 14px;
+      color:#8eafbc;
+      font-size:11px;
+      line-height:1.5;
+    }
+    .tile button{
+      border:0;
+      background:none;
+      padding:0;
+      color:#66d7f2;
+      cursor:pointer;
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .upgrade-note{
+      display:none;
+      margin-top:14px;
+      padding:15px 17px;
+      border-radius:15px;
+      border:1px solid rgba(255,193,91,.16);
+      background:rgba(255,193,91,.055);
+      color:#f2dba8;
+      font-size:12px;
+      line-height:1.55;
+    }
+    .upgrade-note.show{display:block}
+
+    .member-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:17px;
+      padding-top:16px;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    .security{
+      color:#6f95a4;
+      font-size:10px;
+      line-height:1.5;
+    }
+
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:#587b89;
+      font-size:10px;
+    }
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .logo{order:-1;width:min(280px,72vw);max-height:135px}
+      .login-grid{grid-template-columns:1fr}
+      .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media(max-width:620px){
+      .wrap{width:min(100% - 16px,1080px);padding-top:8px}
+      .top{padding:9px 10px}
+      .brand span{display:none}
+      .hero{padding:24px 19px}
+      .content{padding:19px}
+      h1{letter-spacing:-1.3px}
+      .tiles{grid-template-columns:1fr}
+      .member-head{display:block}
+      .membership-badge{display:inline-block;margin-top:12px}
+      .actions{display:grid}
+      .btn{width:100%}
+      .member-actions{display:grid}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mesh" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">
+        <strong>BetInsight Network</strong>
+        <span>Premium · Network · Provisionen</span>
+      </div>
+      <a class="back" href="../">← Startseite</a>
+    </header>
+
+    <section class="shell">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Geschützter Mitgliederbereich</div>
+          <h1>Premium & <span>Network</span></h1>
+          <p>
+            Melde dich mit deinem persönlichen BetInsight-Zugang an. Dein Network,
+            deine Provisionen und die interne Kommunikation werden anschließend
+            ausschließlich für deinen Account geladen.
+          </p>
+        </div>
+        <img class="logo" src="../betinsight.network.png" alt="BetInsight Network">
+      </div>
+
+      <div class="content">
+        <section id="loginArea">
+          <div class="login-grid">
+            <article class="card">
+              <h2>Persönlichen Zugang öffnen</h2>
+              <p>
+                Du kannst deinen Network-Link oder deinen persönlichen Network-Zugangscode
+                einfügen. Wenn du über einen persönlichen Link hierher kommst, erfolgt
+                die Prüfung automatisch.
+              </p>
+
+              <div class="field">
+                <label for="tokenInput">Network-Link oder Zugangscode</label>
+                <input
+                  id="tokenInput"
+                  type="password"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="Persönlichen Zugang einfügen"
+                >
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-primary" type="button" id="loginBtn">
+                  🔐 Premium & Network öffnen
+                </button>
+              </div>
+
+              <div class="status" id="loginStatus"></div>
+            </article>
+
+            <aside class="card">
+              <h3>Noch keinen Network-Zugang?</h3>
+              <p>
+                Öffne zunächst dein BetInsight-Profil. Dort wird als nächster Schritt
+                der direkte Übergang zu BetInsight Network eingebaut.
+              </p>
+
+              <div class="actions">
+                <a class="btn btn-blue" href="https://betinsightclub.github.io/profil/">
+                  Mein BetInsight Profil
+                </a>
+              </div>
+
+              <div class="privacy">
+                <div>🔒 <span><b>Privatsphäre:</b> Andere Networker erhalten keine fremden E-Mail-Adressen.</span></div>
+                <div>🛡 <span><b>Serverprüfung:</b> Der Zugang wird über das BetInsight-Backend geprüft.</span></div>
+                <div>🚫 <span><b>Keine Weitergabe:</b> Deinen persönlichen Zugang niemals an andere Personen senden.</span></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="memberArea">
+          <div class="member-head">
+            <div>
+              <small>Angemeldet</small>
+              <h2 id="welcomeTitle">Dein BetInsight Network</h2>
+              <p id="memberMeta">Benutzerdaten werden geladen …</p>
+            </div>
+            <div class="membership-badge" id="membershipBadge">Mitgliedschaft</div>
+          </div>
+
+          <div class="upgrade-note" id="upgradeNote">
+            Du nutzt aktuell den Basis-Zugang. Premium und Premium Plus schalten
+            zusätzliche Network-Funktionen frei.
+          </div>
+
+          <div class="tiles">
+            <article class="tile">
+              <div class="ico">⭐</div>
+              <h3>Meine Mitgliedschaft</h3>
+              <p>Status, Tarif und später Laufzeit, Kulanz sowie Verlängerung an einem Ort.</p>
+              <button type="button" onclick="comingSoon('Mitgliedschaft')">Öffnen →</button>
+            </article>
+
+            <article class="tile">
+              <div class="ico">🌐</div>
+              <h3>Mein Network</h3>
+              <p>Deine persönliche Downline und Ebenen – ohne Offenlegung fremder E-Mail-Adressen.</p>
+              <button type="button" onclick="comingSoon('Mein Network')">Öffnen →</button>
+            </article>
+
+            <article class="tile">
+              <div class="ico">€</div>
+              <h3>Provisionen</h3>
+              <p>Vorgemerkte, gesperrte, auszahlbare und später ausgezahlte Premium-Provisionen.</p>
+              <button type="button" onclick="comingSoon('Provisionen')">Öffnen →</button>
+            </article>
+
+            <article class="tile">
+              <div class="ico">✉</div>
+              <h3>Nachrichten</h3>
+              <p>Geschützte Kommunikation zwischen Upline und Downline ohne sichtbare private E-Mail-Adresse.</p>
+              <button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button>
+            </article>
+          </div>
+
+          <div class="member-actions">
+            <div class="security">
+              Sitzung nur in diesem Browser-Tab gespeichert · Zugang wird nicht in der sichtbaren URL behalten
+            </div>
+            <button class="btn btn-soft" type="button" id="logoutBtn">Abmelden</button>
+          </div>
+
+          <div class="status" id="memberStatus"></div>
+        </section>
+      </div>
+    </section>
+
+    <footer>© 2026 BetInsight Network · Ein Bereich von BetInsight Club</footer>
+  </main>
+
+  <script>
+    const SESSION_WEBHOOK =
+      "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
+
+    const SESSION_KEY = "betinsight_network_session_token";
+
+    const loginArea = document.getElementById("loginArea");
+    const memberArea = document.getElementById("memberArea");
+    const tokenInput = document.getElementById("tokenInput");
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const loginStatus = document.getElementById("loginStatus");
+    const memberStatus = document.getElementById("memberStatus");
+    const membershipBadge = document.getElementById("membershipBadge");
+    const memberMeta = document.getElementById("memberMeta");
+    const upgradeNote = document.getElementById("upgradeNote");
+
+    function setStatus(el, type, text){
+      el.className = "status show " + type;
+      el.textContent = text;
+    }
+
+    function clearStatus(el){
+      el.className = "status";
+      el.textContent = "";
+    }
+
+    function cleanToken(raw){
+      if(!raw) return "";
+      let value = String(raw).trim();
+      if(!value) return "";
+
+      try{
+        if(value.includes("://")){
+          const url = new URL(value);
+          return (url.searchParams.get("token") || "").trim();
+        }
+      }catch(e){}
+
+      if(value.includes("?token=")){
+        try{
+          const maybeUrl = new URL(value, window.location.href);
+          return (maybeUrl.searchParams.get("token") || "").trim();
+        }catch(e){}
+      }
+
+      return value;
+    }
+
+    function tokenFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      return cleanToken(params.get("token"));
+    }
+
+    function removeTokenFromAddressBar(){
+      if(window.location.search){
+        history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    async function validateToken(token, auto=false){
+      token = cleanToken(token);
+
+      if(!token){
+        if(!auto) setStatus(loginStatus, "error", "Bitte füge deinen persönlichen Network-Zugang ein.");
+        return;
+      }
+
+      loginBtn.disabled = true;
+      setStatus(loginStatus, "loading", "Zugang wird sicher geprüft …");
+
+      try{
+        const response = await fetch(
+          SESSION_WEBHOOK + "?token=" + encodeURIComponent(token),
+          {
+            method:"GET",
+            cache:"no-store",
+            credentials:"omit",
+            referrerPolicy:"no-referrer"
+          }
+        );
+
+        let data = null;
+        try{
+          data = await response.json();
+        }catch(parseError){
+          throw new Error("Die Serverantwort konnte nicht gelesen werden.");
+        }
+
+        if(!data || data.success !== true || !data.user_id){
+          sessionStorage.removeItem(SESSION_KEY);
+          const msg = data && data.error === "invalid_token"
+            ? "Dieser Network-Zugang ist ungültig oder nicht mehr gültig."
+            : "Der Network-Zugang konnte nicht bestätigt werden.";
+          setStatus(loginStatus, "error", msg);
+          return;
+        }
+
+        sessionStorage.setItem(SESSION_KEY, token);
+        showMember(data);
+
+      }catch(error){
+        console.error(error);
+        setStatus(
+          loginStatus,
+          "error",
+          "Der BetInsight Network Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut."
+        );
+      }finally{
+        loginBtn.disabled = false;
+      }
+    }
+
+    function showMember(data){
+      clearStatus(loginStatus);
+      loginArea.classList.add("hidden");
+      memberArea.classList.add("show");
+
+      const membership = (data.mitgliedschaft || "Basis").trim() || "Basis";
+      membershipBadge.textContent = membership;
+      membershipBadge.className = "membership-badge";
+
+      if(membership.toLowerCase().includes("plus")){
+        membershipBadge.classList.add("plus");
+      }else if(membership.toLowerCase() === "basis"){
+        membershipBadge.classList.add("basis");
+      }
+
+      memberMeta.textContent =
+        "BI-ID " + (data.user_id || "–") +
+        " · Ref " + (data.ref_code || "–");
+
+      upgradeNote.classList.toggle(
+        "show",
+        membership.toLowerCase() === "basis"
+      );
+    }
+
+    function logout(){
+      sessionStorage.removeItem(SESSION_KEY);
+      memberArea.classList.remove("show");
+      loginArea.classList.remove("hidden");
+      tokenInput.value = "";
+      clearStatus(memberStatus);
+      setStatus(loginStatus, "ok", "Du wurdest aus BetInsight Network abgemeldet.");
+    }
+
+    function comingSoon(area){
+      setStatus(
+        memberStatus,
+        "loading",
+        area + " wird als nächster geschützter Bereich mit deinem Network-Backend verbunden."
+      );
+      memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }
+
+    loginBtn.addEventListener("click", () => validateToken(tokenInput.value));
+    logoutBtn.addEventListener("click", logout);
+
+    tokenInput.addEventListener("keydown", e => {
+      if(e.key === "Enter") validateToken(tokenInput.value);
+    });
+
+    // 1) Persönlicher Network-Link: Token sofort übernehmen und danach aus der Adresszeile entfernen.
+    const incomingToken = tokenFromUrl();
+    if(incomingToken){
+      removeTokenFromAddressBar();
+      validateToken(incomingToken, true);
+    }else{
+      // 2) Nur für die aktuelle Browser-Tab-Sitzung merken.
+      const sessionToken = sessionStorage.getItem(SESSION_KEY);
+      if(sessionToken){
+        validateToken(sessionToken, true);
+      }
+    }
+  </script>
+</body>
+</html>
