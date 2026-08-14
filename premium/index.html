@@ -7,784 +7,450 @@
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
-  <title>Premium & Network Login | BetInsight Network</title>
+  <title>Premium & Network | BetInsight Network</title>
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
 
   <style>
     :root{
-      --bg:#020b12;
-      --panel:#052331;
-      --panel2:#082d3d;
-      --line:rgba(104,203,235,.17);
-      --line2:rgba(104,203,235,.30);
-      --text:#f2fbff;
-      --soft:#bad8e4;
-      --muted:#789eae;
-      --blue:#189df7;
-      --cyan:#18c9e8;
-      --green:#18d294;
-      --green2:#0ea978;
-      --gold:#ffc15b;
-      --danger:#ff7079;
-      --warning:#ffbf54;
+      --bg:#020b12;--panel:#052331;--panel2:#082d3d;
+      --line:rgba(104,203,235,.17);--line2:rgba(104,203,235,.30);
+      --text:#f2fbff;--soft:#bad8e4;--muted:#789eae;
+      --blue:#189df7;--cyan:#18c9e8;--green:#18d294;--green2:#0ea978;
+      --gold:#ffc15b;--danger:#ff7079;--warning:#ffbf54;
       --shadow:0 28px 90px rgba(0,0,0,.42);
     }
-
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
-      margin:0;
-      min-height:100vh;
-      color:var(--text);
+      margin:0;min-height:100vh;color:var(--text);
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:
         radial-gradient(circle at 10% 0%,rgba(24,157,247,.15),transparent 30%),
         radial-gradient(circle at 90% 12%,rgba(24,210,148,.10),transparent 29%),
         linear-gradient(180deg,#03131d 0%,#041b27 50%,#020b12 100%);
     }
-
-    a{color:inherit}
-    button,input{font:inherit}
-
-    .mesh{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-1;
-      opacity:.35;
-      background-image:
-        linear-gradient(rgba(64,177,207,.045) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(64,177,207,.045) 1px,transparent 1px);
-      background-size:46px 46px;
-      mask-image:linear-gradient(to bottom,black,transparent 88%);
-    }
-
-    .wrap{
-      width:min(1080px,calc(100% - 28px));
-      margin:0 auto;
-      padding:22px 0 34px;
-    }
-
-    .top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:12px 15px;
-      border:1px solid var(--line);
-      border-radius:17px;
-      background:rgba(3,24,35,.76);
-      backdrop-filter:blur(12px);
-    }
-
-    .brand strong{
-      display:block;
-      font-size:15px;
-    }
-    .brand span{
-      display:block;
-      margin-top:4px;
-      color:var(--muted);
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.9px;
-      font-weight:850;
-    }
-
-    .back{
-      min-height:38px;
-      padding:0 13px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:11px;
-      text-decoration:none;
-      background:rgba(255,255,255,.045);
-      border:1px solid rgba(255,255,255,.07);
-      color:#d8eff7;
-      font-size:12px;
-      font-weight:850;
-    }
-
-    .shell{
-      margin-top:18px;
-      border:1px solid var(--line);
-      border-radius:28px;
-      overflow:hidden;
-      background:linear-gradient(145deg,rgba(4,31,44,.94),rgba(4,22,32,.96));
-      box-shadow:var(--shadow);
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(240px,.65fr);
-      align-items:center;
-      gap:28px;
-      padding:34px 38px 30px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      color:#aef1d8;
-      background:rgba(24,210,148,.07);
-      border:1px solid rgba(24,210,148,.16);
-      text-transform:uppercase;
-      letter-spacing:.8px;
-      font-size:10px;
-      font-weight:900;
-    }
-    .eyebrow::before{
-      content:"";
-      width:7px;height:7px;border-radius:50%;
-      background:var(--green);
-      box-shadow:0 0 13px rgba(24,210,148,.8);
-    }
-
-    h1{
-      margin:13px 0 10px;
-      font-size:clamp(32px,5vw,54px);
-      letter-spacing:-2px;
-      line-height:1.02;
-    }
-    h1 span{
-      background:linear-gradient(90deg,var(--green),var(--cyan));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .hero p{
-      max-width:650px;
-      margin:0;
-      color:#a8c8d5;
-      font-size:14px;
-      line-height:1.65;
-    }
-
-    .logo{
-      width:min(310px,100%);
-      max-height:155px;
-      object-fit:contain;
-      justify-self:center;
-      filter:drop-shadow(0 16px 30px rgba(0,0,0,.34));
-    }
-
+    a{color:inherit} button,input{font:inherit}
+    .mesh{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.35;
+      background-image:linear-gradient(rgba(64,177,207,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(64,177,207,.045) 1px,transparent 1px);
+      background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+    .wrap{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:22px 0 34px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 15px;
+      border:1px solid var(--line);border-radius:17px;background:rgba(3,24,35,.76);backdrop-filter:blur(12px)}
+    .brand strong{display:block;font-size:15px}.brand span{display:block;margin-top:4px;color:var(--muted);
+      font-size:10px;text-transform:uppercase;letter-spacing:.9px;font-weight:850}
+    .back{min-height:38px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;
+      border-radius:11px;text-decoration:none;background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.07);color:#d8eff7;font-size:12px;font-weight:850}
+    .shell{margin-top:18px;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+      background:linear-gradient(145deg,rgba(4,31,44,.94),rgba(4,22,32,.96));box-shadow:var(--shadow)}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.65fr);align-items:center;gap:28px;
+      padding:34px 38px 30px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;color:#aef1d8;
+      background:rgba(24,210,148,.07);border:1px solid rgba(24,210,148,.16);
+      text-transform:uppercase;letter-spacing:.8px;font-size:10px;font-weight:900}
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);
+      box-shadow:0 0 13px rgba(24,210,148,.8)}
+    h1{margin:13px 0 10px;font-size:clamp(32px,5vw,54px);letter-spacing:-2px;line-height:1.02}
+    h1 span{background:linear-gradient(90deg,var(--green),var(--cyan));-webkit-background-clip:text;
+      background-clip:text;color:transparent}
+    .hero p{max-width:650px;margin:0;color:#a8c8d5;font-size:14px;line-height:1.65}
+    .logo{width:min(310px,100%);max-height:155px;object-fit:contain;justify-self:center;
+      filter:drop-shadow(0 16px 30px rgba(0,0,0,.34))}
     .content{padding:26px 38px 34px}
-
-    .login-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) minmax(250px,.7fr);
-      gap:16px;
-    }
-
-    .card{
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:linear-gradient(145deg,rgba(6,38,52,.78),rgba(7,46,60,.58));
-      padding:22px;
-    }
-
-    .card h2,.card h3{margin:0 0 8px}
-    .card h2{font-size:21px}
-    .card h3{font-size:16px}
-    .card p{
-      margin:0;
-      color:#93b7c5;
-      font-size:12px;
-      line-height:1.6;
-    }
-
-    .field{
-      margin-top:17px;
-    }
-    .field label{
-      display:block;
-      margin-bottom:7px;
-      color:#c9e6ef;
-      font-size:11px;
-      font-weight:850;
-    }
-    input{
-      width:100%;
-      height:49px;
-      padding:0 14px;
-      border-radius:12px;
-      outline:none;
-      border:1px solid rgba(103,204,237,.24);
-      background:#f7fbfd;
-      color:#10222b;
-      font-size:14px;
-    }
-    input:focus{
-      border-color:#24a9ef;
-      box-shadow:0 0 0 3px rgba(36,169,239,.12);
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:13px;
-    }
-
-    .btn{
-      min-height:47px;
-      padding:0 17px;
-      border:0;
-      border-radius:12px;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-decoration:none;
-      color:#fff;
-      font-size:13px;
-      font-weight:900;
-      transition:.18s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(110deg,#0ca978,#19d397)}
-    .btn-blue{background:linear-gradient(110deg,#168df2,#16bddd)}
-    .btn-soft{
-      background:rgba(255,255,255,.055);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .status{
-      display:none;
-      margin-top:13px;
-      padding:11px 12px;
-      border-radius:11px;
-      font-size:12px;
-      line-height:1.5;
-      font-weight:750;
-    }
-    .status.show{display:block}
-    .status.loading{
-      color:#cceef8;
-      background:rgba(24,157,247,.08);
-      border:1px solid rgba(24,157,247,.15);
-    }
-    .status.error{
-      color:#ffd7da;
-      background:rgba(255,112,121,.08);
-      border:1px solid rgba(255,112,121,.18);
-    }
-    .status.ok{
-      color:#c9fae7;
-      background:rgba(24,210,148,.08);
-      border:1px solid rgba(24,210,148,.18);
-    }
-
-    .privacy{
-      margin-top:14px;
-      display:grid;
-      gap:8px;
-    }
-    .privacy div{
-      display:flex;
-      gap:9px;
-      align-items:flex-start;
-      color:#86aab9;
-      font-size:11px;
-      line-height:1.48;
-    }
+    .login-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.7fr);gap:16px}
+    .card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(6,38,52,.78),rgba(7,46,60,.58));padding:22px}
+    .card h2,.card h3{margin:0 0 8px}.card h2{font-size:21px}.card h3{font-size:16px}
+    .card p{margin:0;color:#93b7c5;font-size:12px;line-height:1.6}
+    .field{margin-top:17px}.field label{display:block;margin-bottom:7px;color:#c9e6ef;font-size:11px;font-weight:850}
+    input{width:100%;height:49px;padding:0 14px;border-radius:12px;outline:none;border:1px solid rgba(103,204,237,.24);
+      background:#f7fbfd;color:#10222b;font-size:14px}
+    input:focus{border-color:#24a9ef;box-shadow:0 0 0 3px rgba(36,169,239,.12)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:13px}
+    .btn{min-height:43px;padding:0 15px;border:0;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;
+      justify-content:center;gap:8px;text-decoration:none;color:#fff;font-size:12px;font-weight:900;transition:.18s ease}
+    .btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(110deg,#0ca978,#19d397)}
+    .btn-blue{background:linear-gradient(110deg,#168df2,#16bddd)}.btn-soft{background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08)}.btn-danger{background:rgba(255,112,121,.10);border:1px solid rgba(255,112,121,.20)}
+    .status{display:none;margin-top:13px;padding:11px 12px;border-radius:11px;font-size:12px;line-height:1.5;font-weight:750}
+    .status.show{display:block}.status.loading{color:#cceef8;background:rgba(24,157,247,.08);border:1px solid rgba(24,157,247,.15)}
+    .status.error{color:#ffd7da;background:rgba(255,112,121,.08);border:1px solid rgba(255,112,121,.18)}
+    .status.ok{color:#c9fae7;background:rgba(24,210,148,.08);border:1px solid rgba(24,210,148,.18)}
+    .privacy{margin-top:14px;display:grid;gap:8px}.privacy div{display:flex;gap:9px;align-items:flex-start;color:#86aab9;font-size:11px;line-height:1.48}
     .privacy b{color:#d9f1f8}
+    #memberArea{display:none}#memberArea.show{display:block}#loginArea.hidden{display:none!important}
+    .member-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 22px;border-radius:19px;
+      background:radial-gradient(circle at 100% 0%,rgba(24,210,148,.09),transparent 33%),rgba(255,255,255,.025);border:1px solid var(--line)}
+    .member-head small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.9px;font-weight:850}
+    .member-head h2{margin:5px 0 4px;font-size:25px}.member-head p{margin:0;color:#91b4c1;font-size:12px}
+    .membership-badge{flex:0 0 auto;padding:9px 13px;border-radius:999px;color:#cefae9;background:rgba(24,210,148,.09);
+      border:1px solid rgba(24,210,148,.18);font-size:11px;font-weight:950;white-space:nowrap}
+    .membership-badge.basis{color:#d4e8ef;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+    .membership-badge.plus{color:#fff0c9;background:rgba(255,193,91,.08);border-color:rgba(255,193,91,.18)}
+    .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:14px}
+    .tile{position:relative;overflow:hidden;min-height:177px;padding:19px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(5,35,48,.86),rgba(7,47,61,.60))}
+    .tile::after{content:"";position:absolute;width:78px;height:78px;right:-39px;top:-39px;border:13px solid rgba(24,157,247,.075);border-radius:50%}
+    .tile:nth-child(2)::after,.tile:nth-child(4)::after{border-color:rgba(24,210,148,.08)}.tile:nth-child(3)::after{border-color:rgba(255,193,91,.08)}
+    .tile .ico{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:rgba(24,157,247,.08);
+      border:1px solid rgba(24,157,247,.13);font-size:18px}
+    .tile h3{margin:12px 0 6px;font-size:15px}.tile p{margin:0 0 14px;color:#8eafbc;font-size:11px;line-height:1.5}
+    .tile button{border:0;background:none;padding:0;color:#66d7f2;cursor:pointer;font-size:11px;font-weight:900}
+    .member-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:17px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+    .security{color:#6f95a4;font-size:10px;line-height:1.5}
 
-    /* eingeloggter Bereich */
-    #memberArea{display:none}
-    #memberArea.show{display:block}
-    #loginArea.hidden{display:none}
+    /* Network Bereich */
+    #networkView{display:none;margin-top:18px}
+    #networkView.show{display:block}
+    .sectionbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}
+    .sectionbar h2{margin:0;font-size:23px}.sectionbar p{margin:4px 0 0;color:#87adbc;font-size:11px}
+    .summary-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .stat{padding:15px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}
+    .stat span{display:block;color:#789dac;font-size:9px;text-transform:uppercase;letter-spacing:.7px;font-weight:850}
+    .stat strong{display:block;margin-top:6px;font-size:21px}
+    .stat small{display:block;margin-top:3px;color:#7399a8;font-size:9px}
+    .filterbar{display:flex;flex-wrap:wrap;align-items:end;gap:9px;margin:13px 0;padding:13px;border:1px solid var(--line);
+      border-radius:15px;background:rgba(255,255,255,.02)}
+    .filterbar label{display:grid;gap:5px;color:#8eb1bf;font-size:10px;font-weight:800}
+    .filterbar input[type=date]{height:38px;min-width:145px;padding:0 9px;background:#eaf6fa}
+    .preset{height:38px;padding:0 11px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+      color:#cbe6ef;cursor:pointer;font-size:10px;font-weight:850}
+    .preset.active{background:rgba(24,210,148,.09);border-color:rgba(24,210,148,.22);color:#c9fae7}
+    .levels-summary{overflow:auto;border:1px solid var(--line);border-radius:15px}
+    table{width:100%;border-collapse:collapse;min-width:760px}
+    th,td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.055);text-align:left;font-size:10px;vertical-align:middle}
+    th{color:#83aab9;background:rgba(255,255,255,.025);text-transform:uppercase;letter-spacing:.5px;font-size:8px;position:sticky;top:0}
+    td{color:#d9edf4}.num{text-align:right;font-variant-numeric:tabular-nums}.money{font-weight:900;color:#caf9e7}
+    .levels{display:grid;gap:9px;margin-top:13px}
+    .level{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.02)}
+    .level-head{width:100%;border:0;background:none;color:inherit;display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;
+      padding:15px 16px;cursor:pointer;text-align:left}
+    .level-title{font-weight:950;font-size:13px}.level-meta{color:#88adbb;font-size:10px;line-height:1.45}
+    .level-money{text-align:right}.level-money strong{display:block;color:#caf9e7;font-size:12px}.level-money small{color:#779dab;font-size:8px}
+    .level-body{display:none;border-top:1px solid rgba(255,255,255,.06);padding:13px}
+    .level.open .level-body{display:block}.chev{display:inline-block;transition:.18s}.level.open .chev{transform:rotate(180deg)}
+    .detail-table-wrap{overflow:auto;border:1px solid rgba(255,255,255,.055);border-radius:12px}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;border-radius:999px;font-size:8px;font-weight:950}
+    .badge.on{background:rgba(24,210,148,.10);color:#bff9df;border:1px solid rgba(24,210,148,.17)}
+    .badge.off{background:rgba(255,255,255,.035);color:#627f8a;border:1px solid rgba(255,255,255,.05)}
+    .statuschip{display:inline-flex;padding:5px 7px;border-radius:999px;font-size:8px;font-weight:900;background:rgba(255,255,255,.04);color:#bed7df}
+    .statuschip.active{background:rgba(24,210,148,.09);color:#bff7df}.statuschip.grace{background:rgba(255,193,91,.09);color:#ffe1a5}
+    .statuschip.blocked{background:rgba(255,112,121,.09);color:#ffc7ca}
+    .msgbtn{border:1px solid rgba(24,201,232,.17);background:rgba(24,201,232,.06);color:#88e7f6;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:9px;font-weight:900}
+    .empty{padding:18px;text-align:center;color:#789cab;font-size:10px}
+    .loadingbox{padding:16px;color:#9fc4d2;font-size:10px}
+    .date-result{display:none;margin:10px 0;padding:12px 14px;border-radius:12px;background:rgba(24,157,247,.06);border:1px solid rgba(24,157,247,.13)}
+    .date-result.show{display:flex;justify-content:space-between;gap:12px;align-items:center}.date-result strong{font-size:16px;color:#d8f6ff}
+    footer{margin-top:18px;text-align:center;color:#587b89;font-size:10px}
 
-    .member-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:18px;
-      padding:20px 22px;
-      border-radius:19px;
-      background:
-        radial-gradient(circle at 100% 0%,rgba(24,210,148,.09),transparent 33%),
-        rgba(255,255,255,.025);
-      border:1px solid var(--line);
-    }
-
-    .member-head small{
-      display:block;
-      color:var(--muted);
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:.9px;
-      font-weight:850;
-    }
-    .member-head h2{
-      margin:5px 0 4px;
-      font-size:25px;
-    }
-    .member-head p{
-      margin:0;
-      color:#91b4c1;
-      font-size:12px;
-    }
-
-    .membership-badge{
-      flex:0 0 auto;
-      padding:9px 13px;
-      border-radius:999px;
-      color:#cefae9;
-      background:rgba(24,210,148,.09);
-      border:1px solid rgba(24,210,148,.18);
-      font-size:11px;
-      font-weight:950;
-      white-space:nowrap;
-    }
-    .membership-badge.basis{
-      color:#d4e8ef;
-      background:rgba(255,255,255,.05);
-      border-color:rgba(255,255,255,.08);
-    }
-    .membership-badge.plus{
-      color:#fff0c9;
-      background:rgba(255,193,91,.08);
-      border-color:rgba(255,193,91,.18);
-    }
-
-    .tiles{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:13px;
-      margin-top:14px;
-    }
-
-    .tile{
-      position:relative;
-      overflow:hidden;
-      min-height:177px;
-      padding:19px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:linear-gradient(145deg,rgba(5,35,48,.86),rgba(7,47,61,.60));
-    }
-    .tile::after{
-      content:"";
-      position:absolute;
-      width:78px;height:78px;
-      right:-39px;top:-39px;
-      border:13px solid rgba(24,157,247,.075);
-      border-radius:50%;
-    }
-    .tile:nth-child(2)::after,
-    .tile:nth-child(4)::after{border-color:rgba(24,210,148,.08)}
-    .tile:nth-child(3)::after{border-color:rgba(255,193,91,.08)}
-
-    .tile .ico{
-      width:39px;height:39px;
-      display:grid;place-items:center;
-      border-radius:12px;
-      background:rgba(24,157,247,.08);
-      border:1px solid rgba(24,157,247,.13);
-      font-size:18px;
-    }
-    .tile h3{
-      margin:12px 0 6px;
-      font-size:15px;
-    }
-    .tile p{
-      margin:0 0 14px;
-      color:#8eafbc;
-      font-size:11px;
-      line-height:1.5;
-    }
-    .tile button{
-      border:0;
-      background:none;
-      padding:0;
-      color:#66d7f2;
-      cursor:pointer;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .upgrade-note{
-      display:none;
-      margin-top:14px;
-      padding:15px 17px;
-      border-radius:15px;
-      border:1px solid rgba(255,193,91,.16);
-      background:rgba(255,193,91,.055);
-      color:#f2dba8;
-      font-size:12px;
-      line-height:1.55;
-    }
-    .upgrade-note.show{display:block}
-
-    .member-actions{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-top:17px;
-      padding-top:16px;
-      border-top:1px solid rgba(255,255,255,.06);
-    }
-
-    .security{
-      color:#6f95a4;
-      font-size:10px;
-      line-height:1.5;
-    }
-
-    footer{
-      margin-top:18px;
-      text-align:center;
-      color:#587b89;
-      font-size:10px;
-    }
-
-    @media(max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .logo{order:-1;width:min(280px,72vw);max-height:135px}
-      .login-grid{grid-template-columns:1fr}
-      .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-
+    @media(max-width:980px){.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.logo{order:-1;width:min(280px,72vw);max-height:135px}.login-grid{grid-template-columns:1fr}}
     @media(max-width:620px){
-      .wrap{width:min(100% - 16px,1080px);padding-top:8px}
-      .top{padding:9px 10px}
-      .brand span{display:none}
-      .hero{padding:24px 19px}
-      .content{padding:19px}
-      h1{letter-spacing:-1.3px}
-      .tiles{grid-template-columns:1fr}
-      .member-head{display:block}
-      .membership-badge{display:inline-block;margin-top:12px}
-      .actions{display:grid}
-      .btn{width:100%}
-      .member-actions{display:grid}
+      .wrap{width:min(100% - 16px,1180px);padding-top:8px}.top{padding:9px 10px}.brand span{display:none}.hero{padding:24px 19px}
+      .content{padding:19px}h1{letter-spacing:-1.3px}.tiles,.summary-grid{grid-template-columns:1fr 1fr}
+      .member-head{display:block}.membership-badge{display:inline-block;margin-top:12px}.actions{display:grid}.btn{width:100%}.member-actions{display:grid}
+      .level-head{grid-template-columns:70px 1fr}.level-money{grid-column:1/-1;text-align:left}.sectionbar{align-items:flex-start;flex-direction:column}
     }
   </style>
 </head>
-
 <body>
-  <div class="mesh" aria-hidden="true"></div>
+<div class="mesh" aria-hidden="true"></div>
 
-  <main class="wrap">
-    <header class="top">
-      <div class="brand">
-        <strong>BetInsight Network</strong>
-        <span>Premium · Network · Provisionen</span>
+<main class="wrap">
+  <header class="top">
+    <div class="brand"><strong>BetInsight Network</strong><span>Premium · Network · Provisionen</span></div>
+    <a class="back" href="../">← Startseite</a>
+  </header>
+
+  <section class="shell">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Geschützter Mitgliederbereich</div>
+        <h1>Premium & <span>Network</span></h1>
+        <p>Dein persönlicher Bereich für Mitgliedschaft, Network, Provisionen und geschützte Kommunikation.</p>
       </div>
-      <a class="back" href="../">← Startseite</a>
-    </header>
+      <img class="logo" src="../betinsight.network.png" alt="BetInsight Network">
+    </div>
 
-    <section class="shell">
-      <div class="hero">
-        <div>
-          <div class="eyebrow">Geschützter Mitgliederbereich</div>
-          <h1>Premium & <span>Network</span></h1>
-          <p>
-            Melde dich mit deinem persönlichen BetInsight-Zugang an. Dein Network,
-            deine Provisionen und die interne Kommunikation werden anschließend
-            ausschließlich für deinen Account geladen.
-          </p>
+    <div class="content">
+      <section id="loginArea">
+        <div class="login-grid">
+          <article class="card">
+            <h2>Persönlichen Zugang öffnen</h2>
+            <p>TEST-Zugang: persönlichen Network-Zugangscode einfügen. Der endgültige Login wird anschließend auf E-Mail + Einmal-Link umgestellt.</p>
+            <div class="field">
+              <label for="tokenInput">Network-Zugangscode</label>
+              <input id="tokenInput" type="password" autocomplete="off" spellcheck="false" placeholder="Persönlichen Zugang einfügen">
+            </div>
+            <div class="actions"><button class="btn btn-primary" type="button" id="loginBtn">🔐 Premium & Network öffnen</button></div>
+            <div class="status" id="loginStatus"></div>
+          </article>
+          <aside class="card">
+            <h3>Datenschutz im Network</h3>
+            <p>Networker sehen keine fremden E-Mail-Adressen, Namen, Wallets oder Zugangsdaten.</p>
+            <div class="privacy">
+              <div>🔒 <span><b>Privatsphäre:</b> sichtbar sind nur notwendige Networkdaten wie BI-ID, Sponsor, Tarif und Status.</span></div>
+              <div>🛡 <span><b>Serverprüfung:</b> der Zugang wird über das BetInsight-Backend geprüft.</span></div>
+              <div>✉ <span><b>Nachrichten:</b> Kommunikation wird später intern vermittelt, ohne private E-Mail-Adresse offenzulegen.</span></div>
+            </div>
+          </aside>
         </div>
-        <img class="logo" src="../betinsight.network.png" alt="BetInsight Network">
-      </div>
+      </section>
 
-      <div class="content">
-        <section id="loginArea">
-          <div class="login-grid">
-            <article class="card">
-              <h2>Persönlichen Zugang öffnen</h2>
-              <p>
-                Du kannst deinen Network-Link oder deinen persönlichen Network-Zugangscode
-                einfügen. Wenn du über einen persönlichen Link hierher kommst, erfolgt
-                die Prüfung automatisch.
-              </p>
-
-              <div class="field">
-                <label for="tokenInput">Network-Link oder Zugangscode</label>
-                <input
-                  id="tokenInput"
-                  type="password"
-                  autocomplete="off"
-                  spellcheck="false"
-                  placeholder="Persönlichen Zugang einfügen"
-                >
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-primary" type="button" id="loginBtn">
-                  🔐 Premium & Network öffnen
-                </button>
-              </div>
-
-              <div class="status" id="loginStatus"></div>
-            </article>
-
-            <aside class="card">
-              <h3>Noch keinen Network-Zugang?</h3>
-              <p>
-                Öffne zunächst dein BetInsight-Profil. Dort wird als nächster Schritt
-                der direkte Übergang zu BetInsight Network eingebaut.
-              </p>
-
-              <div class="actions">
-                <a class="btn btn-blue" href="https://betinsightclub.github.io/profil/">
-                  Mein BetInsight Profil
-                </a>
-              </div>
-
-              <div class="privacy">
-                <div>🔒 <span><b>Privatsphäre:</b> Andere Networker erhalten keine fremden E-Mail-Adressen.</span></div>
-                <div>🛡 <span><b>Serverprüfung:</b> Der Zugang wird über das BetInsight-Backend geprüft.</span></div>
-                <div>🚫 <span><b>Keine Weitergabe:</b> Deinen persönlichen Zugang niemals an andere Personen senden.</span></div>
-              </div>
-            </aside>
+      <section id="memberArea">
+        <div class="member-head">
+          <div>
+            <small>Angemeldet</small>
+            <h2>Dein BetInsight Network</h2>
+            <p id="memberMeta">Benutzerdaten werden geladen …</p>
           </div>
+          <div class="membership-badge" id="membershipBadge">Mitgliedschaft</div>
+        </div>
+
+        <div class="tiles">
+          <article class="tile"><div class="ico">⭐</div><h3>Meine Mitgliedschaft</h3><p>Status, Tarif, Laufzeit, Kulanz und Verlängerung.</p><button type="button" onclick="comingSoon('Mitgliedschaft')">Öffnen →</button></article>
+          <article class="tile"><div class="ico">🌐</div><h3>Mein Network</h3><p>Ebenen 1–8, Partnerstatus und Provisionen je Ebene.</p><button type="button" id="openNetworkBtn">Öffnen →</button></article>
+          <article class="tile"><div class="ico">€</div><h3>Provisionen</h3><p>Vorgemerkt, auszahlbar und ausgezahlt im Detail.</p><button type="button" onclick="comingSoon('Provisionen')">Öffnen →</button></article>
+          <article class="tile"><div class="ico">✉</div><h3>Nachrichten</h3><p>Geschützte Kommunikation zwischen Upline und Downline.</p><button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button></article>
+        </div>
+
+        <section id="networkView">
+          <div class="sectionbar">
+            <div><h2>Mein Network</h2><p>Übersicht aller Ebenen und deiner Premium-Provisionen.</p></div>
+            <button class="btn btn-soft" type="button" id="refreshNetworkBtn">↻ Aktualisieren</button>
+          </div>
+
+          <div class="summary-grid">
+            <div class="stat"><span>Partner gesamt</span><strong id="sPartners">–</strong><small id="sNew">– neu im Monat</small></div>
+            <div class="stat"><span>Basis</span><strong id="sBasis">–</strong><small>gesamtes Network</small></div>
+            <div class="stat"><span>Premium</span><strong id="sPremium">–</strong><small>gesamtes Network</small></div>
+            <div class="stat"><span>Premium Plus</span><strong id="sPlus">–</strong><small>gesamtes Network</small></div>
+            <div class="stat"><span>Provision Monat</span><strong id="sMonth">–</strong><small>laufender Monat</small></div>
+            <div class="stat"><span>Provision gesamt</span><strong id="sTotal">–</strong><small>seit Beginn</small></div>
+            <div class="stat"><span>Vorgemerkt</span><strong id="sPending">–</strong><small>noch nicht auszahlbar</small></div>
+            <div class="stat"><span>Auszahlbar</span><strong id="sPayable">–</strong><small>aktuell verfügbar</small></div>
+            <div class="stat"><span>Ausgezahlt</span><strong id="sPaid">–</strong><small>bereits ausgezahlt</small></div>
+          </div>
+
+          <div class="filterbar">
+            <button class="preset active" data-preset="month">Laufender Monat</button>
+            <button class="preset" data-preset="all">Gesamt</button>
+            <label>Von<input type="date" id="dateFrom"></label>
+            <label>Bis<input type="date" id="dateTo"></label>
+            <button class="btn btn-blue" style="min-height:38px" id="applyDateBtn">Zeitraum auswerten</button>
+          </div>
+          <div class="date-result" id="dateResult"><span>Provision im gewählten Zeitraum</span><strong id="dateAmount">0,00 €</strong></div>
+
+          <div class="levels-summary">
+            <table>
+              <thead><tr><th>Ebene</th><th class="num">Partner</th><th class="num">Basis</th><th class="num">Premium</th><th class="num">Premium Plus</th><th class="num">Monat</th><th class="num">Gesamt</th><th class="num">Ausgezahlt</th></tr></thead>
+              <tbody id="levelsSummaryBody"><tr><td colspan="8" class="empty">Networkdaten werden geladen …</td></tr></tbody>
+            </table>
+          </div>
+
+          <div class="levels" id="levelsContainer"></div>
+          <div class="status" id="networkStatus"></div>
         </section>
 
-        <section id="memberArea">
-          <div class="member-head">
-            <div>
-              <small>Angemeldet</small>
-              <h2 id="welcomeTitle">Dein BetInsight Network</h2>
-              <p id="memberMeta">Benutzerdaten werden geladen …</p>
-            </div>
-            <div class="membership-badge" id="membershipBadge">Mitgliedschaft</div>
-          </div>
+        <div class="member-actions">
+          <div class="security">TEST-Sitzung nur in diesem Browser-Tab gespeichert · vor LIVE Umstellung auf E-Mail + Einmal-Link</div>
+          <button class="btn btn-soft" type="button" id="logoutBtn">Abmelden</button>
+        </div>
+        <div class="status" id="memberStatus"></div>
+      </section>
+    </div>
+  </section>
+  <footer>© 2026 BetInsight Network · Ein Bereich von BetInsight Club</footer>
+</main>
 
-          <div class="upgrade-note" id="upgradeNote">
-            Du nutzt aktuell den Basis-Zugang. Premium und Premium Plus schalten
-            zusätzliche Network-Funktionen frei.
-          </div>
+<script>
+const SESSION_WEBHOOK = "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
+const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp";
+const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63";
+const SESSION_KEY = "betinsight_network_session_token";
 
-          <div class="tiles">
-            <article class="tile">
-              <div class="ico">⭐</div>
-              <h3>Meine Mitgliedschaft</h3>
-              <p>Status, Tarif und später Laufzeit, Kulanz sowie Verlängerung an einem Ort.</p>
-              <button type="button" onclick="comingSoon('Mitgliedschaft')">Öffnen →</button>
-            </article>
+const $ = id => document.getElementById(id);
+const loginArea=$("loginArea"), memberArea=$("memberArea"), tokenInput=$("tokenInput"),
+loginBtn=$("loginBtn"), logoutBtn=$("logoutBtn"), loginStatus=$("loginStatus"),
+memberStatus=$("memberStatus"), membershipBadge=$("membershipBadge"),
+memberMeta=$("memberMeta"), networkView=$("networkView"), networkStatus=$("networkStatus");
 
-            <article class="tile">
-              <div class="ico">🌐</div>
-              <h3>Mein Network</h3>
-              <p>Deine persönliche Downline und Ebenen – ohne Offenlegung fremder E-Mail-Adressen.</p>
-              <button type="button" onclick="comingSoon('Mein Network')">Öffnen →</button>
-            </article>
+let overviewData=null;
+const detailCache={};
 
-            <article class="tile">
-              <div class="ico">€</div>
-              <h3>Provisionen</h3>
-              <p>Vorgemerkte, gesperrte, auszahlbare und später ausgezahlte Premium-Provisionen.</p>
-              <button type="button" onclick="comingSoon('Provisionen')">Öffnen →</button>
-            </article>
+function setStatus(el,type,text){el.className="status show "+type;el.textContent=text}
+function clearStatus(el){el.className="status";el.textContent=""}
+function money(v){const n=Number(v||0);return new Intl.NumberFormat("de-DE",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:5}).format(n)}
+function splitPipe(v){if(v===null||v===undefined||v==="")return[];return String(v).split("|")}
+function cleanToken(raw){
+  if(!raw)return""; let value=String(raw).trim(); if(!value)return"";
+  try{if(value.includes("://")){const u=new URL(value);return(u.searchParams.get("token")||"").trim()}}catch(e){}
+  return value;
+}
+function tokenFromUrl(){return cleanToken(new URLSearchParams(location.search).get("token"))}
+function removeTokenFromAddressBar(){if(location.search)history.replaceState({},document.title,location.pathname)}
 
-            <article class="tile">
-              <div class="ico">✉</div>
-              <h3>Nachrichten</h3>
-              <p>Geschützte Kommunikation zwischen Upline und Downline ohne sichtbare private E-Mail-Adresse.</p>
-              <button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button>
-            </article>
-          </div>
+async function fetchJSON(url){
+  const r=await fetch(url,{method:"GET",cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
+  let data; try{data=await r.json()}catch(e){throw new Error("Serverantwort konnte nicht gelesen werden")}
+  if(!data||data.success!==true)throw new Error(data?.message||data?.error||"Anfrage fehlgeschlagen");
+  return data;
+}
 
-          <div class="member-actions">
-            <div class="security">
-              Sitzung nur in diesem Browser-Tab gespeichert · Zugang wird nicht in der sichtbaren URL behalten
-            </div>
-            <button class="btn btn-soft" type="button" id="logoutBtn">Abmelden</button>
-          </div>
+async function validateToken(token,auto=false){
+  token=cleanToken(token);
+  if(!token){if(!auto)setStatus(loginStatus,"error","Bitte füge deinen persönlichen Network-Zugang ein.");return}
+  loginBtn.disabled=true; setStatus(loginStatus,"loading","Zugang wird sicher geprüft …");
+  try{
+    const data=await fetchJSON(SESSION_WEBHOOK+"?token="+encodeURIComponent(token));
+    sessionStorage.setItem(SESSION_KEY,token); showMember(data);
+  }catch(e){
+    sessionStorage.removeItem(SESSION_KEY); setStatus(loginStatus,"error","Dieser Network-Zugang ist ungültig oder nicht mehr gültig.");
+  }finally{loginBtn.disabled=false}
+}
+function showMember(data){
+  clearStatus(loginStatus); loginArea.classList.add("hidden"); memberArea.classList.add("show");
+  const m=(data.mitgliedschaft||"Basis").trim()||"Basis";
+  membershipBadge.textContent=m; membershipBadge.className="membership-badge";
+  if(m.toLowerCase().includes("plus"))membershipBadge.classList.add("plus");
+  else if(m.toLowerCase()==="basis")membershipBadge.classList.add("basis");
+  memberMeta.textContent="BI-ID "+(data.user_id||"–")+" · Ref "+(data.ref_code||"–");
+}
+function logout(){
+  sessionStorage.removeItem(SESSION_KEY); memberArea.classList.remove("show"); loginArea.classList.remove("hidden");
+  networkView.classList.remove("show"); tokenInput.value=""; clearStatus(memberStatus); setStatus(loginStatus,"ok","Du wurdest abgemeldet.");
+}
+function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als nächster geschützter Bereich verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
-          <div class="status" id="memberStatus"></div>
-        </section>
-      </div>
-    </section>
+async function loadOverview(force=false){
+  const token=sessionStorage.getItem(SESSION_KEY); if(!token)return;
+  if(overviewData&&!force){renderOverview(overviewData);return}
+  setStatus(networkStatus,"loading","Network-Übersicht wird geladen …");
+  try{
+    overviewData=await fetchJSON(OVERVIEW_WEBHOOK+"?token="+encodeURIComponent(token));
+    renderOverview(overviewData); clearStatus(networkStatus);
+  }catch(e){setStatus(networkStatus,"error","Network-Übersicht konnte nicht geladen werden: "+e.message)}
+}
+function renderOverview(d){
+  const g=d.gesamt||{};
+  $("sPartners").textContent=g.partner??0; $("sNew").textContent=(g.neu_im_monat??0)+" neu im Monat";
+  $("sBasis").textContent=g.basis??0; $("sPremium").textContent=g.premium??0; $("sPlus").textContent=g.premium_plus??0;
+  $("sMonth").textContent=money(g.provision_monat_eur); $("sTotal").textContent=money(g.provision_gesamt_eur);
+  $("sPending").textContent=money(g.vorgemerkt_eur); $("sPayable").textContent=money(g.auszahlbar_eur); $("sPaid").textContent=money(g.ausgezahlt_eur);
+  const levels=Array.isArray(d.ebenen)?d.ebenen:[];
+  $("levelsSummaryBody").innerHTML=levels.map(l=>`<tr>
+    <td><b>Ebene ${l.ebene}</b></td><td class="num">${l.partner??0}</td><td class="num">${l.basis??0}</td>
+    <td class="num">${l.premium??0}</td><td class="num">${l.premium_plus??0}</td>
+    <td class="num money">${money(l.provision_monat_eur)}</td><td class="num money">${money(l.provision_gesamt_eur)}</td>
+    <td class="num">${money(l.ausgezahlt_eur)}</td></tr>`).join("");
+  $("levelsContainer").innerHTML=levels.map(l=>`<article class="level" id="level-${l.ebene}">
+    <button class="level-head" type="button" data-level="${l.ebene}">
+      <div class="level-title">Ebene ${l.ebene} <span class="chev">⌄</span></div>
+      <div class="level-meta">${l.partner??0} Partner · ${l.basis??0} Basis · ${l.premium??0} Premium · ${l.premium_plus??0} Premium Plus</div>
+      <div class="level-money"><strong>${money(l.provision_monat_eur)}</strong><small>Monat · Gesamt ${money(l.provision_gesamt_eur)}</small></div>
+    </button>
+    <div class="level-body"><div class="loadingbox">Zum Laden Ebene öffnen.</div></div>
+  </article>`).join("");
+  document.querySelectorAll(".level-head").forEach(b=>b.addEventListener("click",()=>toggleLevel(Number(b.dataset.level))));
+}
+async function toggleLevel(level){
+  const el=$("level-"+level), body=el.querySelector(".level-body");
+  if(el.classList.contains("open")){el.classList.remove("open");return}
+  el.classList.add("open");
+  if(detailCache[level]){renderLevelBody(level,detailCache[level]);return}
+  body.innerHTML='<div class="loadingbox">Ebene '+level+' wird geladen …</div>';
+  try{
+    const token=sessionStorage.getItem(SESSION_KEY);
+    const d=await fetchJSON(DETAIL_WEBHOOK+"?token="+encodeURIComponent(token)+"&ebene="+level);
+    detailCache[level]=d; renderLevelBody(level,d);
+  }catch(e){body.innerHTML='<div class="empty">Ebene konnte nicht geladen werden: '+escapeHtml(e.message)+'</div>'}
+}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function daysLeft(iso){
+  if(!iso||iso==="—")return"—"; const t=new Date(iso); if(Number.isNaN(t.getTime()))return"—";
+  return Math.ceil((t.getTime()-Date.now())/86400000);
+}
+function statusClass(s){s=String(s||"").toUpperCase();if(s.includes("GESPERRT"))return"blocked";if(s.includes("KULANZ"))return"grace";if(s.includes("AKTIV"))return"active";return""}
+function parsePartners(d){
+  const p=d.partner||{}, keys=["user_id","ref_code","sponsor_user_id","mitgliedschaft_level","mitgliedschaft","registriert_am","premium_status","premium_start","premium_bis","kulanz_bis","premium_netzwerk_berechtigt","gesperrt","netzwerk_status"];
+  const arrays={}; keys.forEach(k=>arrays[k]=splitPipe(p[k]));
+  const n=Number(d.partner_anzahl||arrays.user_id.length||0), out=[];
+  for(let i=0;i<n;i++){const o={};keys.forEach(k=>o[k]=arrays[k][i]??"—");out.push(o)} return out;
+}
+function parseLedger(d){
+  const p=d.provisionen||{}, keys=["payment_id","kaeufer_user_id","provision_eur","status","vorgemerkt_am","auszahlbar_ab","ausgezahlt_am","auszahlung_id","berechtigungsstatus","berechtigungsgrund"];
+  const arrays={}; keys.forEach(k=>arrays[k]=splitPipe(p[k])); const n=Number(p.buchungen||arrays.payment_id.length||0), out=[];
+  for(let i=0;i<n;i++){const o={};keys.forEach(k=>o[k]=arrays[k][i]??"—");o.provision_eur=Number(o.provision_eur||0);out.push(o)} return out;
+}
+function sumForUser(ledger,uid,mode){
+  const now=new Date(), ym=now.toISOString().slice(0,7);
+  return ledger.filter(x=>String(x.kaeufer_user_id)===String(uid)).filter(x=>mode==="all"||String(x.vorgemerkt_am).slice(0,7)===ym).reduce((a,b)=>a+Number(b.provision_eur||0),0);
+}
+function renderLevelBody(level,d){
+  const partners=parsePartners(d), ledger=parseLedger(d), body=$("level-"+level).querySelector(".level-body");
+  if(!partners.length){body.innerHTML='<div class="empty">Keine Partner auf dieser Ebene.</div>';return}
+  body.innerHTML=`<div class="detail-table-wrap"><table>
+    <thead><tr><th>Mitglied</th><th>Sponsor</th><th class="num">Basis</th><th class="num">Premium</th><th class="num">Premium Plus</th><th>Status</th><th>gültig bis</th><th class="num">Resttage</th><th class="num">Provision Monat</th><th class="num">Provision Gesamt</th><th>Kontakt</th></tr></thead>
+    <tbody>${partners.map(p=>{
+      const m=String(p.mitgliedschaft||"Basis");
+      const sponsor=(p.sponsor_user_id&&p.sponsor_user_id!=="—"&&p.sponsor_user_id!=="0")?"BI"+p.sponsor_user_id:"—";
+      const st=p.gesperrt==="JA"?"GESPERRT":(p.netzwerk_status||p.premium_status||"BASIS");
+      return `<tr>
+        <td><b>${escapeHtml(p.ref_code||("BI"+p.user_id))}</b></td>
+        <td>${escapeHtml(sponsor)}</td>
+        <td class="num"><span class="badge ${m==="Basis"?"on":"off"}">${m==="Basis"?"✓":"–"}</span></td>
+        <td class="num"><span class="badge ${m==="Premium"?"on":"off"}">${m==="Premium"?"✓":"–"}</span></td>
+        <td class="num"><span class="badge ${m==="Premium Plus"?"on":"off"}">${m==="Premium Plus"?"✓":"–"}</span></td>
+        <td><span class="statuschip ${statusClass(st)}">${escapeHtml(st)}</span></td>
+        <td>${escapeHtml(p.premium_bis==="—"?"—":String(p.premium_bis).slice(0,10))}</td>
+        <td class="num">${daysLeft(p.premium_bis)}</td>
+        <td class="num money">${money(sumForUser(ledger,p.user_id,"month"))}</td>
+        <td class="num money">${money(sumForUser(ledger,p.user_id,"all"))}</td>
+        <td><button class="msgbtn" type="button" onclick="messagePartner('${escapeHtml(p.ref_code)}')">✉ Anschreiben</button></td>
+      </tr>`}).join("")}</tbody>
+  </table></div>`;
+}
+function messagePartner(ref){setStatus(memberStatus,"loading","Nachrichtenfunktion für "+ref+" wird als nächster Baustein verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
-    <footer>© 2026 BetInsight Network · Ein Bereich von BetInsight Club</footer>
-  </main>
-
-  <script>
-    const SESSION_WEBHOOK =
-      "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
-
-    const SESSION_KEY = "betinsight_network_session_token";
-
-    const loginArea = document.getElementById("loginArea");
-    const memberArea = document.getElementById("memberArea");
-    const tokenInput = document.getElementById("tokenInput");
-    const loginBtn = document.getElementById("loginBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const loginStatus = document.getElementById("loginStatus");
-    const memberStatus = document.getElementById("memberStatus");
-    const membershipBadge = document.getElementById("membershipBadge");
-    const memberMeta = document.getElementById("memberMeta");
-    const upgradeNote = document.getElementById("upgradeNote");
-
-    function setStatus(el, type, text){
-      el.className = "status show " + type;
-      el.textContent = text;
+async function applyDateRange(){
+  const from=$("dateFrom").value,to=$("dateTo").value;
+  if(!from||!to){setStatus(networkStatus,"error","Bitte Von- und Bis-Datum auswählen.");return}
+  if(from>to){setStatus(networkStatus,"error","Das Von-Datum darf nicht nach dem Bis-Datum liegen.");return}
+  setStatus(networkStatus,"loading","Zeitraum wird über Ebene 1–8 ausgewertet …");
+  try{
+    const token=sessionStorage.getItem(SESSION_KEY);
+    const tasks=[];
+    for(let l=1;l<=8;l++){
+      if(detailCache[l])tasks.push(Promise.resolve(detailCache[l]));
+      else tasks.push(fetchJSON(DETAIL_WEBHOOK+"?token="+encodeURIComponent(token)+"&ebene="+l).then(d=>(detailCache[l]=d,d)));
     }
-
-    function clearStatus(el){
-      el.className = "status";
-      el.textContent = "";
-    }
-
-    function cleanToken(raw){
-      if(!raw) return "";
-      let value = String(raw).trim();
-      if(!value) return "";
-
-      try{
-        if(value.includes("://")){
-          const url = new URL(value);
-          return (url.searchParams.get("token") || "").trim();
-        }
-      }catch(e){}
-
-      if(value.includes("?token=")){
-        try{
-          const maybeUrl = new URL(value, window.location.href);
-          return (maybeUrl.searchParams.get("token") || "").trim();
-        }catch(e){}
-      }
-
-      return value;
-    }
-
-    function tokenFromUrl(){
-      const params = new URLSearchParams(window.location.search);
-      return cleanToken(params.get("token"));
-    }
-
-    function removeTokenFromAddressBar(){
-      if(window.location.search){
-        history.replaceState({}, document.title, window.location.pathname);
-      }
-    }
-
-    async function validateToken(token, auto=false){
-      token = cleanToken(token);
-
-      if(!token){
-        if(!auto) setStatus(loginStatus, "error", "Bitte füge deinen persönlichen Network-Zugang ein.");
-        return;
-      }
-
-      loginBtn.disabled = true;
-      setStatus(loginStatus, "loading", "Zugang wird sicher geprüft …");
-
-      try{
-        const response = await fetch(
-          SESSION_WEBHOOK + "?token=" + encodeURIComponent(token),
-          {
-            method:"GET",
-            cache:"no-store",
-            credentials:"omit",
-            referrerPolicy:"no-referrer"
-          }
-        );
-
-        let data = null;
-        try{
-          data = await response.json();
-        }catch(parseError){
-          throw new Error("Die Serverantwort konnte nicht gelesen werden.");
-        }
-
-        if(!data || data.success !== true || !data.user_id){
-          sessionStorage.removeItem(SESSION_KEY);
-          const msg = data && data.error === "invalid_token"
-            ? "Dieser Network-Zugang ist ungültig oder nicht mehr gültig."
-            : "Der Network-Zugang konnte nicht bestätigt werden.";
-          setStatus(loginStatus, "error", msg);
-          return;
-        }
-
-        sessionStorage.setItem(SESSION_KEY, token);
-        showMember(data);
-
-      }catch(error){
-        console.error(error);
-        setStatus(
-          loginStatus,
-          "error",
-          "Der BetInsight Network Zugang konnte gerade nicht geprüft werden. Bitte versuche es erneut."
-        );
-      }finally{
-        loginBtn.disabled = false;
-      }
-    }
-
-    function showMember(data){
-      clearStatus(loginStatus);
-      loginArea.classList.add("hidden");
-      memberArea.classList.add("show");
-
-      const membership = (data.mitgliedschaft || "Basis").trim() || "Basis";
-      membershipBadge.textContent = membership;
-      membershipBadge.className = "membership-badge";
-
-      if(membership.toLowerCase().includes("plus")){
-        membershipBadge.classList.add("plus");
-      }else if(membership.toLowerCase() === "basis"){
-        membershipBadge.classList.add("basis");
-      }
-
-      memberMeta.textContent =
-        "BI-ID " + (data.user_id || "–") +
-        " · Ref " + (data.ref_code || "–");
-
-      upgradeNote.classList.toggle(
-        "show",
-        membership.toLowerCase() === "basis"
-      );
-    }
-
-    function logout(){
-      sessionStorage.removeItem(SESSION_KEY);
-      memberArea.classList.remove("show");
-      loginArea.classList.remove("hidden");
-      tokenInput.value = "";
-      clearStatus(memberStatus);
-      setStatus(loginStatus, "ok", "Du wurdest aus BetInsight Network abgemeldet.");
-    }
-
-    function comingSoon(area){
-      setStatus(
-        memberStatus,
-        "loading",
-        area + " wird als nächster geschützter Bereich mit deinem Network-Backend verbunden."
-      );
-      memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"});
-    }
-
-    loginBtn.addEventListener("click", () => validateToken(tokenInput.value));
-    logoutBtn.addEventListener("click", logout);
-
-    tokenInput.addEventListener("keydown", e => {
-      if(e.key === "Enter") validateToken(tokenInput.value);
-    });
-
-    // 1) Persönlicher Network-Link: Token sofort übernehmen und danach aus der Adresszeile entfernen.
-    const incomingToken = tokenFromUrl();
-    if(incomingToken){
-      removeTokenFromAddressBar();
-      validateToken(incomingToken, true);
-    }else{
-      // 2) Nur für die aktuelle Browser-Tab-Sitzung merken.
-      const sessionToken = sessionStorage.getItem(SESSION_KEY);
-      if(sessionToken){
-        validateToken(sessionToken, true);
+    const all=await Promise.all(tasks); let total=0;
+    for(const d of all){
+      for(const x of parseLedger(d)){
+        const dt=String(x.vorgemerkt_am||"").slice(0,10);
+        if(dt&&dt!=="—"&&dt>=from&&dt<=to)total+=Number(x.provision_eur||0);
       }
     }
-  </script>
+    $("dateAmount").textContent=money(total); $("dateResult").classList.add("show"); clearStatus(networkStatus);
+  }catch(e){setStatus(networkStatus,"error","Zeitraum konnte nicht ausgewertet werden: "+e.message)}
+}
+
+loginBtn.addEventListener("click",()=>validateToken(tokenInput.value));
+logoutBtn.addEventListener("click",logout);
+tokenInput.addEventListener("keydown",e=>{if(e.key==="Enter")validateToken(tokenInput.value)});
+$("openNetworkBtn").addEventListener("click",()=>{networkView.classList.add("show");loadOverview();networkView.scrollIntoView({behavior:"smooth",block:"start"})});
+$("refreshNetworkBtn").addEventListener("click",()=>{overviewData=null;Object.keys(detailCache).forEach(k=>delete detailCache[k]);loadOverview(true)});
+$("applyDateBtn").addEventListener("click",applyDateRange);
+document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+  $("dateResult").classList.remove("show");
+  if(b.dataset.preset==="month") $("sMonth").scrollIntoView({behavior:"smooth",block:"center"});
+  else $("sTotal").scrollIntoView({behavior:"smooth",block:"center"});
+}));
+
+const incomingToken=tokenFromUrl();
+if(incomingToken){removeTokenFromAddressBar();validateToken(incomingToken,true)}
+else{const t=sessionStorage.getItem(SESSION_KEY);if(t)validateToken(t,true)}
+</script>
 </body>
 </html>
