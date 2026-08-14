@@ -4,24 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#03131d">
-  <meta name="description" content="BetInsight Network – Premium, Network, Provisionen und interne Kommunikation an einem Ort.">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="BetInsight Network – Premium, Network, Provisionen und interne Kommunikation.">
   <title>BetInsight Network</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Aktueller Dateiname im GitHub-Repository -->
+  <link rel="icon" type="image/x-icon" href="favicon(1).ico">
+
   <style>
     :root{
-      --bg1:#03131d;
-      --bg2:#062434;
-      --bg3:#020c13;
-      --panel:#07202e;
-      --panel2:#0a2a3a;
-      --border:rgba(104,191,230,.18);
-      --green:#0edca6;
-      --blue:#169cff;
-      --cyan:#18c9f3;
-      --orange:#ffab2e;
-      --soft:#d7edf7;
-      --muted:#83abc0;
-      --shadow:0 22px 70px rgba(0,0,0,.34);
+      --bg:#020b12;
+      --bg2:#041723;
+      --panel:#062331;
+      --panel2:#082c3c;
+      --line:rgba(115,205,239,.16);
+      --line-strong:rgba(115,205,239,.28);
+      --text:#f4fbff;
+      --soft:#c9e4ef;
+      --muted:#82a9ba;
+      --blue:#179cff;
+      --cyan:#1bd7ef;
+      --green:#18d58f;
+      --green2:#0eb97d;
+      --gold:#ffc05a;
+      --orange:#ff9f32;
+      --danger:#ff6b73;
+      --shadow:0 24px 80px rgba(0,0,0,.38);
+      --radius:24px;
     }
 
     *{box-sizing:border-box}
@@ -29,114 +38,191 @@
     body{
       margin:0;
       min-height:100vh;
-      color:#fff;
+      color:var(--text);
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:
-        radial-gradient(circle at 10% 0%,rgba(22,156,255,.15),transparent 32%),
-        radial-gradient(circle at 95% 15%,rgba(14,220,166,.10),transparent 30%),
-        linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 48%,var(--bg3) 100%);
+        radial-gradient(circle at 12% 0%,rgba(23,156,255,.16),transparent 28%),
+        radial-gradient(circle at 90% 15%,rgba(24,213,143,.10),transparent 28%),
+        linear-gradient(180deg,#03131d 0%,#041b27 48%,#020b12 100%);
+      overflow-x:hidden;
     }
 
     a{color:inherit}
     button{font:inherit}
 
+    .network-bg{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      overflow:hidden;
+      pointer-events:none;
+      opacity:.48;
+    }
+
+    .network-bg svg{
+      width:100%;
+      height:100%;
+      min-width:1000px;
+      min-height:720px;
+    }
+
+    .network-bg line{
+      stroke:rgba(55,190,225,.14);
+      stroke-width:1;
+    }
+
+    .network-bg circle{
+      fill:rgba(28,213,171,.45);
+      filter:drop-shadow(0 0 6px rgba(28,213,171,.45));
+    }
+
+    .veil{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:linear-gradient(180deg,rgba(2,11,18,.18),rgba(2,11,18,.68));
+    }
+
     .page{
-      width:min(1180px,calc(100% - 32px));
+      width:min(1180px,calc(100% - 34px));
       margin:0 auto;
-      padding:26px 0 38px;
+      padding:24px 0 34px;
     }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:18px;
-      padding:11px 14px;
-      border:1px solid var(--border);
+      gap:20px;
+      padding:12px 16px;
+      border:1px solid var(--line);
       border-radius:18px;
-      background:rgba(5,28,41,.68);
-      box-shadow:0 12px 34px rgba(0,0,0,.22);
-      backdrop-filter:blur(12px);
+      background:rgba(3,24,35,.76);
+      backdrop-filter:blur(14px);
+      box-shadow:0 12px 34px rgba(0,0,0,.20);
     }
 
-    .brand{
+    .mini-brand{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:11px;
       min-width:0;
     }
 
-    .brand-logo{
-      width:46px;
-      height:46px;
-      border-radius:14px;
+    .mini-bin{
+      width:42px;
+      height:42px;
+      flex:0 0 auto;
       display:grid;
       place-items:center;
-      flex:0 0 auto;
-      font-weight:950;
-      font-size:20px;
-      letter-spacing:-1px;
+      border-radius:13px;
       color:#fff;
-      background:linear-gradient(145deg,#0a3150,#061d31);
-      border:1px solid rgba(83,186,231,.28);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 10px 26px rgba(0,0,0,.28);
+      font-size:17px;
+      font-weight:950;
+      letter-spacing:-1px;
+      background:linear-gradient(145deg,#07335b,#062340);
+      border:1px solid rgba(50,169,234,.25);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
     }
-    .brand-logo span{color:var(--green)}
+    .mini-bin b{color:var(--green)}
 
-    .brand-copy strong{
+    .mini-copy strong{
       display:block;
-      font-size:16px;
-      line-height:1.1;
-      letter-spacing:.1px;
+      font-size:15px;
+      line-height:1.05;
     }
-    .brand-copy small{
+    .mini-copy small{
       display:block;
       margin-top:4px;
       color:var(--muted);
-      font-size:11px;
-      font-weight:700;
-      letter-spacing:.75px;
+      font-size:10px;
       text-transform:uppercase;
+      letter-spacing:.9px;
+      font-weight:800;
     }
 
-    .back-link{
+    .club-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:38px;
+      padding:0 13px;
+      border-radius:11px;
       text-decoration:none;
-      color:var(--soft);
-      padding:10px 14px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.045);
-      font-size:13px;
-      font-weight:800;
-      white-space:nowrap;
+      color:#d9f1fa;
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.035);
+      font-size:12px;
+      font-weight:850;
       transition:.2s ease;
+      white-space:nowrap;
     }
-    .back-link:hover{transform:translateY(-1px);background:rgba(255,255,255,.075)}
+    .club-link:hover{
+      transform:translateY(-1px);
+      border-color:rgba(23,156,255,.24);
+      background:rgba(23,156,255,.07);
+    }
 
     .hero{
       position:relative;
       overflow:hidden;
-      margin-top:20px;
-      padding:58px 48px 48px;
-      border:1px solid rgba(104,191,230,.20);
-      border-radius:28px;
+      margin-top:18px;
+      padding:42px 44px 40px;
+      border-radius:30px;
+      border:1px solid rgba(92,196,231,.20);
       background:
-        radial-gradient(circle at 88% 7%,rgba(22,156,255,.20),transparent 34%),
-        radial-gradient(circle at 12% 100%,rgba(14,220,166,.09),transparent 28%),
-        linear-gradient(155deg,rgba(12,48,64,.97),rgba(5,29,43,.97));
+        linear-gradient(135deg,rgba(5,34,48,.94),rgba(4,24,36,.95)),
+        rgba(4,25,36,.94);
       box-shadow:var(--shadow);
     }
 
+    .hero::before,
     .hero::after{
       content:"";
       position:absolute;
-      width:270px;
-      height:270px;
-      right:-110px;
-      bottom:-150px;
-      border:48px solid rgba(14,220,166,.075);
       border-radius:50%;
       pointer-events:none;
+    }
+
+    .hero::before{
+      width:340px;
+      height:340px;
+      right:-185px;
+      top:-165px;
+      border:56px solid rgba(23,156,255,.065);
+    }
+
+    .hero::after{
+      width:250px;
+      height:250px;
+      left:-150px;
+      bottom:-185px;
+      border:42px solid rgba(24,213,143,.055);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);
+      gap:36px;
+      align-items:center;
+    }
+
+    .hero-logo-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:230px;
+    }
+
+    .hero-logo{
+      display:block;
+      width:min(390px,100%);
+      max-height:235px;
+      object-fit:contain;
+      filter:drop-shadow(0 18px 35px rgba(0,0,0,.30));
     }
 
     .eyebrow{
@@ -145,30 +231,31 @@
       gap:8px;
       padding:7px 11px;
       border-radius:999px;
-      color:#a7dff1;
-      background:rgba(22,156,255,.10);
-      border:1px solid rgba(22,156,255,.18);
+      background:rgba(24,213,143,.075);
+      border:1px solid rgba(24,213,143,.16);
+      color:#acf3d6;
       font-size:11px;
       font-weight:900;
-      letter-spacing:1px;
+      letter-spacing:.95px;
       text-transform:uppercase;
     }
+
     .eyebrow::before{
       content:"";
       width:7px;
       height:7px;
       border-radius:50%;
       background:var(--green);
-      box-shadow:0 0 16px rgba(14,220,166,.8);
+      box-shadow:0 0 14px rgba(24,213,143,.85);
     }
 
     h1{
-      max-width:780px;
-      margin:18px 0 13px;
-      font-size:clamp(38px,6vw,72px);
+      margin:16px 0 13px;
+      font-size:clamp(40px,6vw,72px);
       line-height:.98;
-      letter-spacing:-2.8px;
+      letter-spacing:-3px;
     }
+
     h1 span{
       background:linear-gradient(90deg,var(--green),var(--cyan));
       -webkit-background-clip:text;
@@ -176,24 +263,24 @@
       color:transparent;
     }
 
-    .hero p{
-      max-width:760px;
+    .lead{
+      max-width:670px;
       margin:0;
-      color:#b8d5e3;
+      color:#b7d6e2;
       font-size:clamp(15px,2vw,18px);
-      line-height:1.65;
+      line-height:1.67;
     }
 
-    .hero-actions{
+    .main-actions{
       display:flex;
       flex-wrap:wrap;
-      gap:12px;
-      margin-top:29px;
+      gap:11px;
+      margin-top:26px;
     }
 
-    .action{
+    .btn{
       min-height:52px;
-      padding:0 20px;
+      padding:0 19px;
       border:0;
       border-radius:14px;
       display:inline-flex;
@@ -201,41 +288,52 @@
       justify-content:center;
       gap:9px;
       color:#fff;
-      font-weight:900;
       font-size:14px;
+      font-weight:900;
       text-decoration:none;
       cursor:pointer;
-      box-shadow:0 10px 26px rgba(0,0,0,.18);
       transition:.2s ease;
+      box-shadow:0 10px 28px rgba(0,0,0,.20);
     }
-    .action:hover{transform:translateY(-2px)}
-    .action-primary{background:linear-gradient(105deg,#079e79,#0ed5a0)}
-    .action-secondary{background:linear-gradient(105deg,#168dff,#08bdec)}
-    .action-muted{
-      background:linear-gradient(105deg,#5b7385,#728da0);
-      opacity:.72;
-      cursor:default;
-    }
-    .action-muted:hover{transform:none}
 
-    .status-note{
-      margin-top:14px;
-      color:var(--muted);
-      font-size:12px;
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(110deg,#0a9c72,#19d696)}
+    .btn-blue{background:linear-gradient(110deg,#168cff,#15bfe3)}
+    .btn-soft{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:none;
+    }
+
+    .under-note{
+      margin-top:11px;
+      color:#789fb0;
+      font-size:11px;
       font-weight:700;
     }
 
-    .section-title{
-      margin:34px 0 15px;
+    .section-head{
       display:flex;
-      align-items:flex-end;
+      align-items:end;
       justify-content:space-between;
-      gap:20px;
+      gap:18px;
+      margin:31px 2px 14px;
     }
-    .section-title h2{margin:0;font-size:24px;letter-spacing:-.6px}
-    .section-title p{margin:0;color:var(--muted);font-size:12px;text-align:right}
 
-    .feature-grid{
+    .section-head h2{
+      margin:0;
+      font-size:24px;
+      letter-spacing:-.6px;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      text-align:right;
+    }
+
+    .features{
       display:grid;
       grid-template-columns:repeat(4,minmax(0,1fr));
       gap:14px;
@@ -244,100 +342,290 @@
     .card{
       position:relative;
       overflow:hidden;
-      min-height:205px;
+      min-height:200px;
       padding:22px;
-      border:1px solid var(--border);
-      border-radius:20px;
-      background:linear-gradient(145deg,rgba(3,27,39,.84),rgba(13,54,68,.62));
-      box-shadow:0 14px 36px rgba(0,0,0,.19);
+      border:1px solid var(--line);
+      border-radius:21px;
+      background:
+        linear-gradient(145deg,rgba(4,28,40,.88),rgba(8,49,63,.66));
+      box-shadow:0 14px 38px rgba(0,0,0,.18);
     }
 
     .card::after{
       content:"";
       position:absolute;
-      width:88px;
-      height:88px;
-      top:-46px;
-      right:-42px;
-      border:15px solid rgba(22,156,255,.10);
+      width:94px;
+      height:94px;
+      right:-48px;
+      top:-48px;
+      border:16px solid rgba(23,156,255,.09);
       border-radius:50%;
     }
 
-    .card.green::after{border-color:rgba(14,220,166,.11)}
-    .card.orange::after{border-color:rgba(255,171,46,.11)}
+    .card.green::after{border-color:rgba(24,213,143,.11)}
+    .card.gold::after{border-color:rgba(255,192,90,.11)}
 
     .icon{
-      width:42px;
-      height:42px;
+      width:43px;
+      height:43px;
+      border-radius:13px;
       display:grid;
       place-items:center;
-      border-radius:13px;
-      background:rgba(22,156,255,.11);
-      border:1px solid rgba(22,156,255,.15);
-      font-size:19px;
+      background:rgba(23,156,255,.09);
+      border:1px solid rgba(23,156,255,.13);
+      font-size:20px;
     }
-    .card.green .icon{background:rgba(14,220,166,.10);border-color:rgba(14,220,166,.14)}
-    .card.orange .icon{background:rgba(255,171,46,.10);border-color:rgba(255,171,46,.14)}
 
-    .card h3{margin:16px 0 8px;font-size:17px}
-    .card p{margin:0;color:#9fc0d0;font-size:13px;line-height:1.6}
+    .card.green .icon{
+      background:rgba(24,213,143,.08);
+      border-color:rgba(24,213,143,.13);
+    }
 
-    .access-panel{
+    .card.gold .icon{
+      background:rgba(255,192,90,.08);
+      border-color:rgba(255,192,90,.13);
+    }
+
+    .card h3{
+      margin:15px 0 8px;
+      font-size:17px;
+    }
+
+    .card p{
+      margin:0;
+      color:#9fc3d1;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .upgrade{
+      position:relative;
+      overflow:hidden;
+      margin-top:14px;
+      padding:28px;
+      border-radius:23px;
+      border:1px solid rgba(255,192,90,.16);
+      background:
+        radial-gradient(circle at 100% 0%,rgba(255,159,50,.10),transparent 34%),
+        linear-gradient(145deg,rgba(4,29,42,.90),rgba(7,41,52,.80));
+      box-shadow:0 16px 42px rgba(0,0,0,.20);
+    }
+
+    .upgrade-grid{
       display:grid;
-      grid-template-columns:1.3fr .7fr;
-      gap:14px;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:24px;
+      align-items:center;
+    }
+
+    .upgrade h2{
+      margin:0 0 8px;
+      font-size:24px;
+      letter-spacing:-.6px;
+    }
+
+    .upgrade p{
+      margin:0;
+      max-width:760px;
+      color:#a9cad7;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .upgrade-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    .trust-strip{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
       margin-top:14px;
     }
 
-    .access-card{
-      padding:24px;
-      border-radius:20px;
-      border:1px solid var(--border);
-      background:linear-gradient(145deg,rgba(2,21,31,.82),rgba(13,55,69,.56));
+    .trust{
+      padding:16px 17px;
+      border-radius:17px;
+      border:1px solid rgba(255,255,255,.065);
+      background:rgba(2,19,28,.62);
     }
 
-    .access-card h3{margin:0 0 8px;font-size:18px}
-    .access-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
-
-    .access-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:17px;
+    .trust strong{
+      display:block;
+      margin-bottom:4px;
+      font-size:13px;
+      color:#dff6ff;
     }
 
-    .privacy{
-      border-color:rgba(14,220,166,.18);
-      background:
-        linear-gradient(145deg,rgba(14,220,166,.055),rgba(22,156,255,.035)),
-        rgba(2,21,31,.78);
+    .trust span{
+      color:#789faf;
+      font-size:11px;
+      line-height:1.55;
     }
-    .privacy strong{color:var(--green)}
 
     footer{
-      margin-top:30px;
-      padding:18px 4px 0;
-      border-top:1px solid rgba(255,255,255,.07);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      color:rgba(215,237,247,.47);
+      margin-top:28px;
+      padding:18px 2px 4px;
+      border-top:1px solid rgba(255,255,255,.065);
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:16px;
+      align-items:center;
+      color:rgba(202,229,239,.48);
       font-size:11px;
+    }
+
+    .footer-right{
+      display:flex;
+      gap:13px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .footer-right a{
+      text-decoration:none;
+      color:rgba(202,229,239,.52);
+    }
+
+    .footer-right a:hover{color:#cdebf6}
+
+    .admin-link{
+      opacity:.48;
+      font-size:10px;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:9998;
+      display:none;
+      place-items:center;
+      padding:20px;
+      background:rgba(0,8,12,.72);
+      backdrop-filter:blur(8px);
+    }
+
+    .modal.show{display:grid}
+
+    .modal-card{
+      width:min(760px,100%);
+      max-height:min(84vh,760px);
+      overflow:auto;
+      border-radius:24px;
+      border:1px solid var(--line-strong);
+      background:linear-gradient(150deg,#062536,#041822);
+      box-shadow:0 30px 100px rgba(0,0,0,.58);
+    }
+
+    .modal-head{
+      position:sticky;
+      top:0;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:20px 21px;
+      border-bottom:1px solid rgba(255,255,255,.07);
+      background:rgba(5,30,42,.96);
+      backdrop-filter:blur(10px);
+    }
+
+    .modal-head h3{
+      margin:0;
+      font-size:20px;
+    }
+
+    .close{
+      width:38px;
+      height:38px;
+      border:0;
+      border-radius:12px;
+      color:#fff;
+      background:rgba(255,255,255,.065);
+      cursor:pointer;
+      font-size:20px;
+    }
+
+    .plans{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      padding:18px;
+    }
+
+    .plan{
+      padding:19px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.025);
+    }
+
+    .plan.featured{
+      border-color:rgba(24,213,143,.20);
+      background:linear-gradient(145deg,rgba(24,213,143,.06),rgba(23,156,255,.035));
+    }
+
+    .plan.plus{
+      border-color:rgba(255,192,90,.20);
+      background:linear-gradient(145deg,rgba(255,192,90,.055),rgba(255,159,50,.025));
+    }
+
+    .plan .tag{
+      display:inline-block;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.055);
+      color:#b7d6e2;
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+    }
+
+    .plan h4{
+      margin:11px 0 6px;
+      font-size:18px;
+    }
+
+    .price{
+      margin-bottom:13px;
+      color:#ecfaff;
+      font-size:19px;
+      font-weight:950;
+    }
+
+    .price small{
+      color:#769cac;
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .plan ul{
+      margin:0;
+      padding-left:17px;
+      color:#99bdcb;
+      font-size:12px;
+      line-height:1.6;
     }
 
     .toast{
       position:fixed;
+      z-index:10000;
       left:50%;
       bottom:24px;
-      transform:translate(-50%,18px);
-      z-index:9999;
-      max-width:min(520px,calc(100% - 30px));
+      width:min(520px,calc(100% - 28px));
+      transform:translate(-50%,20px);
       padding:13px 16px;
-      border:1px solid rgba(104,191,230,.22);
       border-radius:13px;
-      background:rgba(3,22,32,.96);
-      box-shadow:0 18px 50px rgba(0,0,0,.38);
-      color:var(--soft);
+      border:1px solid var(--line-strong);
+      background:rgba(3,22,32,.97);
+      box-shadow:0 18px 55px rgba(0,0,0,.45);
+      color:#dff7ff;
       font-size:13px;
       font-weight:800;
       text-align:center;
@@ -345,132 +633,366 @@
       pointer-events:none;
       transition:.22s ease;
     }
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-
-    @media (max-width:900px){
-      .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .access-panel{grid-template-columns:1fr}
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
     }
 
-    @media (max-width:620px){
-      .page{width:min(100% - 20px,1180px);padding-top:10px}
-      .topbar{border-radius:15px;padding:9px 10px}
-      .brand-logo{width:41px;height:41px;border-radius:12px}
-      .brand-copy strong{font-size:14px}
-      .brand-copy small{font-size:9px}
-      .back-link{padding:9px 10px;font-size:11px}
-      .hero{padding:35px 21px 29px;border-radius:22px}
-      h1{letter-spacing:-1.8px}
-      .hero-actions{display:grid;grid-template-columns:1fr;width:100%}
-      .action{width:100%}
-      .feature-grid{grid-template-columns:1fr}
+    @media (max-width:960px){
+      .hero-inner{
+        grid-template-columns:1fr;
+      }
+      .hero-logo-wrap{
+        order:-1;
+        min-height:150px;
+      }
+      .hero-logo{
+        width:min(330px,78vw);
+        max-height:190px;
+      }
+      .features{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .upgrade-grid{
+        grid-template-columns:1fr;
+      }
+      .upgrade-actions{
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width:680px){
+      .page{
+        width:min(100% - 20px,1180px);
+        padding-top:10px;
+      }
+      .topbar{
+        padding:9px 10px;
+        border-radius:15px;
+      }
+      .mini-copy small{display:none}
+      .club-link{
+        font-size:10px;
+        padding:0 10px;
+      }
+      .hero{
+        padding:27px 20px 28px;
+        border-radius:22px;
+      }
+      .hero-logo-wrap{
+        min-height:122px;
+      }
+      h1{
+        letter-spacing:-1.8px;
+        font-size:clamp(37px,13vw,56px);
+      }
+      .main-actions{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+      .btn{width:100%}
+      .features{
+        grid-template-columns:1fr;
+      }
       .card{min-height:0}
-      .section-title{display:block}
-      .section-title p{text-align:left;margin-top:5px}
-      footer{display:block;line-height:1.7;text-align:center}
+      .section-head{
+        display:block;
+      }
+      .section-head p{
+        margin-top:5px;
+        text-align:left;
+      }
+      .upgrade{
+        padding:22px 18px;
+      }
+      .upgrade-actions{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+      .trust-strip{
+        grid-template-columns:1fr;
+      }
+      footer{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+      .footer-right{
+        justify-content:center;
+      }
+      .plans{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div class="network-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <line x1="90" y1="180" x2="340" y2="90"/>
+      <line x1="340" y1="90" x2="570" y2="230"/>
+      <line x1="570" y1="230" x2="800" y2="125"/>
+      <line x1="800" y1="125" x2="1040" y2="250"/>
+      <line x1="1040" y1="250" x2="1320" y2="125"/>
+      <line x1="1320" y1="125" x2="1510" y2="290"/>
+      <line x1="190" y1="520" x2="430" y2="390"/>
+      <line x1="430" y1="390" x2="680" y2="555"/>
+      <line x1="680" y1="555" x2="920" y2="420"/>
+      <line x1="920" y1="420" x2="1190" y2="565"/>
+      <line x1="1190" y1="565" x2="1430" y2="420"/>
+      <line x1="340" y1="90" x2="430" y2="390"/>
+      <line x1="570" y1="230" x2="680" y2="555"/>
+      <line x1="1040" y1="250" x2="920" y2="420"/>
+      <line x1="1320" y1="125" x2="1190" y2="565"/>
+      <line x1="680" y1="555" x2="510" y2="790"/>
+      <line x1="920" y1="420" x2="1040" y2="760"/>
+      <circle cx="90" cy="180" r="4"/>
+      <circle cx="340" cy="90" r="5"/>
+      <circle cx="570" cy="230" r="4"/>
+      <circle cx="800" cy="125" r="5"/>
+      <circle cx="1040" cy="250" r="4"/>
+      <circle cx="1320" cy="125" r="5"/>
+      <circle cx="1510" cy="290" r="4"/>
+      <circle cx="190" cy="520" r="4"/>
+      <circle cx="430" cy="390" r="5"/>
+      <circle cx="680" cy="555" r="5"/>
+      <circle cx="920" cy="420" r="5"/>
+      <circle cx="1190" cy="565" r="5"/>
+      <circle cx="1430" cy="420" r="4"/>
+      <circle cx="510" cy="790" r="4"/>
+      <circle cx="1040" cy="760" r="4"/>
+    </svg>
+  </div>
+  <div class="veil" aria-hidden="true"></div>
+
   <main class="page">
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-logo" aria-hidden="true">bi<span>n</span></div>
-        <div class="brand-copy">
+      <div class="mini-brand">
+        <div class="mini-bin" aria-hidden="true">bi<b>N</b></div>
+        <div class="mini-copy">
           <strong>BetInsight Network</strong>
           <small>Premium · Network · Provisionen</small>
         </div>
       </div>
-      <a class="back-link" href="https://betinsight.club/">↗ BetInsight Club</a>
+
+      <a class="club-link" href="https://betinsight.club/">
+        BetInsight Club ↗
+      </a>
     </header>
 
     <section class="hero">
-      <div class="eyebrow">BetInsight Network</div>
-      <h1>Dein <span>Network.</span><br>Ein System.</h1>
-      <p>
-        Premium-Mitgliedschaft, Network-Status, Provisionen und sichere interne Kommunikation
-        werden hier in einem eigenen Bereich gebündelt. Persönliche Kontaktdaten anderer Mitglieder
-        bleiben geschützt.
-      </p>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">BetInsight Network</div>
 
-      <div class="hero-actions">
-        <button class="action action-primary" type="button" onclick="planned('Mitglieder-Login')">🔐 Mitglieder-Login</button>
-        <button class="action action-secondary" type="button" onclick="planned('Admin-Login')">🛡️ Admin-Login</button>
+          <h1>Premium. Network.<br><span>Gemeinsam wachsen.</span></h1>
+
+          <p class="lead">
+            Dein eigener Bereich für Premium-Mitgliedschaft, dein persönliches Network,
+            Provisionen und geschützte Kommunikation innerhalb von BetInsight.
+          </p>
+
+          <div class="main-actions">
+            <button class="btn btn-primary" type="button" onclick="planned('Premium & Network Login')">
+              🔐 Premium & Network Login
+            </button>
+
+            <button class="btn btn-blue" type="button" onclick="openPlans()">
+              ⭐ Premium entdecken
+            </button>
+          </div>
+
+          <div class="under-note">
+            Der Login wird als nächster geschützter Bereich eingerichtet.
+          </div>
+        </div>
+
+        <div class="hero-logo-wrap">
+          <img
+            class="hero-logo"
+            src="betinsight.network.png"
+            alt="BetInsight Network"
+            onerror="this.style.display='none'"
+          >
+        </div>
       </div>
-      <div class="status-note">Die Login-Bereiche werden im nächsten Schritt eingerichtet.</div>
     </section>
 
-    <div class="section-title">
-      <h2>Alles Wichtige an einem Ort</h2>
-      <p>Klare Trennung zwischen Mitgliedern, Networkern und Administration</p>
+    <div class="section-head">
+      <h2>Dein Premium & Network Bereich</h2>
+      <p>Ein Zugang · klare Bereiche · persönliche Daten geschützt</p>
     </div>
 
-    <section class="feature-grid" aria-label="Network Funktionen">
+    <section class="features">
       <article class="card green">
         <div class="icon">⭐</div>
-        <h3>Premium & Premium Plus</h3>
-        <p>Mitgliedschaft, Laufzeit, Status und Network-Berechtigung übersichtlich und nachvollziehbar.</p>
+        <h3>Premium-Status</h3>
+        <p>
+          Mitgliedschaft, Laufzeit und Status zentral sehen. Basis, Premium und Premium Plus
+          bleiben klar unterscheidbar.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">🌐</div>
-        <h3>Network-Struktur</h3>
-        <p>Basis, Premium und Premium Plus bleiben sichtbar – ohne fremde E-Mail-Adressen offenzulegen.</p>
+        <h3>Mein Network</h3>
+        <p>
+          Deine Sponsor- und Downline-Struktur übersichtlich verfolgen, ohne fremde
+          E-Mail-Adressen oder private Kontaktdaten offenzulegen.
+        </p>
       </article>
 
-      <article class="card orange">
+      <article class="card gold">
         <div class="icon">€</div>
         <h3>Provisionen</h3>
-        <p>Premium-Provisionen, Status und spätere Auszahlungen erhalten einen eigenen, transparenten Bereich.</p>
+        <p>
+          Vorgemerkte, gesperrte und später auszahlbare Premium-Provisionen nachvollziehbar
+          an einem Ort darstellen.
+        </p>
       </article>
 
       <article class="card green">
         <div class="icon">✉</div>
-        <h3>Interne Nachrichten</h3>
-        <p>Premium-Mitglieder können später innerhalb des Networks kommunizieren, ohne private E-Mail-Adressen auszutauschen.</p>
+        <h3>Interne Kommunikation</h3>
+        <p>
+          Premium-Mitglieder können innerhalb des Networks kommunizieren, ohne dass
+          persönliche E-Mail-Adressen zwischen Networkern sichtbar werden.
+        </p>
       </article>
     </section>
 
-    <div class="section-title">
-      <h2>Zugänge</h2>
-      <p>Die Rollen werden serverseitig geprüft – nicht nur im HTML verborgen.</p>
-    </div>
-
-    <section class="access-panel">
-      <article class="access-card">
-        <h3>Mitglieder & Networker</h3>
-        <p>
-          Persönlicher Bereich für Mitgliedschaft, Network, Provisionen und Nachrichten.
-          Andere Mitglieder werden nur mit den für das Network notwendigen Informationen angezeigt.
-        </p>
-        <div class="access-row">
-          <button class="action action-primary" type="button" onclick="planned('Mitglieder-Login')">Mitgliederbereich öffnen</button>
+    <section class="upgrade">
+      <div class="upgrade-grid">
+        <div>
+          <h2>Noch kein Premium?</h2>
+          <p>
+            Basis-Mitglieder bleiben im Network sichtbar. Nach dem geschützten Login soll das
+            System später automatisch erkennen, ob du Basis, Premium oder Premium Plus bist
+            und dir die passenden Funktionen und Upgrade-Möglichkeiten anzeigen.
+          </p>
         </div>
-      </article>
 
-      <article class="access-card privacy">
-        <h3>Datenschutz</h3>
-        <p><strong>Private Daten bleiben privat.</strong> Networker sehen keine fremden E-Mail-Adressen. Administrative Detaildaten bleiben dem berechtigten Backoffice vorbehalten.</p>
-      </article>
+        <div class="upgrade-actions">
+          <button class="btn btn-primary" type="button" onclick="openPlans()">
+            Premium vergleichen
+          </button>
+
+          <a class="btn btn-soft" href="https://betinsight.club/">
+            Zu BetInsight Club
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="trust">
+        <strong>🔒 Datenschutz</strong>
+        <span>Networker erhalten keine fremden E-Mail-Adressen über die Oberfläche.</span>
+      </div>
+
+      <div class="trust">
+        <strong>🛡 Rollen & Rechte</strong>
+        <span>Mitglieder-, Network- und Adminrechte werden später getrennt geprüft.</span>
+      </div>
+
+      <div class="trust">
+        <strong>⚡ Schlanke Plattform</strong>
+        <span>Keine externe Oberfläche nötig – BetInsight Network bleibt eigenständig.</span>
+      </div>
     </section>
 
     <footer>
-      <span>© 2026 BetInsight Network</span>
-      <span>betinsight.network · eigenständiger Network-Bereich</span>
+      <div>
+        © 2026 BetInsight Network · Ein Bereich von BetInsight Club
+      </div>
+
+      <div class="footer-right">
+        <a href="https://betinsight.club/">BetInsight Club</a>
+        <a href="#" onclick="planned('Premium & Network Login');return false;">Mitglieder</a>
+
+        <!-- bewusst klein und unauffällig -->
+        <a class="admin-link" href="#" onclick="planned('Administration');return false;">
+          Administration
+        </a>
+      </div>
     </footer>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal" id="plansModal" role="dialog" aria-modal="true" aria-labelledby="plansTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="plansTitle">Basis, Premium & Premium Plus</h3>
+        <button class="close" type="button" aria-label="Fenster schließen" onclick="closePlans()">×</button>
+      </div>
+
+      <div class="plans">
+        <article class="plan">
+          <span class="tag">Standard</span>
+          <h4>Basis</h4>
+          <div class="price">0 €</div>
+          <ul>
+            <li>BetInsight Basiszugang</li>
+            <li>bestehendes Unit-Netzwerk bis zur 3. Ebene</li>
+            <li>Premium-Funktionen noch nicht freigeschaltet</li>
+          </ul>
+        </article>
+
+        <article class="plan featured">
+          <span class="tag">Premium</span>
+          <h4>Premium</h4>
+          <div class="price">9,99 € <small>/ 30 Tage</small></div>
+          <ul>
+            <li>zusätzliche Premium-Funktionen</li>
+            <li>interne Network-Kommunikation</li>
+            <li>Premium-Provisionen bis zur 6. Ebene</li>
+          </ul>
+        </article>
+
+        <article class="plan plus">
+          <span class="tag">Premium Plus</span>
+          <h4>Premium Plus</h4>
+          <div class="price">14,99 € <small>/ 30 Tage</small></div>
+          <ul>
+            <li>erweiterte Premium-Funktionen</li>
+            <li>interne Network-Kommunikation</li>
+            <li>Premium-Provisionen bis zur 8. Ebene</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
 
   <script>
+    const toast = document.getElementById("toast");
+    const plansModal = document.getElementById("plansModal");
     let toastTimer;
+
     function planned(area){
-      const toast = document.getElementById('toast');
-      toast.textContent = area + ' wird im nächsten Schritt eingerichtet.';
-      toast.classList.add('show');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+      toast.textContent = area + " wird als nächster geschützter Bereich eingerichtet.";
+      toast.classList.add("show");
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
     }
+
+    function openPlans(){
+      plansModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePlans(){
+      plansModal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    plansModal.addEventListener("click", (e) => {
+      if(e.target === plansModal) closePlans();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closePlans();
+    });
   </script>
 </body>
 </html>
