@@ -8,6 +8,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
   <title>Premium & Network | BetInsight Network</title>
+  <!-- Premium & Network v1.2 TEST · Tarifabhängige Ebenen-Sperre -->
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
 
   <style>
@@ -276,6 +277,8 @@ memberStatus=$("memberStatus"), membershipBadge=$("membershipBadge"),
 memberMeta=$("memberMeta"), networkView=$("networkView"), networkStatus=$("networkStatus");
 
 let overviewData=null;
+let currentMembershipLevel=0;
+let currentMembership="Basis";
 const detailCache={};
 
 function setStatus(el,type,text){el.className="status show "+type;el.textContent=text}
@@ -311,6 +314,8 @@ async function validateToken(token,auto=false){
 function showMember(data){
   clearStatus(loginStatus); loginArea.classList.add("hidden"); memberArea.classList.add("show");
   const m=(data.mitgliedschaft||"Basis").trim()||"Basis";
+  currentMembership=m;
+  currentMembershipLevel=Number(data.mitgliedschaft_level||0);
   membershipBadge.textContent=m; membershipBadge.className="membership-badge";
   if(m.toLowerCase().includes("plus"))membershipBadge.classList.add("plus");
   else if(m.toLowerCase()==="basis")membershipBadge.classList.add("basis");
@@ -321,6 +326,48 @@ function logout(){
   networkView.classList.remove("show"); tokenInput.value=""; clearStatus(memberStatus); setStatus(loginStatus,"ok","Du wurdest abgemeldet.");
 }
 function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als nächster geschützter Bereich verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
+
+
+function maxUnlockedLevel(){
+  if(currentMembershipLevel>=2)return 8;
+  if(currentMembershipLevel>=1)return 6;
+  return 3;
+}
+function levelIsUnlocked(level){return Number(level)<=maxUnlockedLevel()}
+function requiredTarifForLevel(level){
+  return Number(level)>=7 ? "Premium Plus" : "Premium";
+}
+function upgradeTextForLevel(level){
+  const required=requiredTarifForLevel(level);
+  if(required==="Premium Plus"){
+    return "Mit Premium Plus erhältst du Zugriff auf Ebene 7 und 8 sowie die entsprechenden Premium-Provisionen ab deiner Aktivierung.";
+  }
+  return "Mit Premium erhältst du Zugriff auf Ebene 4 bis 6. Premium Plus erweitert deinen Zugriff zusätzlich bis Ebene 8.";
+}
+function upgradeButtonLabel(level){
+  return requiredTarifForLevel(level)==="Premium Plus" ? "⭐ Auf Premium Plus upgraden" : "⭐ Premium freischalten";
+}
+function openUpgrade(){
+  // Absichtlich ohne dashboard_token in der URL.
+  window.location.href="https://betinsightclub.github.io/profil/";
+}
+function renderLockedLevel(level, summary){
+  const el=$("level-"+level);
+  if(!el)return;
+  const body=el.querySelector(".level-body");
+  const req=requiredTarifForLevel(level);
+  body.innerHTML=`
+    <div style="padding:20px;border:1px solid rgba(255,193,91,.15);border-radius:14px;background:rgba(255,193,91,.045)">
+      <div style="font-size:22px;margin-bottom:8px">🔒</div>
+      <div style="font-weight:950;font-size:14px">Ebene ${level} ist mit ${escapeHtml(req)} freigeschaltet</div>
+      <div style="color:#92b4c1;font-size:11px;line-height:1.6;margin-top:7px">
+        Auf dieser Ebene befinden sich aktuell <b>${Number(summary?.partner||0)} Partner</b>.
+        ${escapeHtml(upgradeTextForLevel(level))}
+        Bereits entstandene Provisionen werden nicht rückwirkend verändert; neue Provisionsberechtigung beginnt erst ab der Aktivierung des höheren Tarifs.
+      </div>
+      <button class="btn btn-primary" type="button" style="margin-top:14px" onclick="openUpgrade()">${upgradeButtonLabel(level)}</button>
+    </div>`;
+}
 
 async function loadOverview(force=false){
   const token=sessionStorage.getItem(SESSION_KEY); if(!token)return;
@@ -337,26 +384,53 @@ function renderOverview(d){
   $("sBasis").textContent=g.basis??0; $("sPremium").textContent=g.premium??0; $("sPlus").textContent=g.premium_plus??0;
   $("sMonth").textContent=money(g.provision_monat_eur); $("sTotal").textContent=money(g.provision_gesamt_eur);
   $("sPending").textContent=money(g.vorgemerkt_eur); $("sPayable").textContent=money(g.auszahlbar_eur); $("sPaid").textContent=money(g.ausgezahlt_eur);
+
   const levels=Array.isArray(d.ebenen)?d.ebenen:[];
-  $("levelsSummaryBody").innerHTML=levels.map(l=>`<tr>
-    <td><b>Ebene ${l.ebene}</b></td><td class="num">${l.partner??0}</td><td class="num">${l.basis??0}</td>
-    <td class="num">${l.premium??0}</td><td class="num">${l.premium_plus??0}</td>
-    <td class="num money">${money(l.provision_monat_eur)}</td><td class="num money">${money(l.provision_gesamt_eur)}</td>
-    <td class="num">${money(l.ausgezahlt_eur)}</td></tr>`).join("");
-  $("levelsContainer").innerHTML=levels.map(l=>`<article class="level" id="level-${l.ebene}">
-    <button class="level-head" type="button" data-level="${l.ebene}">
-      <div class="level-title">Ebene ${l.ebene} <span class="chev">⌄</span></div>
-      <div class="level-meta">${l.partner??0} Partner · ${l.basis??0} Basis · ${l.premium??0} Premium · ${l.premium_plus??0} Premium Plus</div>
-      <div class="level-money"><strong>${money(l.provision_monat_eur)}</strong><small>Monat · Gesamt ${money(l.provision_gesamt_eur)}</small></div>
-    </button>
-    <div class="level-body"><div class="loadingbox">Zum Laden Ebene öffnen.</div></div>
-  </article>`).join("");
+  $("levelsSummaryBody").innerHTML=levels.map(l=>{
+    const open=levelIsUnlocked(l.ebene);
+    return `<tr>
+      <td><b>Ebene ${l.ebene}</b>${open?"":' <span class="statuschip grace">🔒 '+requiredTarifForLevel(l.ebene)+'</span>'}</td>
+      <td class="num">${l.partner??0}</td>
+      <td class="num">${l.basis??0}</td>
+      <td class="num">${l.premium??0}</td>
+      <td class="num">${l.premium_plus??0}</td>
+      <td class="num money">${open?money(l.provision_monat_eur):"🔒"}</td>
+      <td class="num money">${open?money(l.provision_gesamt_eur):"🔒"}</td>
+      <td class="num">${open?money(l.ausgezahlt_eur):"🔒"}</td>
+    </tr>`;
+  }).join("");
+
+  $("levelsContainer").innerHTML=levels.map(l=>{
+    const open=levelIsUnlocked(l.ebene);
+    return `<article class="level" id="level-${l.ebene}">
+      <button class="level-head" type="button" data-level="${l.ebene}">
+        <div class="level-title">Ebene ${l.ebene} <span class="chev">⌄</span></div>
+        <div class="level-meta">
+          ${l.partner??0} Partner · ${l.basis??0} Basis · ${l.premium??0} Premium · ${l.premium_plus??0} Premium Plus
+          ${open?"":' · 🔒 '+requiredTarifForLevel(l.ebene)}
+        </div>
+        <div class="level-money">
+          <strong>${open?money(l.provision_monat_eur):"🔒 Upgrade"}</strong>
+          <small>${open?("Monat · Gesamt "+money(l.provision_gesamt_eur)):"Details dieser Ebene gesperrt"}</small>
+        </div>
+      </button>
+      <div class="level-body"><div class="loadingbox">${open?"Zum Laden Ebene öffnen.":"Ebene öffnen, um Upgrade-Informationen zu sehen."}</div></div>
+    </article>`;
+  }).join("");
+
   document.querySelectorAll(".level-head").forEach(b=>b.addEventListener("click",()=>toggleLevel(Number(b.dataset.level))));
 }
 async function toggleLevel(level){
   const el=$("level-"+level), body=el.querySelector(".level-body");
   if(el.classList.contains("open")){el.classList.remove("open");return}
   el.classList.add("open");
+
+  if(!levelIsUnlocked(level)){
+    const summary=(overviewData?.ebenen||[]).find(x=>Number(x.ebene)===Number(level));
+    renderLockedLevel(level,summary);
+    return;
+  }
+
   if(detailCache[level]){renderLevelBody(level,detailCache[level]);return}
   body.innerHTML='<div class="loadingbox">Ebene '+level+' wird geladen …</div>';
   try{
@@ -420,7 +494,7 @@ async function applyDateRange(){
   try{
     const token=sessionStorage.getItem(SESSION_KEY);
     const tasks=[];
-    for(let l=1;l<=8;l++){
+    for(let l=1;l<=maxUnlockedLevel();l++){
       if(detailCache[l])tasks.push(Promise.resolve(detailCache[l]));
       else tasks.push(fetchJSON(DETAIL_WEBHOOK+"?token="+encodeURIComponent(token)+"&ebene="+l).then(d=>(detailCache[l]=d,d)));
     }
