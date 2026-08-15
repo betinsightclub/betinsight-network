@@ -8,7 +8,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
   <title>Premium & Network | BetInsight Network</title>
-  <!-- Premium & Network v1.4 TEST · Basis Preview mit Partnerzahl + CTA -->
+  <!-- Premium & Network v1.5 TEST · Basis Übersicht Ebene 1–6 ohne Aufklappen -->
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
 
   <style>
@@ -99,6 +99,14 @@
     .tile button{border:0;background:none;padding:0;color:#66d7f2;cursor:pointer;font-size:11px;font-weight:900}
     .member-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:17px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
     .security{color:#6f95a4;font-size:10px;line-height:1.5}
+
+
+    .basis-preview-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin-top:15px}
+    .basis-level{padding:13px 10px;border-radius:13px;border:1px solid rgba(104,203,235,.15);background:rgba(255,255,255,.025);text-align:center}
+    .basis-level span{display:block;color:#7fa5b4;font-size:8px;text-transform:uppercase;letter-spacing:.6px;font-weight:900}
+    .basis-level strong{display:block;margin-top:5px;font-size:22px;color:#edfaff}
+    .member-head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    @media(max-width:760px){.basis-preview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
     /* Network Bereich */
     #networkView{display:none;margin-top:18px}
@@ -205,39 +213,87 @@
             <h2>Dein BetInsight Network</h2>
             <p id="memberMeta">Benutzerdaten werden geladen …</p>
           </div>
-          <div class="membership-badge" id="membershipBadge">Mitgliedschaft</div>
+          <div class="member-head-actions">
+            <div class="membership-badge" id="membershipBadge">Mitgliedschaft</div>
+            <button class="btn btn-soft" type="button" onclick="logout()">↔ Account wechseln</button>
+          </div>
         </div>
 
         <div class="tiles">
           <article class="tile"><div class="ico">⭐</div><h3>Meine Mitgliedschaft</h3><p>Status, Tarif, Laufzeit, Kulanz und Verlängerung.</p><button type="button" onclick="comingSoon('Mitgliedschaft')">Öffnen →</button></article>
           <article class="tile"><div class="ico">🌐</div><h3>Mein Network</h3><p id="networkCardText">Ebenen 1–8, Partnerstatus und Provisionen je Ebene.</p><button type="button" id="openNetworkBtn">Öffnen →</button></article>
           <article class="tile"><div class="ico">€</div><h3>Provisionen</h3><p>Vorgemerkt, auszahlbar und ausgezahlt im Detail.</p><button type="button" onclick="comingSoon('Provisionen')">Öffnen →</button></article>
-          <article class="tile"><div class="ico">✉</div><h3>Nachrichten</h3><p>Geschützte Kommunikation zwischen Upline und Downline.</p><button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button></article>
+          <article class="tile"><div class="ico">✉</div><h3>Nachrichten</h3><p>Nachrichten empfangen und antworten – auch im Basis-Tarif.</p><button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button></article>
         </div>
 
         
+        
         <section id="basisNetworkUpgrade" style="display:none;margin-top:18px">
-  <div class="card" style="border:1px solid rgba(255,193,91,.28);background:radial-gradient(circle at 88% 14%,rgba(255,193,91,.10),transparent 28%),linear-gradient(145deg,rgba(40,30,10,.40),rgba(5,44,58,.88));box-shadow:0 18px 50px rgba(0,0,0,.18)">
-    <div class="eyebrow" style="color:#ffe0a0;border-color:rgba(255,193,91,.25);background:rgba(255,193,91,.08)">🔒 PREMIUM NETWORK</div>
-    <h2 style="font-size:clamp(24px,4vw,38px);margin:14px 0 10px">Dein Network ist bereits da.</h2>
-    <p style="max-width:760px;font-size:14px;line-height:1.7">Auch als Basis-Mitglied wächst deine Sponsorstruktur weiter. Die detaillierte Network-Anzeige und die Premium-Verdienstmöglichkeiten werden jedoch erst ab Premium freigeschaltet.</p>
+          <div class="card" style="
+            border:1px solid rgba(255,193,91,.25);
+            background:
+              radial-gradient(circle at 88% 8%,rgba(255,193,91,.09),transparent 27%),
+              linear-gradient(145deg,rgba(5,37,50,.92),rgba(5,26,36,.94));
+            box-shadow:0 18px 50px rgba(0,0,0,.18)">
+            <div class="eyebrow" style="color:#ffe0a0;border-color:rgba(255,193,91,.22);background:rgba(255,193,91,.07)">
+              🔒 Premium Network Vorschau
+            </div>
 
-    <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:stretch;margin-top:18px">
-      <div style="flex:1 1 260px;padding:18px;border-radius:16px;border:1px solid rgba(0,224,169,.20);background:rgba(0,224,169,.055)">
-        <div style="font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#83aebb;font-weight:900">Partner in deinem Network</div>
-        <div id="basisPartnerCount" style="font-size:40px;font-weight:950;color:#ecfbff;line-height:1;margin-top:7px">…</div>
-        <div style="font-size:10px;color:#7599a6;margin-top:7px">Nur die Gesamtzahl wird im Basis-Tarif angezeigt.</div>
-      </div>
-      <div style="flex:1 1 360px;padding:18px;border-radius:16px;border:1px solid rgba(255,193,91,.20);background:rgba(255,193,91,.055)">
-        <div style="font-weight:950;font-size:15px;color:#ffe0a0">Anzeige und Verdienst erst ab Premium</div>
-        <div style="font-size:11px;line-height:1.65;color:#a8c2cb;margin-top:7px">Mit Premium werden dein Premium-Network bis zur 6. Ebene, Partnerdetails und Premium-Provisionen freigeschaltet. Premium Plus erweitert den Bereich bis zur 8. Ebene.</div>
-        <button class="btn btn-primary" type="button" onclick="openUpgrade()" style="margin-top:14px">⭐ Premium entdecken</button>
-      </div>
-    </div>
+            <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-top:14px">
+              <div>
+                <h2 style="font-size:clamp(24px,4vw,36px);margin:0 0 8px">Dein Network wächst bereits.</h2>
+                <p style="max-width:760px;font-size:13px;line-height:1.65;margin:0">
+                  Als Basis-Mitglied siehst du hier nur die Entwicklung deiner Sponsorstruktur
+                  bis zur 6. Ebene. Einzelne Partner, Statusdaten und Premium-Provisionen werden
+                  erst nach einem Upgrade auf Premium freigeschaltet.
+                </p>
+              </div>
+              <div style="
+                min-width:180px;padding:15px 18px;border-radius:15px;
+                border:1px solid rgba(24,210,148,.20);background:rgba(24,210,148,.055)">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:#82adba;font-weight:900">
+                  Partner gesamt · Ebene 1–6
+                </div>
+                <div id="basisPartnerCount" style="font-size:34px;font-weight:950;margin-top:4px">…</div>
+              </div>
+            </div>
 
-    <p style="margin-top:14px;color:#7397a5;font-size:10px">Die normalen Unit-Empfehlungen bis zur 3. Ebene bleiben davon getrennt. Premium-Provisionsberechtigungen beginnen erst ab der jeweiligen Aktivierung.</p>
-  </div>
-</section>
+            <div class="basis-preview-grid" aria-label="Network Vorschau Ebene 1 bis 6">
+              <div class="basis-level"><span>Ebene 1</span><strong id="basisL1">–</strong></div>
+              <div class="basis-level"><span>Ebene 2</span><strong id="basisL2">–</strong></div>
+              <div class="basis-level"><span>Ebene 3</span><strong id="basisL3">–</strong></div>
+              <div class="basis-level"><span>Ebene 4</span><strong id="basisL4">–</strong></div>
+              <div class="basis-level"><span>Ebene 5</span><strong id="basisL5">–</strong></div>
+              <div class="basis-level"><span>Ebene 6</span><strong id="basisL6">–</strong></div>
+            </div>
+
+            <div style="
+              margin-top:16px;padding:15px 16px;border-radius:14px;
+              border:1px solid rgba(255,193,91,.22);background:rgba(255,193,91,.055);
+              display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="font-weight:950;font-size:14px;color:#ffe0a0">
+                  Anzeige der Partnerdetails und Verdienst erst ab Premium
+                </div>
+                <div style="font-size:10px;line-height:1.55;color:#9ebbc6;margin-top:4px">
+                  Premium schaltet dein Premium-Network bis zur 6. Ebene frei.
+                  Premium Plus erweitert es bis zur 8. Ebene.
+                </div>
+              </div>
+              <button class="btn btn-primary" type="button" onclick="openUpgrade()">
+                ⭐ Premium freischalten
+              </button>
+            </div>
+
+            <div style="
+              margin-top:12px;padding:11px 13px;border-radius:12px;
+              background:rgba(24,157,247,.045);border:1px solid rgba(24,157,247,.12);
+              color:#91b3c0;font-size:10px;line-height:1.55">
+              ✉ Nachrichten empfangen und auf erhaltene Nachrichten antworten bleibt auch im Basis-Tarif möglich.
+              Die normalen Unit-Empfehlungen bis zur 3. Ebene bleiben ein separates BetInsight-Club-System.
+            </div>
+          </div>
+        </section>
 
 <section id="networkView">
           <div class="sectionbar">
@@ -290,7 +346,7 @@
 
 <script>
 const SESSION_WEBHOOK = "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
-const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.2 TEST
+const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.3 TEST
 const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63"; // Network Ebene Detail v1.2 TEST
 const SESSION_KEY = "betinsight_network_session_token";
 
@@ -346,8 +402,8 @@ function showMember(data){
   memberMeta.textContent="BI-ID "+(data.user_id||"–")+" · Ref "+(data.ref_code||"–");
 
   if(currentMembershipLevel===0){
-    $("networkCardText").textContent="Dein Network wächst bereits · Details und Verdienst ab Premium.";
-    $("openNetworkBtn").textContent="Network-Vorschau →";
+    $("networkCardText").textContent="Vorschau Ebene 1–6 · Partnerdetails und Verdienst ab Premium.";
+    $("openNetworkBtn").textContent="Vorschau öffnen →";
   }else if(currentMembershipLevel===1){
     $("networkCardText").textContent="Ebenen 1–6 offen · Ebene 7–8 mit Premium Plus.";
     $("openNetworkBtn").textContent="Öffnen →";
@@ -554,14 +610,27 @@ $("openNetworkBtn").addEventListener("click",async()=>{
     networkView.classList.remove("show");
     $("basisNetworkUpgrade").style.display="block";
     $("basisPartnerCount").textContent="…";
+    for(let l=1;l<=6;l++) $("basisL"+l).textContent="–";
     $("basisNetworkUpgrade").scrollIntoView({behavior:"smooth",block:"start"});
     try{
       const token=sessionStorage.getItem(SESSION_KEY);
       const d=await fetchJSON(OVERVIEW_WEBHOOK+"?token="+encodeURIComponent(token));
-      $("basisPartnerCount").textContent=(d && d.preview_only===true)?Number(d?.gesamt?.partner||0):"–";
-    }catch(e){$("basisPartnerCount").textContent="–"}
+      if(d && d.preview_only===true){
+        $("basisPartnerCount").textContent=Number(d?.gesamt?.partner||0);
+        const levels=Array.isArray(d.ebenen)?d.ebenen:[];
+        for(let l=1;l<=6;l++){
+          const row=levels.find(x=>Number(x.ebene)===l);
+          $("basisL"+l).textContent=Number(row?.partner||0);
+        }
+      }else{
+        $("basisPartnerCount").textContent="–";
+      }
+    }catch(e){
+      $("basisPartnerCount").textContent="–";
+    }
     return;
   }
+
   $("basisNetworkUpgrade").style.display="none";
   networkView.classList.add("show");
   loadOverview();
