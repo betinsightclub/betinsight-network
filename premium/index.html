@@ -8,7 +8,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
   <title>Premium & Network | BetInsight Network</title>
-  <!-- Premium & Network v1.2 TEST · Tarifabhängige Ebenen-Sperre -->
+  <!-- Premium & Network v1.3 TEST · Basis ohne Premium-Network-Zugriff -->
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
 
   <style>
@@ -210,12 +210,42 @@
 
         <div class="tiles">
           <article class="tile"><div class="ico">⭐</div><h3>Meine Mitgliedschaft</h3><p>Status, Tarif, Laufzeit, Kulanz und Verlängerung.</p><button type="button" onclick="comingSoon('Mitgliedschaft')">Öffnen →</button></article>
-          <article class="tile"><div class="ico">🌐</div><h3>Mein Network</h3><p>Ebenen 1–8, Partnerstatus und Provisionen je Ebene.</p><button type="button" id="openNetworkBtn">Öffnen →</button></article>
+          <article class="tile"><div class="ico">🌐</div><h3>Mein Network</h3><p id="networkCardText">Ebenen 1–8, Partnerstatus und Provisionen je Ebene.</p><button type="button" id="openNetworkBtn">Öffnen →</button></article>
           <article class="tile"><div class="ico">€</div><h3>Provisionen</h3><p>Vorgemerkt, auszahlbar und ausgezahlt im Detail.</p><button type="button" onclick="comingSoon('Provisionen')">Öffnen →</button></article>
           <article class="tile"><div class="ico">✉</div><h3>Nachrichten</h3><p>Geschützte Kommunikation zwischen Upline und Downline.</p><button type="button" onclick="comingSoon('Nachrichten')">Öffnen →</button></article>
         </div>
 
-        <section id="networkView">
+        
+        <section id="basisNetworkUpgrade" style="display:none;margin-top:18px">
+          <div class="card" style="border-color:rgba(255,193,91,.18);background:linear-gradient(145deg,rgba(44,35,15,.28),rgba(7,46,60,.58))">
+            <div class="eyebrow" style="color:#ffe2a6;border-color:rgba(255,193,91,.20);background:rgba(255,193,91,.07)">Premium Network</div>
+            <h2 style="margin-top:14px">Dein Premium-Network ist noch nicht aktiviert</h2>
+            <p style="max-width:760px">
+              Der Basis-Tarif enthält weiterhin deine normalen BetInsight-Unit-Empfehlungen bis zur 3. Ebene.
+              Der separate Premium-Network-Bereich ist jedoch eine Premium-Funktion und zeigt deshalb im Basis-Tarif
+              keine Partnerzahlen, Ebenen, Premium-Status oder Premium-Provisionen.
+            </p>
+            <div class="tiles" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px">
+              <article class="tile" style="min-height:145px">
+                <div class="ico">⭐</div>
+                <h3>Premium</h3>
+                <p>Premium-Network und Premium-Provisionen bis zur 6. Ebene.</p>
+                <button type="button" onclick="openUpgrade()">Premium entdecken →</button>
+              </article>
+              <article class="tile" style="min-height:145px">
+                <div class="ico">👑</div>
+                <h3>Premium Plus</h3>
+                <p>Premium-Network und Premium-Provisionen bis zur 8. Ebene.</p>
+                <button type="button" onclick="openUpgrade()">Premium Plus entdecken →</button>
+              </article>
+            </div>
+            <p style="margin-top:14px;color:#789eae;font-size:10px">
+              Neue Premium-Provisionsberechtigungen beginnen erst ab der jeweiligen Aktivierung und werden nicht rückwirkend erzeugt.
+            </p>
+          </div>
+        </section>
+
+<section id="networkView">
           <div class="sectionbar">
             <div><h2>Mein Network</h2><p>Übersicht aller Ebenen und deiner Premium-Provisionen.</p></div>
             <button class="btn btn-soft" type="button" id="refreshNetworkBtn">↻ Aktualisieren</button>
@@ -266,8 +296,8 @@
 
 <script>
 const SESSION_WEBHOOK = "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
-const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp";
-const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63";
+const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.1 TEST
+const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63"; // Network Ebene Detail v1.2 TEST
 const SESSION_KEY = "betinsight_network_session_token";
 
 const $ = id => document.getElementById(id);
@@ -320,10 +350,22 @@ function showMember(data){
   if(m.toLowerCase().includes("plus"))membershipBadge.classList.add("plus");
   else if(m.toLowerCase()==="basis")membershipBadge.classList.add("basis");
   memberMeta.textContent="BI-ID "+(data.user_id||"–")+" · Ref "+(data.ref_code||"–");
+
+  if(currentMembershipLevel===0){
+    $("networkCardText").textContent="Premium Network ist im Basis-Tarif nicht enthalten.";
+    $("openNetworkBtn").textContent="Premium entdecken →";
+  }else if(currentMembershipLevel===1){
+    $("networkCardText").textContent="Ebenen 1–6 offen · Ebene 7–8 mit Premium Plus.";
+    $("openNetworkBtn").textContent="Öffnen →";
+  }else{
+    $("networkCardText").textContent="Ebenen 1–8, Partnerstatus und Provisionen je Ebene.";
+    $("openNetworkBtn").textContent="Öffnen →";
+  }
+
 }
 function logout(){
   sessionStorage.removeItem(SESSION_KEY); memberArea.classList.remove("show"); loginArea.classList.remove("hidden");
-  networkView.classList.remove("show"); tokenInput.value=""; clearStatus(memberStatus); setStatus(loginStatus,"ok","Du wurdest abgemeldet.");
+  networkView.classList.remove("show"); $("basisNetworkUpgrade").style.display="none"; tokenInput.value=""; clearStatus(memberStatus); setStatus(loginStatus,"ok","Du wurdest abgemeldet.");
 }
 function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als nächster geschützter Bereich verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
@@ -331,7 +373,7 @@ function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als näch
 function maxUnlockedLevel(){
   if(currentMembershipLevel>=2)return 8;
   if(currentMembershipLevel>=1)return 6;
-  return 3;
+  return 0;
 }
 function levelIsUnlocked(level){return Number(level)<=maxUnlockedLevel()}
 function requiredTarifForLevel(level){
@@ -487,6 +529,7 @@ function renderLevelBody(level,d){
 function messagePartner(ref){setStatus(memberStatus,"loading","Nachrichtenfunktion für "+ref+" wird als nächster Baustein verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
 async function applyDateRange(){
+  if(currentMembershipLevel===0){setStatus(networkStatus,"error","Premium Network ist im Basis-Tarif nicht enthalten.");return}
   const from=$("dateFrom").value,to=$("dateTo").value;
   if(!from||!to){setStatus(networkStatus,"error","Bitte Von- und Bis-Datum auswählen.");return}
   if(from>to){setStatus(networkStatus,"error","Das Von-Datum darf nicht nach dem Bis-Datum liegen.");return}
@@ -512,7 +555,18 @@ async function applyDateRange(){
 loginBtn.addEventListener("click",()=>validateToken(tokenInput.value));
 logoutBtn.addEventListener("click",logout);
 tokenInput.addEventListener("keydown",e=>{if(e.key==="Enter")validateToken(tokenInput.value)});
-$("openNetworkBtn").addEventListener("click",()=>{networkView.classList.add("show");loadOverview();networkView.scrollIntoView({behavior:"smooth",block:"start"})});
+$("openNetworkBtn").addEventListener("click",()=>{
+  if(currentMembershipLevel===0){
+    networkView.classList.remove("show");
+    $("basisNetworkUpgrade").style.display="block";
+    $("basisNetworkUpgrade").scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+  }
+  $("basisNetworkUpgrade").style.display="none";
+  networkView.classList.add("show");
+  loadOverview();
+  networkView.scrollIntoView({behavior:"smooth",block:"start"});
+});
 $("refreshNetworkBtn").addEventListener("click",()=>{overviewData=null;Object.keys(detailCache).forEach(k=>delete detailCache[k]);loadOverview(true)});
 $("applyDateBtn").addEventListener("click",applyDateRange);
 document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
