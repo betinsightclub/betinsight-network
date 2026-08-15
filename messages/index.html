@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#03131d">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Nachrichten | BetInsight Network</title>
+  <!-- BetInsight Network Nachrichten v1.0 TEST -->
+  <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
+  <style>
+    :root{
+      --bg:#020b12;--panel:#052331;--panel2:#082d3d;
+      --line:rgba(104,203,235,.17);--line2:rgba(104,203,235,.30);
+      --text:#f2fbff;--soft:#bad8e4;--muted:#789eae;
+      --blue:#189df7;--cyan:#18c9e8;--green:#18d294;--gold:#ffc15b;
+      --danger:#ff7079;--warning:#ffbf54;--shadow:0 28px 90px rgba(0,0,0,.42);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;min-height:100vh;color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(24,157,247,.15),transparent 30%),
+        radial-gradient(circle at 90% 12%,rgba(24,210,148,.10),transparent 29%),
+        linear-gradient(180deg,#03131d 0%,#041b27 50%,#020b12 100%);
+    }
+    button,textarea{font:inherit}
+    .mesh{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.35;
+      background-image:linear-gradient(rgba(64,177,207,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(64,177,207,.045) 1px,transparent 1px);
+      background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+    .wrap{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:22px 0 34px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 15px;
+      border:1px solid var(--line);border-radius:17px;background:rgba(3,24,35,.76);backdrop-filter:blur(12px)}
+    .brand strong{display:block;font-size:15px}.brand span{display:block;margin-top:4px;color:var(--muted);
+      font-size:10px;text-transform:uppercase;letter-spacing:.9px;font-weight:850}
+    .back{min-height:38px;padding:0 13px;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+      border-radius:11px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);
+      color:#d8eff7;font-size:12px;font-weight:850}
+    .shell{margin-top:18px;border:1px solid var(--line);border-radius:28px;overflow:hidden;
+      background:linear-gradient(145deg,rgba(4,31,44,.94),rgba(4,22,32,.96));box-shadow:var(--shadow)}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.65fr);align-items:center;gap:28px;
+      padding:30px 38px 27px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;color:#aef1d8;
+      background:rgba(24,210,148,.07);border:1px solid rgba(24,210,148,.16);
+      text-transform:uppercase;letter-spacing:.8px;font-size:10px;font-weight:900}
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);
+      box-shadow:0 0 13px rgba(24,210,148,.8)}
+    h1{margin:13px 0 10px;font-size:clamp(31px,5vw,51px);letter-spacing:-2px;line-height:1.02}
+    h1 span{background:linear-gradient(90deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{max-width:680px;margin:0;color:#a8c8d5;font-size:13px;line-height:1.65}
+    .logo{width:min(290px,100%);max-height:145px;object-fit:contain;justify-self:center;
+      filter:drop-shadow(0 16px 30px rgba(0,0,0,.34))}
+    .content{padding:24px 38px 34px}
+    .status{display:none;margin:12px 0;padding:11px 12px;border-radius:11px;font-size:11px;line-height:1.5;font-weight:750}
+    .status.show{display:block}.status.loading{color:#cceef8;background:rgba(24,157,247,.08);border:1px solid rgba(24,157,247,.15)}
+    .status.error{color:#ffd7da;background:rgba(255,112,121,.08);border:1px solid rgba(255,112,121,.18)}
+    .status.ok{color:#c9fae7;background:rgba(24,210,148,.08);border:1px solid rgba(24,210,148,.18)}
+    .member-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 20px;border-radius:18px;
+      border:1px solid var(--line);background:rgba(255,255,255,.025)}
+    .member-head small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.8px;font-weight:850}
+    .member-head h2{margin:5px 0 3px;font-size:22px}.member-head p{margin:0;color:#91b4c1;font-size:11px}
+    .membership{padding:8px 12px;border-radius:999px;color:#cefae9;background:rgba(24,210,148,.09);
+      border:1px solid rgba(24,210,148,.18);font-size:10px;font-weight:950;white-space:nowrap}
+    .membership.basis{color:#d4e8ef;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+    .membership.plus{color:#fff0c9;background:rgba(255,193,91,.08);border-color:rgba(255,193,91,.18)}
+    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:13px}
+    .stat{padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}
+    .stat span{display:block;color:#789dac;font-size:8px;text-transform:uppercase;letter-spacing:.7px;font-weight:850}
+    .stat strong{display:block;margin-top:6px;font-size:19px}.stat small{display:block;margin-top:4px;color:#7399a8;font-size:8px;line-height:1.4}
+    .rules{margin-top:12px;padding:13px 14px;border-radius:14px;border:1px solid rgba(255,193,91,.16);
+      background:rgba(255,193,91,.045);color:#a8c1ca;font-size:10px;line-height:1.55}
+    .rules b{color:#ffe0a0}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+    .tabs{display:flex;gap:7px;flex-wrap:wrap}
+    .tab,.btn{min-height:38px;padding:0 12px;border-radius:10px;cursor:pointer;font-size:10px;font-weight:900}
+    .tab{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#c9e4ed}
+    .tab.active{background:rgba(24,210,148,.09);border-color:rgba(24,210,148,.22);color:#c9fae7}
+    .btn{border:0;color:white}.btn-blue{background:linear-gradient(110deg,#168df2,#16bddd)}
+    .btn-green{background:linear-gradient(110deg,#0ca978,#19d397)}.btn-soft{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08)}
+    .list{display:grid;gap:9px;margin-top:12px}
+    .msg{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.022);padding:14px 15px}
+    .msg.system{border-color:rgba(24,157,247,.20);background:rgba(24,157,247,.04)}
+    .msg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .msg-who{font-size:11px;font-weight:950}.msg-meta{margin-top:3px;color:#769ba9;font-size:8px;line-height:1.4}
+    .msg-date{color:#7399a8;font-size:8px;text-align:right;white-space:nowrap}
+    .msg-text{margin-top:10px;color:#d6edf4;font-size:11px;line-height:1.62;white-space:pre-wrap;word-break:break-word}
+    .msg-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+    .pill{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:900;
+      background:rgba(255,255,255,.04);color:#9bbbc6;border:1px solid rgba(255,255,255,.05)}
+    .pill.filtered{color:#ffe0a0;background:rgba(255,193,91,.07);border-color:rgba(255,193,91,.13)}
+    .empty{padding:28px 15px;text-align:center;color:#789cab;font-size:10px;border:1px dashed rgba(104,203,235,.14);border-radius:15px}
+    .composer{display:none;margin-top:15px;border:1px solid rgba(24,210,148,.18);border-radius:17px;
+      background:linear-gradient(145deg,rgba(5,39,51,.92),rgba(5,27,37,.94));padding:17px}
+    .composer.show{display:block}.compose-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .compose-head h3{margin:0;font-size:15px}.compose-head p{margin:4px 0 0;color:#8fabb6;font-size:9px}
+    textarea{width:100%;min-height:120px;margin-top:12px;padding:12px 13px;border-radius:12px;resize:vertical;outline:none;
+      border:1px solid rgba(103,204,237,.24);background:#f7fbfd;color:#10222b;font-size:12px;line-height:1.5}
+    textarea:focus{border-color:#24a9ef;box-shadow:0 0 0 3px rgba(36,169,239,.12)}
+    .counter{display:flex;justify-content:space-between;gap:10px;margin-top:7px;color:#789cab;font-size:8px}
+    .filter-hint{margin-top:10px;padding:10px 11px;border-radius:11px;background:rgba(24,157,247,.055);
+      border:1px solid rgba(24,157,247,.12);color:#9dbbc6;font-size:9px;line-height:1.55}
+    .filter-hint.warn{background:rgba(255,193,91,.055);border-color:rgba(255,193,91,.14);color:#d8c79f}
+    footer{margin-top:17px;text-align:center;color:#587b89;font-size:9px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.logo{order:-1;width:min(270px,72vw)}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){
+      .wrap{width:min(100% - 16px,1180px);padding-top:8px}.top{padding:9px 10px}.brand span{display:none}
+      .hero{padding:23px 18px}.content{padding:18px}.member-head{display:block}.membership{display:inline-block;margin-top:10px}
+      .summary{grid-template-columns:1fr 1fr}.toolbar{align-items:stretch}.tabs{width:100%}.tab{flex:1}.btn{width:100%}
+      .msg-head{display:block}.msg-date{text-align:left;margin-top:5px}.compose-head{display:block}
+    }
+  </style>
+</head>
+<body>
+<div class="mesh" aria-hidden="true"></div>
+<main class="wrap">
+  <header class="top">
+    <div class="brand"><strong>BetInsight Network</strong><span>Geschützte Network-Kommunikation</span></div>
+    <button class="back" type="button" onclick="goBack()">← Premium & Network</button>
+  </header>
+
+  <section class="shell">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Geschützte Kommunikation</div>
+        <h1>Meine <span>Nachrichten</span></h1>
+        <p>BetInsight vermittelt die Kommunikation innerhalb deines Networks. Private E-Mail-Adressen anderer Mitglieder werden nicht offengelegt.</p>
+      </div>
+      <img class="logo" src="../betinsight.network.png" alt="BetInsight Network">
+    </div>
+
+    <div class="content">
+      <div id="pageStatus" class="status"></div>
+
+      <section id="app" style="display:none">
+        <div class="member-head">
+          <div>
+            <small>Angemeldet</small>
+            <h2 id="userTitle">Deine Network-Nachrichten</h2>
+            <p id="userMeta">Benutzerdaten werden geladen …</p>
+          </div>
+          <div class="membership" id="membershipBadge">Mitgliedschaft</div>
+        </div>
+
+        <div class="summary">
+          <div class="stat"><span>Posteingang</span><strong id="statInbox">–</strong><small>geladene Nachrichten</small></div>
+          <div class="stat"><span>Gesendet</span><strong id="statSent">–</strong><small>geladene Nachrichten</small></div>
+          <div class="stat"><span>Heute genutzt</span><strong id="statToday">–</strong><small id="statTodaySub">Tariflimit</small></div>
+          <div class="stat"><span>Firstline</span><strong id="statFirstline">–</strong><small>aktive Erstkontakte heute</small></div>
+        </div>
+
+        <div class="rules" id="rulesBox">Regeln werden geladen …</div>
+
+        <div class="toolbar">
+          <div class="tabs">
+            <button class="tab active" type="button" data-tab="inbox">Posteingang</button>
+            <button class="tab" type="button" data-tab="sent">Gesendet</button>
+          </div>
+          <button class="btn btn-soft" type="button" id="refreshBtn">↻ Nachrichten aktualisieren</button>
+        </div>
+
+        <div id="messagesStatus" class="status"></div>
+        <div class="list" id="messageList"><div class="empty">Nachrichten werden geladen …</div></div>
+
+        <section class="composer" id="composer">
+          <div class="compose-head">
+            <div>
+              <h3 id="composeTitle">Nachricht schreiben</h3>
+              <p id="composeMeta">Empfänger wird gewählt.</p>
+            </div>
+            <button class="tab" type="button" id="closeComposerBtn">Schließen</button>
+          </div>
+          <textarea id="messageText" maxlength="1000" placeholder="Nachricht eingeben …"></textarea>
+          <div class="counter"><span id="composeRule">Serverseitige Prüfung vor Versand.</span><span><b id="charCount">0</b>/1000</span></div>
+          <div class="filter-hint" id="filterHint"></div>
+          <div id="sendStatus" class="status"></div>
+          <div class="msg-actions">
+            <button class="btn btn-green" type="button" id="sendBtn">✉ Nachricht senden</button>
+          </div>
+        </section>
+      </section>
+    </div>
+  </section>
+  <footer>© 2026 BetInsight Network · Ein Bereich von BetInsight Club</footer>
+</main>
+
+<script>
+const SESSION_WEBHOOK="https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
+const READ_WEBHOOK="https://hook.eu1.make.com/bhx1l23aoz91eob5y9oex7xlk9uopddm";
+const SEND_WEBHOOK="https://hook.eu1.make.com/o2nhkn76h0dxnij3ia9oed1p4np4mfav";
+const SESSION_KEY="betinsight_network_session_token";
+const TARGET_KEY="betinsight_network_message_target";
+
+const $=id=>document.getElementById(id);
+let currentUserId="";
+let currentMembership="Basis";
+let currentMembershipLevel=0;
+let messages=[];
+let activeTab="inbox";
+let loaded=false;
+let composeTarget=null;
+
+function setStatus(el,type,text){el.className="status show "+type;el.textContent=text}
+function clearStatus(el){el.className="status";el.textContent=""}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function cleanToken(v){return String(v||"").trim()}
+function goBack(){location.href="../premium/"}
+
+async function getJSON(url){
+  const r=await fetch(url,{method:"GET",cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
+  let d;try{d=await r.json()}catch(e){throw new Error("Serverantwort konnte nicht gelesen werden")}
+  if(!d||d.success!==true)throw new Error(d?.message||d?.error||"Anfrage fehlgeschlagen");
+  return d;
+}
+
+async function postMessage(payload){
+  const body=new URLSearchParams(payload);
+  const r=await fetch(SEND_WEBHOOK,{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body:body.toString(),
+    cache:"no-store",
+    credentials:"omit",
+    referrerPolicy:"no-referrer"
+  });
+  let d;try{d=await r.json()}catch(e){throw new Error("Serverantwort konnte nicht gelesen werden")}
+  return d||{success:false,error:"UNKNOWN"};
+}
+
+function splitValue(v,delimiter){
+  if(v===null||v===undefined||v==="")return[];
+  return String(v).split(delimiter);
+}
+function parseMessages(d){
+  const delimiter=d.delimiter||"§§BI_MSG§§";
+  const src=d.nachrichten||{};
+  const keys=["nachricht_id","thread_id","gesendet_am","absender_user_id","empfaenger_user_id","absender_tarif","beziehung_ebene","richtung","typ","antwort_auf_id","nachricht","status","gelesen_am","quelle"];
+  const arrays={};keys.forEach(k=>arrays[k]=splitValue(src[k],delimiter));
+  const n=Math.max(Number(d.anzahl||0),...keys.map(k=>arrays[k].length),0);
+  const out=[];
+  for(let i=0;i<n;i++){
+    const o={};keys.forEach(k=>o[k]=arrays[k][i]??"");
+    if(o.nachricht_id||o.nachricht)out.push(o);
+  }
+  return out;
+}
+function berlinDay(v){
+  const d=v?new Date(v):new Date();
+  if(Number.isNaN(d.getTime()))return"";
+  return new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Berlin",year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+}
+function formatDate(v){
+  const d=new Date(v);if(Number.isNaN(d.getTime()))return"–";
+  return new Intl.DateTimeFormat("de-DE",{timeZone:"Europe/Berlin",day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}).format(d);
+}
+function isOutgoing(m){return String(m.absender_user_id)===String(currentUserId)}
+function isSystem(m){return String(m.absender_user_id).toUpperCase()==="SYSTEM"||String(m.quelle).toUpperCase()==="SYSTEM"}
+function displayId(id){if(!id||id==="ALL")return id==="ALL"?"BetInsight System":"–";return "BI"+String(id)}
+function levelNum(m){return Number(m.beziehung_ebene||0)}
+
+function tariffRules(){
+  if(currentMembershipLevel<=0){
+    return {limit:5,label:"Antworten",depthText:"Basis kann empfangen und auf erhaltene Nachrichten antworten. Maximal 5 ausgehende Antworten pro Tag."};
+  }
+  if(currentMembershipLevel===1){
+    return {limit:12,label:"Tiefe",depthText:"Premium: Firstline je direktem Partner 1 aktiver Erstkontakt pro Tag. Ebene 2–6: insgesamt maximal 12 Nachrichten pro Tag; zusätzliche Partner-/Ebenenlimits gelten serverseitig."};
+  }
+  return {limit:25,label:"Tiefe",depthText:"Premium Plus: Firstline je direktem Partner 1 aktiver Erstkontakt pro Tag. Ebene 2–8: insgesamt maximal 25 Nachrichten pro Tag; zusätzliche Partner-/Ebenenlimits gelten serverseitig."};
+}
+function todayUsage(){
+  const today=berlinDay();
+  const outgoing=messages.filter(isOutgoing).filter(m=>berlinDay(m.gesendet_am)===today);
+  if(currentMembershipLevel<=0)return outgoing.filter(m=>String(m.typ).toUpperCase()==="ANTWORT").length;
+  return outgoing.filter(m=>levelNum(m)>=2).length;
+}
+function firstlineToday(){
+  const today=berlinDay();
+  return messages.filter(isOutgoing).filter(m=>berlinDay(m.gesendet_am)===today)
+    .filter(m=>levelNum(m)===1&&String(m.typ).toUpperCase()==="NEU").length;
+}
+function updateSummary(){
+  const inbox=messages.filter(m=>!isOutgoing(m)).length;
+  const sent=messages.filter(isOutgoing).length;
+  const r=tariffRules();
+  $("statInbox").textContent=inbox;
+  $("statSent").textContent=sent;
+  $("statToday").textContent=todayUsage()+" / "+r.limit;
+  $("statTodaySub").textContent=currentMembershipLevel<=0?"Antworten heute":"Nachrichten ab Ebene 2";
+  $("statFirstline").textContent=currentMembershipLevel<=0?"–":firstlineToday();
+  $("rulesBox").innerHTML="<b>"+escapeHtml(currentMembership)+":</b> "+escapeHtml(r.depthText)+"<br>Links werden immer entfernt. Firstline darf Telefon + Telegram-Username übertragen; ab Ebene 2 werden direkte Kontaktdaten automatisch entfernt.";
+}
+
+function renderMessages(){
+  updateSummary();
+  const list=activeTab==="inbox"?messages.filter(m=>!isOutgoing(m)):messages.filter(isOutgoing);
+  const box=$("messageList");
+  if(!list.length){box.innerHTML='<div class="empty">'+(activeTab==="inbox"?"Noch keine Nachrichten im Posteingang.":"Noch keine gesendeten Nachrichten.")+"</div>";return}
+  box.innerHTML=list.map(m=>{
+    const outgoing=isOutgoing(m);
+    const system=isSystem(m);
+    const other=outgoing?displayId(m.empfaenger_user_id):(system?"BetInsight System":displayId(m.absender_user_id));
+    const filtered=String(m.status||"").includes("GEFILTERT");
+    const level=levelNum(m);
+    const canReply=!outgoing&&!system&&m.nachricht_id;
+    return `<article class="msg ${system?"system":""}">
+      <div class="msg-head">
+        <div>
+          <div class="msg-who">${outgoing?"An ":"Von "}${escapeHtml(other)}</div>
+          <div class="msg-meta">${level?("Network-Ebene "+level+" · "):""}${escapeHtml(m.typ||"Nachricht")}</div>
+        </div>
+        <div class="msg-date">${escapeHtml(formatDate(m.gesendet_am))}</div>
+      </div>
+      <div class="msg-text">${escapeHtml(m.nachricht)}</div>
+      <div class="msg-actions">
+        ${filtered?'<span class="pill filtered">Kontaktangabe/Link bereinigt</span>':""}
+        ${system?'<span class="pill">Systemnachricht</span>':""}
+        ${canReply?`<button class="tab" type="button" onclick="replyToMessage('${escapeHtml(m.nachricht_id)}','${escapeHtml(m.absender_user_id)}',${level})">↩ Antworten</button>`:""}
+      </div>
+    </article>`;
+  }).join("");
+}
+
+async function loadMessages(force=false){
+  if(loaded&&!force){renderMessages();return}
+  const token=sessionStorage.getItem(SESSION_KEY);if(!token)return;
+  setStatus($("messagesStatus"),"loading","Nachrichten werden geladen …");
+  try{
+    const d=await getJSON(READ_WEBHOOK+"?token="+encodeURIComponent(token));
+    messages=parseMessages(d);
+    loaded=true;
+    renderMessages();
+    clearStatus($("messagesStatus"));
+  }catch(e){
+    setStatus($("messagesStatus"),"error","Nachrichten konnten nicht geladen werden: "+e.message);
+    $("messageList").innerHTML='<div class="empty">Abruf derzeit nicht möglich.</div>';
+  }
+}
+
+function filterHint(level,text){
+  const hasLink=/(https?:\/\/|www\.|t\.me\/|wa\.me\/)/i.test(text);
+  const hasEmail=/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text);
+  const hasPhone=/\+?[0-9][0-9 .()/-]{7,}/.test(text);
+  const hasHandle=/@[A-Za-z0-9_]{3,}/.test(text);
+  let parts=[];
+  if(hasLink)parts.push("Links");
+  if(hasEmail)parts.push("E-Mail");
+  if(level>=2&&hasPhone)parts.push("Telefonnummer");
+  if(level>=2&&hasHandle)parts.push("Kontakt-Handle");
+  const el=$("filterHint");
+  if(parts.length){
+    el.className="filter-hint warn";
+    el.textContent="Vor dem Versand: "+[...new Set(parts)].join(", ")+" wird/werden serverseitig automatisch entfernt. Die restliche Nachricht wird zugestellt.";
+  }else{
+    el.className="filter-hint";
+    el.textContent=level===1
+      ?"Firstline: Telefon und Telegram-Username sind erlaubt. E-Mail-Adressen und externe Links werden entfernt."
+      :"Ab Ebene 2: direkte Kontaktdaten, E-Mail-Adressen und externe Links werden automatisch entfernt.";
+  }
+}
+
+function openComposer(target){
+  composeTarget=target;
+  $("composer").classList.add("show");
+  $("composeTitle").textContent=target.replyTo?"Antwort schreiben":"Nachricht schreiben";
+  $("composeMeta").textContent="Empfänger "+displayId(target.userId)+(target.level?(" · Ebene "+target.level):"");
+  $("messageText").value="";
+  $("charCount").textContent="0";
+  $("composeRule").textContent=target.replyTo?"Antwort auf erhaltene Nachricht":"Neuer Network-Kontakt";
+  clearStatus($("sendStatus"));
+  filterHint(Number(target.level||0),"");
+  $("composer").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function closeComposer(){$("composer").classList.remove("show");composeTarget=null;clearStatus($("sendStatus"))}
+function replyToMessage(messageId,senderId,level){
+  openComposer({userId:String(senderId),level:Number(level||0),replyTo:String(messageId)});
+}
+function consumePendingTarget(){
+  let target=null;
+  try{target=JSON.parse(sessionStorage.getItem(TARGET_KEY)||"null")}catch(e){}
+  sessionStorage.removeItem(TARGET_KEY);
+  if(target&&target.userId&&currentMembershipLevel>0)openComposer(target);
+}
+
+function friendlyError(code){
+  const map={
+    FIRSTLINE_WAIT_FOR_REPLY_OR_NEXT_DAY:"Dieser direkte Partner wurde heute bereits aktiv angeschrieben. Warte auf eine Antwort oder bis zum nächsten Tag.",
+    PARTNER_DAILY_LIMIT:"Dieser Partner hat sein heutiges Kontaktlimit erreicht.",
+    COOLDOWN_30_MIN:"Zu diesem Partner gilt derzeit die 30-Minuten-Wartezeit.",
+    BASIS_REPLY_ONLY:"Basis-Mitglieder können nur auf bereits erhaltene Nachrichten antworten.",
+    BASIS_DAILY_LIMIT:"Das tägliche Basis-Limit von 5 Antworten ist erreicht.",
+    PREMIUM_DAILY_LIMIT:"Das tägliche Premium-Limit für tiefere Ebenen ist erreicht.",
+    PLUS_DAILY_LIMIT:"Das tägliche Premium-Plus-Limit für tiefere Ebenen ist erreicht.",
+    LEVEL_DAILY_LIMIT:"Das heutige Nachrichtenlimit dieser Ebene ist erreicht.",
+    PREMIUM_LEVEL_LOCKED:"Diese Ebene erfordert Premium Plus.",
+    NO_NETWORK_RELATION:"Der Empfänger gehört nicht zu einer freigegebenen Network-Beziehung.",
+    INVALID_RECIPIENT:"Der Empfänger konnte nicht bestätigt werden.",
+    INVALID_TOKEN:"Die Sitzung ist nicht mehr gültig."
+  };
+  return map[code]||"Die Nachricht konnte nach den aktuellen Network-Regeln nicht gesendet werden.";
+}
+
+async function sendCurrent(){
+  if(!composeTarget)return;
+  const text=$("messageText").value.trim();
+  if(!text){setStatus($("sendStatus"),"error","Bitte zuerst eine Nachricht eingeben.");return}
+  const token=sessionStorage.getItem(SESSION_KEY);
+  if(!token){setStatus($("sendStatus"),"error","Sitzung abgelaufen. Bitte erneut anmelden.");return}
+  $("sendBtn").disabled=true;
+  setStatus($("sendStatus"),"loading","Nachricht wird serverseitig geprüft …");
+  try{
+    const payload={token,empfaenger_user_id:composeTarget.userId,nachricht:text};
+    if(composeTarget.replyTo)payload.antwort_auf_id=composeTarget.replyTo;
+    const d=await postMessage(payload);
+    if(d.success===true){
+      setStatus($("sendStatus"),"ok",d.message||"Nachricht gesendet.");
+      $("messageText").value="";$("charCount").textContent="0";
+      loaded=false;
+      // Kein automatischer erneuter Make-Abruf: spart Operations.
+      setStatus($("messagesStatus"),"ok","Nachricht wurde gesendet. Für die endgültige gespeicherte Fassung bei Bedarf „Nachrichten aktualisieren“ wählen.");
+    }else{
+      setStatus($("sendStatus"),"error",friendlyError(String(d.error||"")));
+    }
+  }catch(e){
+    setStatus($("sendStatus"),"error","Versand derzeit nicht möglich: "+e.message);
+  }finally{$("sendBtn").disabled=false}
+}
+
+async function init(){
+  const token=cleanToken(sessionStorage.getItem(SESSION_KEY));
+  if(!token){
+    setStatus($("pageStatus"),"error","Keine aktive Network-Sitzung gefunden. Bitte zuerst Premium & Network öffnen.");
+    setTimeout(()=>location.href="../premium/",1200);
+    return;
+  }
+  setStatus($("pageStatus"),"loading","Network-Sitzung wird geprüft …");
+  try{
+    const d=await getJSON(SESSION_WEBHOOK+"?token="+encodeURIComponent(token));
+    currentUserId=String(d.user_id||"");
+    currentMembership=String(d.mitgliedschaft||"Basis")||"Basis";
+    currentMembershipLevel=Number(d.mitgliedschaft_level||0);
+    $("userMeta").textContent="BI-ID "+(d.user_id||"–")+" · Ref "+(d.ref_code||"–");
+    $("membershipBadge").textContent=currentMembership;
+    $("membershipBadge").className="membership";
+    if(currentMembershipLevel<=0)$("membershipBadge").classList.add("basis");
+    if(currentMembershipLevel>=2)$("membershipBadge").classList.add("plus");
+    $("app").style.display="block";
+    clearStatus($("pageStatus"));
+    await loadMessages();
+    consumePendingTarget();
+  }catch(e){
+    sessionStorage.removeItem(SESSION_KEY);
+    setStatus($("pageStatus"),"error","Network-Sitzung ist ungültig. Bitte erneut anmelden.");
+  }
+}
+
+document.querySelectorAll(".tab[data-tab]").forEach(b=>b.addEventListener("click",()=>{
+  activeTab=b.dataset.tab;
+  document.querySelectorAll(".tab[data-tab]").forEach(x=>x.classList.toggle("active",x===b));
+  renderMessages();
+}));
+$("refreshBtn").addEventListener("click",()=>loadMessages(true));
+$("closeComposerBtn").addEventListener("click",closeComposer);
+$("sendBtn").addEventListener("click",sendCurrent);
+$("messageText").addEventListener("input",e=>{
+  $("charCount").textContent=e.target.value.length;
+  filterHint(Number(composeTarget?.level||0),e.target.value);
+});
+
+init();
+</script>
+</body>
+</html>
