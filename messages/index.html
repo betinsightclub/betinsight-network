@@ -1,4 +1,36 @@
 <!DOCTYPE html>
+<!--
+GitHub-Ziel: betinsightclub/betinsight-network/messages/index.html
+Live-Seite TEST: https://betinsightclub.github.io/betinsight-network/messages/
+Live-Seite später: https://betinsight.network/messages/
+
+Projekt: BetInsight Network
+Bereich: Geschützte Network-Kommunikation
+Datei: messages/index.html
+Version: 2026.08.15-01
+Anwendungs-Version: 1.1 TEST
+
+Backend / Webhooks:
+- Network Session: BetInsight - Network Session v1.1.1 TEST
+- Nachrichten abrufen: BetInsight - Network Nachrichten abrufen v1.0 TEST
+- Nachricht senden: BetInsight - Network Nachricht senden v1.0.5 TEST
+
+Wichtige Regeln:
+- Nachrichten werden erst beim Öffnen des Bereichs geladen (Lazy Loading).
+- Kein periodisches Polling; Make wird nur bei tatsächlicher Aktion aufgerufen.
+- Firstline: Telefon + Telegram-Username erlaubt; E-Mail und externe Links werden entfernt.
+- Ab Ebene 2: direkte Kontaktdaten, E-Mail, Messenger-Kontakte und externe Links werden entfernt.
+- Gefilterte Nachrichten werden bereinigt zugestellt und im Admin-Filter-Log protokolliert.
+- Basis darf Nachrichten empfangen und nur auf erhaltene Nachrichten antworten.
+- Premium/Premium Plus unterliegen den serverseitigen Tages-, Ebenen- und Partnerlimits.
+- Zusatznachrichten gegen Units sind vorbereitet, aber noch nicht aktiv.
+
+Änderungen 1.1 TEST:
+- Standard-Kopfblock nach Muster der Profil-HTMLs ergänzt.
+- GitHub-Ziel und öffentliche TEST-/spätere Live-Seite dokumentiert.
+- Backend-Zuordnung und Kommunikationsregeln im Dateikopf dokumentiert.
+- Funktion der Nachrichten-Seite ansonsten unverändert.
+-->
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -8,7 +40,6 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
   <title>Nachrichten | BetInsight Network</title>
-  <!-- BetInsight Network Nachrichten v1.0 TEST -->
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
   <style>
     :root{
