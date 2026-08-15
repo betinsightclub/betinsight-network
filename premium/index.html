@@ -8,7 +8,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex,nofollow">
   <title>Premium & Network | BetInsight Network</title>
-  <!-- Premium & Network v1.3 TEST · Basis ohne Premium-Network-Zugriff -->
+  <!-- Premium & Network v1.4 TEST · Basis Preview mit Partnerzahl + CTA -->
   <link rel="icon" type="image/x-icon" href="../favicon(1).ico">
 
   <style>
@@ -217,33 +217,27 @@
 
         
         <section id="basisNetworkUpgrade" style="display:none;margin-top:18px">
-          <div class="card" style="border-color:rgba(255,193,91,.18);background:linear-gradient(145deg,rgba(44,35,15,.28),rgba(7,46,60,.58))">
-            <div class="eyebrow" style="color:#ffe2a6;border-color:rgba(255,193,91,.20);background:rgba(255,193,91,.07)">Premium Network</div>
-            <h2 style="margin-top:14px">Dein Premium-Network ist noch nicht aktiviert</h2>
-            <p style="max-width:760px">
-              Der Basis-Tarif enthält weiterhin deine normalen BetInsight-Unit-Empfehlungen bis zur 3. Ebene.
-              Der separate Premium-Network-Bereich ist jedoch eine Premium-Funktion und zeigt deshalb im Basis-Tarif
-              keine Partnerzahlen, Ebenen, Premium-Status oder Premium-Provisionen.
-            </p>
-            <div class="tiles" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px">
-              <article class="tile" style="min-height:145px">
-                <div class="ico">⭐</div>
-                <h3>Premium</h3>
-                <p>Premium-Network und Premium-Provisionen bis zur 6. Ebene.</p>
-                <button type="button" onclick="openUpgrade()">Premium entdecken →</button>
-              </article>
-              <article class="tile" style="min-height:145px">
-                <div class="ico">👑</div>
-                <h3>Premium Plus</h3>
-                <p>Premium-Network und Premium-Provisionen bis zur 8. Ebene.</p>
-                <button type="button" onclick="openUpgrade()">Premium Plus entdecken →</button>
-              </article>
-            </div>
-            <p style="margin-top:14px;color:#789eae;font-size:10px">
-              Neue Premium-Provisionsberechtigungen beginnen erst ab der jeweiligen Aktivierung und werden nicht rückwirkend erzeugt.
-            </p>
-          </div>
-        </section>
+  <div class="card" style="border:1px solid rgba(255,193,91,.28);background:radial-gradient(circle at 88% 14%,rgba(255,193,91,.10),transparent 28%),linear-gradient(145deg,rgba(40,30,10,.40),rgba(5,44,58,.88));box-shadow:0 18px 50px rgba(0,0,0,.18)">
+    <div class="eyebrow" style="color:#ffe0a0;border-color:rgba(255,193,91,.25);background:rgba(255,193,91,.08)">🔒 PREMIUM NETWORK</div>
+    <h2 style="font-size:clamp(24px,4vw,38px);margin:14px 0 10px">Dein Network ist bereits da.</h2>
+    <p style="max-width:760px;font-size:14px;line-height:1.7">Auch als Basis-Mitglied wächst deine Sponsorstruktur weiter. Die detaillierte Network-Anzeige und die Premium-Verdienstmöglichkeiten werden jedoch erst ab Premium freigeschaltet.</p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:stretch;margin-top:18px">
+      <div style="flex:1 1 260px;padding:18px;border-radius:16px;border:1px solid rgba(0,224,169,.20);background:rgba(0,224,169,.055)">
+        <div style="font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#83aebb;font-weight:900">Partner in deinem Network</div>
+        <div id="basisPartnerCount" style="font-size:40px;font-weight:950;color:#ecfbff;line-height:1;margin-top:7px">…</div>
+        <div style="font-size:10px;color:#7599a6;margin-top:7px">Nur die Gesamtzahl wird im Basis-Tarif angezeigt.</div>
+      </div>
+      <div style="flex:1 1 360px;padding:18px;border-radius:16px;border:1px solid rgba(255,193,91,.20);background:rgba(255,193,91,.055)">
+        <div style="font-weight:950;font-size:15px;color:#ffe0a0">Anzeige und Verdienst erst ab Premium</div>
+        <div style="font-size:11px;line-height:1.65;color:#a8c2cb;margin-top:7px">Mit Premium werden dein Premium-Network bis zur 6. Ebene, Partnerdetails und Premium-Provisionen freigeschaltet. Premium Plus erweitert den Bereich bis zur 8. Ebene.</div>
+        <button class="btn btn-primary" type="button" onclick="openUpgrade()" style="margin-top:14px">⭐ Premium entdecken</button>
+      </div>
+    </div>
+
+    <p style="margin-top:14px;color:#7397a5;font-size:10px">Die normalen Unit-Empfehlungen bis zur 3. Ebene bleiben davon getrennt. Premium-Provisionsberechtigungen beginnen erst ab der jeweiligen Aktivierung.</p>
+  </div>
+</section>
 
 <section id="networkView">
           <div class="sectionbar">
@@ -296,7 +290,7 @@
 
 <script>
 const SESSION_WEBHOOK = "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
-const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.1 TEST
+const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.2 TEST
 const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63"; // Network Ebene Detail v1.2 TEST
 const SESSION_KEY = "betinsight_network_session_token";
 
@@ -352,8 +346,8 @@ function showMember(data){
   memberMeta.textContent="BI-ID "+(data.user_id||"–")+" · Ref "+(data.ref_code||"–");
 
   if(currentMembershipLevel===0){
-    $("networkCardText").textContent="Premium Network ist im Basis-Tarif nicht enthalten.";
-    $("openNetworkBtn").textContent="Premium entdecken →";
+    $("networkCardText").textContent="Dein Network wächst bereits · Details und Verdienst ab Premium.";
+    $("openNetworkBtn").textContent="Network-Vorschau →";
   }else if(currentMembershipLevel===1){
     $("networkCardText").textContent="Ebenen 1–6 offen · Ebene 7–8 mit Premium Plus.";
     $("openNetworkBtn").textContent="Öffnen →";
@@ -555,11 +549,17 @@ async function applyDateRange(){
 loginBtn.addEventListener("click",()=>validateToken(tokenInput.value));
 logoutBtn.addEventListener("click",logout);
 tokenInput.addEventListener("keydown",e=>{if(e.key==="Enter")validateToken(tokenInput.value)});
-$("openNetworkBtn").addEventListener("click",()=>{
+$("openNetworkBtn").addEventListener("click",async()=>{
   if(currentMembershipLevel===0){
     networkView.classList.remove("show");
     $("basisNetworkUpgrade").style.display="block";
+    $("basisPartnerCount").textContent="…";
     $("basisNetworkUpgrade").scrollIntoView({behavior:"smooth",block:"start"});
+    try{
+      const token=sessionStorage.getItem(SESSION_KEY);
+      const d=await fetchJSON(OVERVIEW_WEBHOOK+"?token="+encodeURIComponent(token));
+      $("basisPartnerCount").textContent=(d && d.preview_only===true)?Number(d?.gesamt?.partner||0):"–";
+    }catch(e){$("basisPartnerCount").textContent="–"}
     return;
   }
   $("basisNetworkUpgrade").style.display="none";
