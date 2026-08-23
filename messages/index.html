@@ -7,8 +7,8 @@ Live-Seite später: https://betinsight.network/messages/
 Projekt: BetInsight Network
 Bereich: Geschützte Network-Kommunikation
 Datei: messages/index.html
-Version: 2026.08.15-01
-Anwendungs-Version: 1.1 TEST
+Version: 2026.08.23-01
+Anwendungs-Version: 1.2 TEST
 
 Backend / Webhooks:
 - Network Session: BetInsight - Network Session v1.1.1 TEST
@@ -25,11 +25,11 @@ Wichtige Regeln:
 - Premium/Premium Plus unterliegen den serverseitigen Tages-, Ebenen- und Partnerlimits.
 - Zusatznachrichten gegen Units sind vorbereitet, aber noch nicht aktiv.
 
-Änderungen 1.1 TEST:
+Änderungen 1.2 TEST:
 - Standard-Kopfblock nach Muster der Profil-HTMLs ergänzt.
 - GitHub-Ziel und öffentliche TEST-/spätere Live-Seite dokumentiert.
 - Backend-Zuordnung und Kommunikationsregeln im Dateikopf dokumentiert.
-- Funktion der Nachrichten-Seite ansonsten unverändert.
+- Premium-Kommunikation an die neue Network-Tiefe 1–5 angepasst; Premium Plus bleibt bis Ebene 8.
 -->
 <html lang="de">
 <head>
@@ -298,7 +298,7 @@ function tariffRules(){
     return {limit:5,label:"Antworten",depthText:"Basis kann empfangen und auf erhaltene Nachrichten antworten. Maximal 5 ausgehende Antworten pro Tag."};
   }
   if(currentMembershipLevel===1){
-    return {limit:12,label:"Tiefe",depthText:"Premium: Firstline je direktem Partner 1 aktiver Erstkontakt pro Tag. Ebene 2–6: insgesamt maximal 12 Nachrichten pro Tag; zusätzliche Partner-/Ebenenlimits gelten serverseitig."};
+    return {limit:12,label:"Tiefe",depthText:"Premium: Firstline je direktem Partner 1 aktiver Erstkontakt pro Tag. Ebene 2–5: insgesamt maximal 12 Nachrichten pro Tag; zusätzliche Partner-/Ebenenlimits gelten serverseitig."};
   }
   return {limit:25,label:"Tiefe",depthText:"Premium Plus: Firstline je direktem Partner 1 aktiver Erstkontakt pro Tag. Ebene 2–8: insgesamt maximal 25 Nachrichten pro Tag; zusätzliche Partner-/Ebenenlimits gelten serverseitig."};
 }

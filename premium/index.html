@@ -7,8 +7,8 @@ Live-Seite später: https://betinsight.network/premium/
 Projekt: BetInsight Network
 Bereich: Premium & Network Mitgliederbereich
 Datei: premium/index.html
-Version: 2026.08.15-01
-Anwendungs-Version: 1.6.1 TEST
+Version: 2026.08.23-01
+Anwendungs-Version: 1.6.2 TEST
 
 Backend / Webhooks:
 - Network Session: BetInsight - Network Session v1.1.1 TEST
@@ -19,19 +19,20 @@ Wichtige Hinweise:
 - TEST-Login nutzt derzeit sessionStorage mit dashboard_token.
 - LIVE-Login wird später auf E-Mail + Einmal-Link umgestellt.
 - dashboard_token darf LIVE nicht als dauerhafter Browser-Login-Schlüssel verwendet werden.
-- Basis: Premium-Network-Vorschau bis Ebene 6, keine Partnerdetails/Provisionen.
-- Premium: Network bis Ebene 6.
-- Premium Plus: Network bis Ebene 8.
+- Basis: Premium-Network-Vorschau bis Ebene 5, keine Partnerdetails/Provisionen.
+- Premium: Premium-Gruppenprovision bis Ebene 5.
+- Premium Plus: Premium-Gruppenprovision bis Ebene 8 (zusätzliche Ebenen 6–8).
 - Unit-Referral Ebene 1–3 ist ein separates BetInsight-Club-System.
 
-Änderungen 1.6.1 TEST:
+Änderungen 1.6.2 TEST:
 - Standard-Kopfblock nach Muster der Profil-HTMLs ergänzt.
 - GitHub-Ziel und öffentliche TEST-/spätere Live-Seite dokumentiert.
 - Backend-Zuordnung im Dateikopf dokumentiert.
 - Sichtbarer Mehrfachaccount-Wechsel-Button entfernt.
 - Nachrichten-Button mit ../messages/ verbunden; Navigation erfolgt im selben Tab.
 - Normaler Abmelden-Button bleibt erhalten.
-- Sonstige Premium-/Network-Logik unverändert.
+- Premium auf Ebene 1–5, Premium Plus auf Ebene 1–8 umgestellt.
+- Premium-Mitgliedschaft und Unit-Zahlungen bleiben getrennte Systeme.
 -->
 <html lang="de">
 <head>
@@ -276,7 +277,7 @@ Wichtige Hinweise:
                 <h2 style="font-size:clamp(24px,4vw,36px);margin:0 0 8px">Dein Network wächst bereits.</h2>
                 <p style="max-width:760px;font-size:13px;line-height:1.65;margin:0">
                   Als Basis-Mitglied siehst du hier nur die Entwicklung deiner Sponsorstruktur
-                  bis zur 6. Ebene. Einzelne Partner, Statusdaten und Premium-Provisionen werden
+                  bis zur 5. Ebene. Einzelne Partner, Statusdaten und Premium-Gruppenprovisionen werden
                   erst nach einem Upgrade auf Premium freigeschaltet.
                 </p>
               </div>
@@ -284,19 +285,18 @@ Wichtige Hinweise:
                 min-width:180px;padding:15px 18px;border-radius:15px;
                 border:1px solid rgba(24,210,148,.20);background:rgba(24,210,148,.055)">
                 <div style="font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:#82adba;font-weight:900">
-                  Partner gesamt · Ebene 1–6
+                  Partner gesamt · Ebene 1–5
                 </div>
                 <div id="basisPartnerCount" style="font-size:34px;font-weight:950;margin-top:4px">…</div>
               </div>
             </div>
 
-            <div class="basis-preview-grid" aria-label="Network Vorschau Ebene 1 bis 6">
+            <div class="basis-preview-grid" aria-label="Network Vorschau Ebene 1 bis 5">
               <div class="basis-level"><span>Ebene 1</span><strong id="basisL1">–</strong></div>
               <div class="basis-level"><span>Ebene 2</span><strong id="basisL2">–</strong></div>
               <div class="basis-level"><span>Ebene 3</span><strong id="basisL3">–</strong></div>
               <div class="basis-level"><span>Ebene 4</span><strong id="basisL4">–</strong></div>
               <div class="basis-level"><span>Ebene 5</span><strong id="basisL5">–</strong></div>
-              <div class="basis-level"><span>Ebene 6</span><strong id="basisL6">–</strong></div>
             </div>
 
             <div style="
@@ -308,8 +308,8 @@ Wichtige Hinweise:
                   Anzeige der Partnerdetails und Verdienst erst ab Premium
                 </div>
                 <div style="font-size:10px;line-height:1.55;color:#9ebbc6;margin-top:4px">
-                  Premium schaltet dein Premium-Network bis zur 6. Ebene frei.
-                  Premium Plus erweitert es bis zur 8. Ebene.
+                  Premium berechtigt zur Premium-Gruppenprovision bis zur 5. Ebene.
+                  Premium Plus erweitert diese Berechtigung um die Ebenen 6 bis 8.
                 </div>
               </div>
               <button class="btn btn-primary" type="button" onclick="openUpgrade()">
@@ -434,10 +434,10 @@ function showMember(data){
   memberMeta.textContent="BI-ID "+(data.user_id||"–")+" · Ref "+(data.ref_code||"–");
 
   if(currentMembershipLevel===0){
-    $("networkCardText").textContent="Vorschau Ebene 1–6 · Partnerdetails und Verdienst ab Premium.";
+    $("networkCardText").textContent="Vorschau Ebene 1–5 · Partnerdetails und Premium-Gruppenprovision ab Premium.";
     $("openNetworkBtn").textContent="Vorschau öffnen →";
   }else if(currentMembershipLevel===1){
-    $("networkCardText").textContent="Ebenen 1–6 offen · Ebene 7–8 mit Premium Plus.";
+    $("networkCardText").textContent="Premium-Gruppenprovision Ebene 1–5 · Ebenen 6–8 mit Premium Plus.";
     $("openNetworkBtn").textContent="Öffnen →";
   }else{
     $("networkCardText").textContent="Ebenen 1–8, Partnerstatus und Provisionen je Ebene.";
@@ -454,19 +454,19 @@ function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als näch
 
 function maxUnlockedLevel(){
   if(currentMembershipLevel>=2)return 8;
-  if(currentMembershipLevel>=1)return 6;
+  if(currentMembershipLevel>=1)return 5;
   return 0;
 }
 function levelIsUnlocked(level){return Number(level)<=maxUnlockedLevel()}
 function requiredTarifForLevel(level){
-  return Number(level)>=7 ? "Premium Plus" : "Premium";
+  return Number(level)>=6 ? "Premium Plus" : "Premium";
 }
 function upgradeTextForLevel(level){
   const required=requiredTarifForLevel(level);
   if(required==="Premium Plus"){
-    return "Mit Premium Plus erhältst du Zugriff auf Ebene 7 und 8 sowie die entsprechenden Premium-Provisionen ab deiner Aktivierung.";
+    return "Mit Premium Plus erhältst du Zugriff auf die Ebenen 6 bis 8 sowie die entsprechende Premium-Gruppenprovision ab deiner Aktivierung.";
   }
-  return "Mit Premium erhältst du Zugriff auf Ebene 4 bis 6. Premium Plus erweitert deinen Zugriff zusätzlich bis Ebene 8.";
+  return "Mit Premium erhältst du Premium-Gruppenprovision bis Ebene 5. Premium Plus erweitert die Berechtigung um die Ebenen 6 bis 8.";
 }
 function upgradeButtonLabel(level){
   return requiredTarifForLevel(level)==="Premium Plus" ? "⭐ Auf Premium Plus upgraden" : "⭐ Premium freischalten";
@@ -642,7 +642,7 @@ $("openNetworkBtn").addEventListener("click",async()=>{
     networkView.classList.remove("show");
     $("basisNetworkUpgrade").style.display="block";
     $("basisPartnerCount").textContent="…";
-    for(let l=1;l<=6;l++) $("basisL"+l).textContent="–";
+    for(let l=1;l<=5;l++) $("basisL"+l).textContent="–";
     $("basisNetworkUpgrade").scrollIntoView({behavior:"smooth",block:"start"});
     try{
       const token=sessionStorage.getItem(SESSION_KEY);
@@ -650,7 +650,7 @@ $("openNetworkBtn").addEventListener("click",async()=>{
       if(d && d.preview_only===true){
         $("basisPartnerCount").textContent=Number(d?.gesamt?.partner||0);
         const levels=Array.isArray(d.ebenen)?d.ebenen:[];
-        for(let l=1;l<=6;l++){
+        for(let l=1;l<=5;l++){
           const row=levels.find(x=>Number(x.ebene)===l);
           $("basisL"+l).textContent=Number(row?.partner||0);
         }
