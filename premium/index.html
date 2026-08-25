@@ -8,7 +8,7 @@ Projekt: BetInsight Network
 Bereich: Premium & Network Mitgliederbereich
 Datei: premium/index.html
 Version: 2026.08.23-01
-Anwendungs-Version: 1.6.2 TEST
+Anwendungs-Version: 1.6.3 TEST
 
 Backend / Webhooks:
 - Network Session: BetInsight - Network Session v1.1.1 TEST
@@ -23,6 +23,12 @@ Wichtige Hinweise:
 - Premium: Premium-Gruppenprovision bis Ebene 5.
 - Premium Plus: Premium-Gruppenprovision bis Ebene 8 (zusätzliche Ebenen 6–8).
 - Unit-Referral Ebene 1–3 ist ein separates BetInsight-Club-System.
+
+Änderungen 1.6.3 TEST:
+- Technisches Network-Zugangscode-Feld aus der sichtbaren Login-Oberfläche entfernt.
+- Während der Prüfung wird nur noch ein neutraler Zugangsstatus angezeigt.
+- Ohne gültige Network-Sitzung erfolgt die Weiterleitung zur zentralen E-Mail-Zugangsseite auf app.betinsight.club.
+- Bestehende Token-/Session-Prüfung im Hintergrund bleibt unverändert erhalten.
 
 Änderungen 1.6.2 TEST:
 - Standard-Kopfblock nach Muster der Profil-HTMLs ergänzt.
@@ -218,14 +224,9 @@ Wichtige Hinweise:
       <section id="loginArea">
         <div class="login-grid">
           <article class="card">
-            <h2>Persönlichen Zugang öffnen</h2>
-            <p>TEST-Zugang: persönlichen Network-Zugangscode einfügen. Der endgültige Login wird anschließend auf E-Mail + Einmal-Link umgestellt.</p>
-            <div class="field">
-              <label for="tokenInput">Network-Zugangscode</label>
-              <input id="tokenInput" type="password" autocomplete="off" spellcheck="false" placeholder="Persönlichen Zugang einfügen">
-            </div>
-            <div class="actions"><button class="btn btn-primary" type="button" id="loginBtn">🔐 Premium & Network öffnen</button></div>
-            <div class="status" id="loginStatus"></div>
+            <h2>Dein Zugang wird geprüft</h2>
+            <p>BetInsight prüft automatisch, ob für diesen Browser bereits ein gültiger persönlicher Zugang vorhanden ist. Du musst keinen technischen Zugangscode eingeben.</p>
+            <div class="status show loading" id="loginStatus">🔐 Dein Zugang wird geprüft …</div>
           </article>
           <aside class="card">
             <h3>Datenschutz im Network</h3>
@@ -380,10 +381,10 @@ const SESSION_WEBHOOK = "https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3ac
 const OVERVIEW_WEBHOOK = "https://hook.eu1.make.com/59or1bn41hd3w4wrfbl0a0z4pn4tn6wp"; // Network Übersicht v1.3 TEST
 const DETAIL_WEBHOOK = "https://hook.eu1.make.com/mk87itc8mzqh1nonl1b5s2gszo6g3w63"; // Network Ebene Detail v1.2 TEST
 const SESSION_KEY = "betinsight_network_session_token";
+const ACCESS_GATEWAY_URL = "https://app.betinsight.club/konto/?next=premium-provisionen";
 
 const $ = id => document.getElementById(id);
-const loginArea=$("loginArea"), memberArea=$("memberArea"), tokenInput=$("tokenInput"),
-loginBtn=$("loginBtn"), logoutBtn=$("logoutBtn"), loginStatus=$("loginStatus"),
+const loginArea=$("loginArea"), memberArea=$("memberArea"), logoutBtn=$("logoutBtn"), loginStatus=$("loginStatus"),
 memberStatus=$("memberStatus"), membershipBadge=$("membershipBadge"),
 memberMeta=$("memberMeta"), networkView=$("networkView"), networkStatus=$("networkStatus");
 
@@ -403,6 +404,7 @@ function cleanToken(raw){
 }
 function tokenFromUrl(){return cleanToken(new URLSearchParams(location.search).get("token"))}
 function removeTokenFromAddressBar(){if(location.search)history.replaceState({},document.title,location.pathname)}
+function goToAccessGateway(){window.location.replace(ACCESS_GATEWAY_URL)}
 
 async function fetchJSON(url){
   const r=await fetch(url,{method:"GET",cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer"});
@@ -411,16 +413,22 @@ async function fetchJSON(url){
   return data;
 }
 
-async function validateToken(token,auto=false){
+async function validateToken(token){
   token=cleanToken(token);
-  if(!token){if(!auto)setStatus(loginStatus,"error","Bitte füge deinen persönlichen Network-Zugang ein.");return}
-  loginBtn.disabled=true; setStatus(loginStatus,"loading","Zugang wird sicher geprüft …");
+  if(!token){
+    setStatus(loginStatus,"loading","🔐 Kein gespeicherter Network-Zugang gefunden. Sichere Anmeldung wird geöffnet …");
+    window.setTimeout(goToAccessGateway,250);
+    return;
+  }
+  setStatus(loginStatus,"loading","🔐 Dein Zugang wird geprüft …");
   try{
     const data=await fetchJSON(SESSION_WEBHOOK+"?token="+encodeURIComponent(token));
     sessionStorage.setItem(SESSION_KEY,token); showMember(data);
   }catch(e){
-    sessionStorage.removeItem(SESSION_KEY); setStatus(loginStatus,"error","Dieser Network-Zugang ist ungültig oder nicht mehr gültig.");
-  }finally{loginBtn.disabled=false}
+    sessionStorage.removeItem(SESSION_KEY);
+    setStatus(loginStatus,"loading","Der Zugang konnte nicht bestätigt werden. Sichere Anmeldung wird geöffnet …");
+    window.setTimeout(goToAccessGateway,350);
+  }
 }
 function showMember(data){
   clearStatus(loginStatus); loginArea.classList.add("hidden"); memberArea.classList.add("show");
@@ -445,8 +453,8 @@ function showMember(data){
 
 }
 function logout(){
-  sessionStorage.removeItem(SESSION_KEY); memberArea.classList.remove("show"); loginArea.classList.remove("hidden");
-  networkView.classList.remove("show"); $("basisNetworkUpgrade").style.display="none"; tokenInput.value=""; clearStatus(memberStatus); setStatus(loginStatus,"ok","Du wurdest abgemeldet.");
+  sessionStorage.removeItem(SESSION_KEY);
+  window.location.href="../";
 }
 function comingSoon(area){setStatus(memberStatus,"loading",area+" wird als nächster geschützter Bereich verbunden.");memberStatus.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
@@ -633,9 +641,7 @@ async function applyDateRange(){
   }catch(e){setStatus(networkStatus,"error","Zeitraum konnte nicht ausgewertet werden: "+e.message)}
 }
 
-loginBtn.addEventListener("click",()=>validateToken(tokenInput.value));
 logoutBtn.addEventListener("click",logout);
-tokenInput.addEventListener("keydown",e=>{if(e.key==="Enter")validateToken(tokenInput.value)});
 $("openNetworkBtn").addEventListener("click",async()=>{
   if(currentMembershipLevel===0){
     networkView.classList.remove("show");
@@ -677,8 +683,18 @@ document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{
 }));
 
 const incomingToken=tokenFromUrl();
-if(incomingToken){removeTokenFromAddressBar();validateToken(incomingToken,true)}
-else{const t=sessionStorage.getItem(SESSION_KEY);if(t)validateToken(t,true)}
+if(incomingToken){
+  removeTokenFromAddressBar();
+  validateToken(incomingToken);
+}else{
+  const t=sessionStorage.getItem(SESSION_KEY);
+  if(t){
+    validateToken(t);
+  }else{
+    setStatus(loginStatus,"loading","🔐 Kein gespeicherter Network-Zugang gefunden. Sichere Anmeldung wird geöffnet …");
+    window.setTimeout(goToAccessGateway,300);
+  }
+}
 </script>
 </body>
 </html>
