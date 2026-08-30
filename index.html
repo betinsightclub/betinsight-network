@@ -8,7 +8,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="description" content="BetInsight Network – Premium, Network, Provisionen und interne Kommunikation.">
   <title>BetInsight Network</title>
-  <!-- Startseite v2.3 · Premium 13,49 €, Premium Plus 19,99 €, Premium-Gruppenprovision E1–5 / E1–8 -->
+  <!-- Startseite v2.4 · Premium-Provisionsplan 30/12/8/5/3 · Premium Plus +2/1,5/1 -->
 
   <!-- Aktueller Dateiname im GitHub-Repository -->
 <style>
@@ -495,8 +495,8 @@
     .modal.show{display:grid}
 
     .modal-card{
-      width:min(760px,100%);
-      max-height:min(84vh,760px);
+      width:min(900px,100%);
+      max-height:min(88vh,820px);
       overflow:auto;
       border-radius:24px;
       border:1px solid var(--line-strong);
@@ -595,6 +595,43 @@
       font-size:12px;
       line-height:1.6;
     }
+
+    .plan-help{
+      width:100%;
+      min-height:36px;
+      margin-top:14px;
+      border:1px solid rgba(115,205,239,.18);
+      border-radius:10px;
+      background:rgba(3,24,35,.55);
+      color:#dff6ff;
+      cursor:pointer;
+      font-size:10px;
+      font-weight:900;
+    }
+    .plan-help:hover{border-color:rgba(24,213,143,.30);background:rgba(24,213,143,.07)}
+    .provision-details{
+      display:none;
+      grid-column:1/-1;
+      padding:18px;
+      border:1px solid rgba(115,205,239,.18);
+      border-radius:18px;
+      background:rgba(2,17,25,.62);
+    }
+    .provision-details.show{display:block}
+    .provision-details-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+    .provision-details-head h4{margin:0;font-size:18px}
+    .provision-details-head p{margin:5px 0 0;color:#87adbc;font-size:10px;line-height:1.45}
+    .provision-tiers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .provision-tier{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.025)}
+    .provision-tier.premium{border-color:rgba(24,213,143,.18)}
+    .provision-tier.plus{border-color:rgba(255,192,90,.18)}
+    .provision-tier strong{display:block;font-size:12px}
+    .provision-tier small{display:block;margin-top:4px;color:#7fa5b5;font-size:9px}
+    .rate-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+    .rate-chip{display:inline-flex;padding:5px 8px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.035);color:#d9eef5;font-size:9px;font-weight:900}
+    .provision-max{margin-top:10px;color:#a8cad7;font-size:10px}.provision-max b{color:#fff}
+    .provision-rules{margin-top:12px;padding:11px 12px;border-radius:11px;background:rgba(255,193,91,.045);border:1px solid rgba(255,193,91,.12);color:#a8c3cd;font-size:9px;line-height:1.5}
+    .provision-rules b{color:#edf9ff}
 
     .toast{
       position:fixed;
@@ -702,7 +739,7 @@
       .footer-right{
         justify-content:center;
       }
-      .plans{
+      .plans,.provision-tiers{
         grid-template-columns:1fr;
       }
     }
@@ -829,7 +866,7 @@
         <h3>Provisionen</h3>
         <p>
           Vorgemerkte, gesperrte und später auszahlbare Premium-Provisionen nachvollziehbar
-          an einem Ort darstellen.
+          an einem Ort darstellen. Der genaue Provisionsplan ist im Premium-Vergleich hinterlegt.
         </p>
       </article>
 
@@ -849,7 +886,7 @@
           <h2>Noch kein Premium?</h2>
           <p>
             Basis-Mitglieder bleiben im Network sichtbar. Nach dem geschützten Login soll das
-            System später automatisch erkennen, ob du Basis, Premium oder Premium Plus bist
+            System automatisch erkennen, ob du Basis, Premium oder Premium Plus bist
             und dir die passenden Funktionen und Upgrade-Möglichkeiten anzeigen.
           </p>
         </div>
@@ -874,7 +911,7 @@
 
       <div class="trust">
         <strong>🛡 Rollen & Rechte</strong>
-        <span>Mitglieder-, Network- und Adminrechte werden später getrennt geprüft.</span>
+        <span>Mitglieder-, Network- und Adminrechte werden getrennt geprüft.</span>
       </div>
 
       <div class="trust">
@@ -928,6 +965,7 @@
             <li>interne Network-Kommunikation</li>
             <li>Premium-Gruppenprovision bis zur 5. Ebene</li>
           </ul>
+          <button class="plan-help" type="button" onclick="toggleProvisionDetails(event)">? Provisionsplan anzeigen</button>
         </article>
 
         <article class="plan plus">
@@ -939,7 +977,17 @@
             <li>interne Network-Kommunikation</li>
             <li>Premium-Gruppenprovision bis zur 8. Ebene</li>
           </ul>
+          <button class="plan-help" type="button" onclick="toggleProvisionDetails(event)">? Provisionsplan anzeigen</button>
         </article>
+
+        <section id="provisionDetails" class="provision-details" aria-live="polite">
+          <div class="provision-details-head"><div><h4>Premium-Provisionsplan</h4><p>Die Prozentsätze beziehen sich auf die jeweilige erfolgreich bezahlte Premium-Mitgliedschaft bzw. Verlängerung.</p></div></div>
+          <div class="provision-tiers">
+            <div class="provision-tier premium"><strong>Premium · 13,49 € / 30 Tage</strong><small>Provisionsberechtigung Ebene 1–5</small><div class="rate-grid"><span class="rate-chip">E1 30 %</span><span class="rate-chip">E2 12 %</span><span class="rate-chip">E3 8 %</span><span class="rate-chip">E4 5 %</span><span class="rate-chip">E5 3 %</span></div><div class="provision-max">Maximaler Tarif-Provisionsanteil: <b>58 %</b></div></div>
+            <div class="provision-tier plus"><strong>Premium Plus · 19,99 € / 30 Tage</strong><small>Provisionsberechtigung Ebene 1–8</small><div class="rate-grid"><span class="rate-chip">E1 30 %</span><span class="rate-chip">E2 12 %</span><span class="rate-chip">E3 8 %</span><span class="rate-chip">E4 5 %</span><span class="rate-chip">E5 3 %</span><span class="rate-chip">E6 2 %</span><span class="rate-chip">E7 1,5 %</span><span class="rate-chip">E8 1 %</span></div><div class="provision-max">Maximaler Tarif-Provisionsanteil: <b>62,5 %</b></div></div>
+          </div>
+          <div class="provision-rules"><b>Wichtig:</b> Provisionen entstehen nur auf tariflich freigeschalteten Ebenen und erst ab bestätigter eigener Aktivierung. Es gibt keine rückwirkende Premium-Provision. Nicht provisionsberechtigte oder unbesetzte Ebenen werden nicht auf andere Ebenen umverteilt. Das bestehende Unit-Referral-System bis Ebene 3 ist ein separates System.</div>
+        </section>
       </div>
     </div>
   </div>
@@ -949,6 +997,7 @@
   <script>
     const toast = document.getElementById("toast");
     const plansModal = document.getElementById("plansModal");
+    const provisionDetails = document.getElementById("provisionDetails");
     let toastTimer;
 
     function planned(area){
@@ -965,7 +1014,15 @@
 
     function closePlans(){
       plansModal.classList.remove("show");
+      provisionDetails?.classList.remove("show");
       document.body.style.overflow = "";
+    }
+
+    function toggleProvisionDetails(event){
+      event?.stopPropagation();
+      if(!provisionDetails) return;
+      provisionDetails.classList.toggle("show");
+      if(provisionDetails.classList.contains("show")) setTimeout(() => provisionDetails.scrollIntoView({behavior:"smooth",block:"nearest"}), 20);
     }
 
     plansModal.addEventListener("click", (e) => {
