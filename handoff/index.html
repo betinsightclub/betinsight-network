@@ -7,45 +7,80 @@
   <meta name="referrer" content="no-referrer">
   <title>BetInsight – Sicherer Übergang</title>
   <style>
-    html,body{min-height:100%;margin:0}body{display:grid;place-items:center;background:#03131d;color:#dff6ff;font-family:Inter,Arial,sans-serif}.card{width:min(520px,calc(100% - 32px));padding:26px;border:1px solid rgba(104,203,235,.2);border-radius:20px;background:#062433;box-shadow:0 24px 70px rgba(0,0,0,.34);text-align:center}.dot{width:12px;height:12px;margin:0 auto 14px;border-radius:50%;background:#18d294;box-shadow:0 0 18px rgba(24,210,148,.8)}h1{margin:0 0 8px;font-size:22px}p{margin:0;color:#96b8c6;line-height:1.55;font-size:13px}.error{color:#ffd1d5}
+    html,body{min-height:100%;margin:0}body{display:grid;place-items:center;background:#03131d;color:#dff6ff;font-family:Inter,Arial,sans-serif}.card{width:min(520px,calc(100% - 32px));padding:26px;border:1px solid rgba(104,203,235,.2);border-radius:20px;background:#062433;box-shadow:0 24px 70px rgba(0,0,0,.34);text-align:center}.dot{width:12px;height:12px;margin:0 auto 14px;border-radius:50%;background:#18d294;box-shadow:0 0 18px rgba(24,210,148,.8)}h1{margin:0 0 8px;font-size:22px}p{margin:0;color:#96b8c6;line-height:1.55;font-size:13px}.error{color:#ffd1d5}.back{display:none;margin:18px auto 0;padding:11px 15px;border-radius:11px;background:#168df2;color:#fff;text-decoration:none;font-weight:800;font-size:13px}.back.show{display:inline-flex}
   </style>
 </head>
 <body>
   <main class="card">
     <div class="dot"></div>
     <h1>Sicherer Übergang</h1>
-    <p id="status">Premium &amp; Network wird geöffnet …</p>
+    <p id="status">Premium &amp; Network wird sicher geöffnet …</p>
+    <a id="back" class="back" href="https://app.betinsight.club/">Zurück zum BetInsight Dashboard</a>
   </main>
 <script>
 (() => {
   "use strict";
-  const PREFIX = "BI_NETWORK_HANDOFF_V1:";
+  const LEGACY_PREFIX = "BI_NETWORK_HANDOFF_V1:";
+  const MESSAGE_TYPE = "BI_NETWORK_HANDOFF_V2";
+  const ACK_TYPE = "BI_NETWORK_HANDOFF_ACK_V2";
+  const TRUSTED_ORIGIN = "https://app.betinsight.club";
   const SESSION_KEY = "betinsight_network_session_token";
   const PREMIUM_URL = "../premium/";
-  const GATEWAY_URL = "https://app.betinsight.club/konto/?next=premium-provisionen";
   const status = document.getElementById("status");
+  const back = document.getElementById("back");
   const isUuid = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value||"").trim());
+  let completed = false;
 
-  let raw = "";
-  try { raw = String(window.name || ""); } catch (e) {}
-  try { window.name = ""; } catch (e) {}
-
-  const token = raw.startsWith(PREFIX) ? raw.slice(PREFIX.length).trim() : "";
-  if (!isUuid(token)) {
+  function fail(text){
+    if(completed)return;
     status.classList.add("error");
-    status.textContent = "Der sichere Zugang konnte nicht übernommen werden. Du wirst zur Kontozentrale zurückgeleitet …";
-    window.setTimeout(() => window.location.replace(GATEWAY_URL), 500);
-    return;
+    status.textContent=text;
+    back.classList.add("show");
   }
 
-  try {
-    sessionStorage.setItem(SESSION_KEY, token);
-    window.location.replace(PREMIUM_URL);
-  } catch (e) {
-    status.classList.add("error");
-    status.textContent = "Die Sitzung konnte nicht gespeichert werden. Du wirst zur Kontozentrale zurückgeleitet …";
-    window.setTimeout(() => window.location.replace(GATEWAY_URL), 500);
+  function acceptToken(token, sourceWindow=null){
+    const clean=String(token||"").trim();
+    if(completed||!isUuid(clean))return false;
+    try{
+      sessionStorage.setItem(SESSION_KEY,clean);
+      completed=true;
+      status.classList.remove("error");
+      status.textContent="✅ Zugang übernommen. Premium & Network wird geöffnet …";
+      if(sourceWindow){
+        try{sourceWindow.postMessage({type:ACK_TYPE},TRUSTED_ORIGIN)}catch(e){}
+      }
+      window.setTimeout(()=>window.location.replace(PREMIUM_URL),120);
+      return true;
+    }catch(e){
+      fail("Die sichere Sitzung konnte nicht gespeichert werden. Bitte kehre zum Dashboard zurück und versuche es erneut.");
+      return false;
+    }
   }
+
+  /* Existing valid same-origin session can be reused immediately. */
+  try{
+    const existing=String(sessionStorage.getItem(SESSION_KEY)||"").trim();
+    if(isUuid(existing)){acceptToken(existing);return}
+  }catch(e){}
+
+  /* Backward-compatible fallback for older clients; never bounce automatically. */
+  let raw="";
+  try{raw=String(window.name||"")}catch(e){}
+  try{window.name=""}catch(e){}
+  if(raw.startsWith(LEGACY_PREFIX)){
+    const legacy=raw.slice(LEGACY_PREFIX.length).trim();
+    if(acceptToken(legacy))return;
+  }
+
+  window.addEventListener("message",event=>{
+    if(completed||event.origin!==TRUSTED_ORIGIN)return;
+    const data=event.data;
+    if(!data||data.type!==MESSAGE_TYPE)return;
+    acceptToken(data.token,event.source);
+  });
+
+  status.textContent="Warte auf die sichere Freigabe aus deinem BetInsight Dashboard …";
+  window.setTimeout(()=>fail("Die sichere Freigabe ist nicht angekommen. Es erfolgt keine automatische Weiterleitung, damit keine Endlosschleife entstehen kann."),12000);
 })();
 </script>
 </body>
