@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>BetInsight – Sicherer Übergang</title>
+  <style>
+    html,body{min-height:100%;margin:0}body{display:grid;place-items:center;background:#03131d;color:#dff6ff;font-family:Inter,Arial,sans-serif}.card{width:min(520px,calc(100% - 32px));padding:26px;border:1px solid rgba(104,203,235,.2);border-radius:20px;background:#062433;box-shadow:0 24px 70px rgba(0,0,0,.34);text-align:center}.dot{width:12px;height:12px;margin:0 auto 14px;border-radius:50%;background:#18d294;box-shadow:0 0 18px rgba(24,210,148,.8)}h1{margin:0 0 8px;font-size:22px}p{margin:0;color:#96b8c6;line-height:1.55;font-size:13px}.error{color:#ffd1d5}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="dot"></div>
+    <h1>Sicherer Übergang</h1>
+    <p id="status">Premium &amp; Network wird geöffnet …</p>
+  </main>
+<script>
+(() => {
+  "use strict";
+  const PREFIX = "BI_NETWORK_HANDOFF_V1:";
+  const SESSION_KEY = "betinsight_network_session_token";
+  const PREMIUM_URL = "../premium/";
+  const GATEWAY_URL = "https://app.betinsight.club/konto/?next=premium-provisionen";
+  const status = document.getElementById("status");
+  const isUuid = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value||"").trim());
+
+  let raw = "";
+  try { raw = String(window.name || ""); } catch (e) {}
+  try { window.name = ""; } catch (e) {}
+
+  const token = raw.startsWith(PREFIX) ? raw.slice(PREFIX.length).trim() : "";
+  if (!isUuid(token)) {
+    status.classList.add("error");
+    status.textContent = "Der sichere Zugang konnte nicht übernommen werden. Du wirst zur Kontozentrale zurückgeleitet …";
+    window.setTimeout(() => window.location.replace(GATEWAY_URL), 500);
+    return;
+  }
+
+  try {
+    sessionStorage.setItem(SESSION_KEY, token);
+    window.location.replace(PREMIUM_URL);
+  } catch (e) {
+    status.classList.add("error");
+    status.textContent = "Die Sitzung konnte nicht gespeichert werden. Du wirst zur Kontozentrale zurückgeleitet …";
+    window.setTimeout(() => window.location.replace(GATEWAY_URL), 500);
+  }
+})();
+</script>
+</body>
+</html>
