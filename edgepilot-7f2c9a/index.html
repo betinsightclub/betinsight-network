@@ -17,12 +17,11 @@
   <div id="login" class="login card">
     <div class="eyebrow">Privater Zugang</div>
     <h1>EdgePilot AI</h1>
-    <p class="muted">Diese Oberfläche ist nur für dein Paper-Trading. Beim ersten Mal Konto anlegen, danach normal einloggen.</p>
+    <p class="muted">Privates Paper-Trading Control Center. Der Besitzer-Account ist eingerichtet.</p>
     <input id="email" type="email" autocomplete="email" placeholder="E-Mail">
-    <input id="pass" type="password" autocomplete="current-password" placeholder="Passwort (mind. 6 Zeichen)">
+    <input id="pass" type="password" autocomplete="current-password" placeholder="Passwort">
     <div class="formrow" style="margin-top:10px">
       <button id="signin" class="btn primary">Einloggen</button>
-      <button id="signup" class="btn">Konto anlegen</button>
     </div>
     <div id="loginmsg" class="muted" style="margin-top:12px">System startet …</div>
   </div>
@@ -49,12 +48,10 @@
 <script>
 const q=id=>document.getElementById(id);
 window.addEventListener('error',e=>{const el=q('loginmsg');if(el)el.textContent='Technischer Fehler: '+(e.message||'unbekannt');});
-
 if(window.__supaLoadError || !window.supabase || typeof window.supabase.createClient!=='function'){
   q('loginmsg').textContent='Technischer Fehler: Supabase-Bibliothek konnte nicht geladen werden.';
   throw new Error('Supabase library unavailable');
 }
-
 const SUPABASE_URL='https://lszlaglwlixejzytrurg.supabase.co';
 const SUPABASE_KEY='sb_publishable_GcavIYFtdaryt97JzSkIkg_7YPicQQP';
 const API_URL=SUPABASE_URL+'/functions/v1/edgepilot-api';
@@ -62,7 +59,7 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const f=n=>n==null?'—':Number(n).toFixed(2);
 const pct=n=>n==null?'—':(Number(n)*100).toFixed(2)+'%';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-q('loginmsg').textContent='System bereit · v0.3';
+q('loginmsg').textContent='System bereit · Besitzerzugang aktiv';
 
 async function api(action,opts={}){
   const {data,error}=await sb.auth.getSession();
@@ -83,10 +80,7 @@ async function load(){
 }
 function renderSession(sess){q('login').classList.toggle('hidden',!!sess);q('app').classList.toggle('hidden',!sess);if(sess)setTimeout(load,0);}
 async function show(){try{const {data,error}=await sb.auth.getSession();if(error)throw error;renderSession(data.session);}catch(e){renderSession(null);q('loginmsg').textContent=e.message||String(e);}}
-function authBusy(on,kind){q('signin').disabled=on;q('signup').disabled=on;q('signin').textContent=on&&kind==='signin'?'Einloggen …':'Einloggen';q('signup').textContent=on&&kind==='signup'?'Konto wird angelegt …':'Konto anlegen';}
-
-q('signin').onclick=async()=>{q('loginmsg').textContent='Anmeldung läuft …';authBusy(true,'signin');try{const {data,error}=await sb.auth.signInWithPassword({email:q('email').value.trim(),password:q('pass').value});if(error)throw error;q('loginmsg').textContent='Angemeldet.';renderSession(data.session);}catch(e){q('loginmsg').textContent='Fehler: '+(e.message||String(e));}finally{authBusy(false);}};
-q('signup').onclick=async()=>{const email=q('email').value.trim(),password=q('pass').value;if(!email){q('loginmsg').textContent='Bitte E-Mail eingeben.';return;}if(password.length<6){q('loginmsg').textContent='Das Passwort muss mindestens 6 Zeichen haben.';return;}q('loginmsg').textContent='Konto wird angelegt …';authBusy(true,'signup');try{const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});if(error)throw error;q('loginmsg').textContent=data.session?'Konto erstellt und angemeldet.':'Konto erstellt. Bitte Bestätigungs-Mail öffnen und danach einloggen.';if(data.session)renderSession(data.session);}catch(e){q('loginmsg').textContent='Fehler: '+(e.message||String(e));}finally{authBusy(false);}};
+q('signin').onclick=async()=>{q('loginmsg').textContent='Anmeldung läuft …';q('signin').disabled=true;q('signin').textContent='Einloggen …';try{const {data,error}=await sb.auth.signInWithPassword({email:q('email').value.trim(),password:q('pass').value});if(error)throw error;q('loginmsg').textContent='Angemeldet.';renderSession(data.session);}catch(e){q('loginmsg').textContent='Fehler: '+(e.message||String(e));}finally{q('signin').disabled=false;q('signin').textContent='Einloggen';}};
 q('logout').onclick=async()=>{await sb.auth.signOut();renderSession(null);q('loginmsg').textContent='Abgemeldet.';};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));b.classList.add('active');q(b.dataset.tab).classList.add('active');});
 q('save').onclick=async()=>{try{const r=await api('settings',{method:'POST',body:JSON.stringify({ui_timezone:q('tz').value})});q('msg').textContent=r.ok?'Gespeichert.':'Speichern fehlgeschlagen.';if(r.ok)load();}catch(e){q('msg').textContent=e.message||String(e);}};q('refresh').onclick=load;
