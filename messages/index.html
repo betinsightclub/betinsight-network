@@ -220,9 +220,9 @@ Wichtige Regeln:
 </main>
 
 <script>
-const SESSION_WEBHOOK="https://hook.eu1.make.com/aop3vttb8eijgk5kasi8sttidu3aczne";
-const READ_WEBHOOK="https://hook.eu1.make.com/bhx1l23aoz91eob5y9oex7xlk9uopddm";
-const SEND_WEBHOOK="https://hook.eu1.make.com/o2nhkn76h0dxnij3ia9oed1p4np4mfav";
+const SESSION_WEBHOOK="https://lszlaglwlixejzytrurg.supabase.co/functions/v1/betinsight-network-gateway?route=session";
+const READ_WEBHOOK="https://lszlaglwlixejzytrurg.supabase.co/functions/v1/betinsight-network-gateway?route=messages-read";
+const SEND_WEBHOOK="https://lszlaglwlixejzytrurg.supabase.co/functions/v1/betinsight-network-gateway?route=messages-send";
 const SESSION_KEY="betinsight_network_session_token";
 const TARGET_KEY="betinsight_network_message_target";
 
@@ -360,7 +360,7 @@ async function loadMessages(force=false){
   const token=sessionStorage.getItem(SESSION_KEY);if(!token)return;
   setStatus($("messagesStatus"),"loading","Nachrichten werden geladen …");
   try{
-    const d=await getJSON(READ_WEBHOOK+"?token="+encodeURIComponent(token));
+    const d=await getJSON(READ_WEBHOOK+"&token="+encodeURIComponent(token));
     messages=parseMessages(d);
     loaded=true;
     renderMessages();
@@ -469,7 +469,7 @@ async function init(){
   }
   setStatus($("pageStatus"),"loading","Network-Sitzung wird geprüft …");
   try{
-    const d=await getJSON(SESSION_WEBHOOK+"?token="+encodeURIComponent(token));
+    const d=await getJSON(SESSION_WEBHOOK+"&token="+encodeURIComponent(token));
     currentUserId=String(d.user_id||"");
     currentMembership=String(d.mitgliedschaft||"Basis")||"Basis";
     currentMembershipLevel=Number(d.mitgliedschaft_level||0);
